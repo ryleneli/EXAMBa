@@ -1,0 +1,124 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"><!--mine fragment-->
+    <com.example.UI.TitleBarView
+        android:id="@+id/mine"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:title_back_icon_visible="false"
+        app:title_answer_visible="false"
+        app:title_clock_visible="false"
+        app:title_exam_chronometer_visible="false"
+        app:title_text_text="个人中心">
+
+    </com.example.UI.TitleBarView>
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:background="@drawable/mine_bg2"
+        android:alpha="1">
+
+        <ImageView
+            android:id="@+id/my_face"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/ic_sentiment_satisfied_black_72dp"
+            android:layout_centerInParent="true" />
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="20dp"
+            android:layout_below="@+id/my_face">
+            <View
+                android:id="@+id/view2"
+                android:layout_width="0.5dp"
+                android:layout_height="fill_parent"
+                android:layout_centerInParent="true"
+                android:background="#A9A9A9" />
+            <TextView
+                android:id="@+id/stu_name"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="studentname"
+                android:layout_marginRight="20dp"
+                android:layout_toLeftOf="@+id/view2"/>
+
+            <TextView
+                android:id="@+id/stu_number"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="studentnumber"
+                android:layout_marginLeft="20dp"
+                android:layout_toRightOf="@+id/view2"/>
+        </RelativeLayout>
+    </RelativeLayout>
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="2"
+        android:orientation="vertical"
+        android:background="#F5F5F5">
+        <com.example.UI.ItemView
+            android:id="@+id/mine_message"
+            android:layout_marginTop="20dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:left_icon_drawable="@drawable/ic_message_black_24dp"
+            app:left_text_text="消息通知"
+            app:right_arrow_drawable="@drawable/ic_keyboard_arrow_right_black_24dp"/>
+        <View
+            android:id="@+id/view3"
+            android:layout_width="fill_parent"
+            android:layout_height="0.5dp"
+            android:background="#A9A9A9" />
+        <com.example.UI.ItemView
+            android:id="@+id/mine_exam"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:left_icon_drawable="@drawable/ic_description_black_24dp"
+            app:left_text_text="我的考试"
+            app:right_arrow_drawable="@drawable/ic_keyboard_arrow_right_black_24dp"/>
+
+        <com.example.UI.ItemView
+            android:id="@+id/change_password"
+            android:layout_marginTop="20dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:left_icon_drawable="@drawable/ic_settings_applications_black_24dp"
+            app:left_text_text="修改密码"
+            app:right_arrow_drawable="@drawable/ic_keyboard_arrow_right_black_24dp"/>
+        <View
+            android:id="@+id/view4"
+            android:layout_width="fill_parent"
+            android:layout_height="0.5dp"
+            android:background="#A9A9A9" />
+        <com.example.UI.ItemView
+            android:id="@+id/about"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:left_icon_drawable="@drawable/ic_info_black_24dp"
+            app:left_text_text="关于"
+            app:right_arrow_drawable="@drawable/ic_keyboard_arrow_right_black_24dp">
+        </com.example.UI.ItemView>
+        <Button
+            android:id="@+id/login_button"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:layout_marginRight="40dp"
+            android:layout_marginLeft="40dp"
+            android:background="@drawable/rounded_button"
+            android:text="退出" />
+
+    </LinearLayout>
+
+
+</LinearLayout>

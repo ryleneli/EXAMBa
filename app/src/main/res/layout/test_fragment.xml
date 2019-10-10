@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+    <com.example.UI.TitleBarView
+        android:id="@+id/test_titlebar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        app:title_back_icon_visible="true"
+        app:title_answer_visible="true"
+        app:title_clock_visible="true"
+        app:title_exam_chronometer_visible="true">
+
+    </com.example.UI.TitleBarView>
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="45dp"
+        android:layout_below="@+id/test_titlebar"
+        android:background="@color/gray">
+
+        <TextView
+            android:id="@+id/test_style"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:layout_marginLeft="10dp"
+            android:layout_centerVertical="true"
+            android:text="TextView" />
+        <TextView
+            android:id="@+id/test_number"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_marginRight="10dp"
+            android:layout_centerVertical="true"
+            android:text="TextView" />
+    </RelativeLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_alignParentBottom="true"
+        >
+
+
+        <TextView
+            android:id="@+id/last"
+            android:layout_width="0dp"
+            android:layout_height="40dp"
+            android:layout_weight="1"
+            android:text="上一题"
+            android:gravity="center"
+            android:textColor="@color/colorRoundedButton"
+            android:background="@color/colorTitleBar"/>
+        <View
+            android:id="@+id/view_between"
+            android:layout_width="0.5dp"
+            android:layout_height="fill_parent"
+            android:background="#A9A9A9" />
+        <TextView
+            android:id="@+id/next"
+            android:layout_width="0dp"
+            android:layout_height="40dp"
+            android:layout_weight="1"
+            android:text="下一题"
+            android:gravity="center"
+            android:textColor="@color/colorRoundedButton"
+            android:background="@color/colorTitleBar"/>
+    </LinearLayout>
+
+
+</RelativeLayout>

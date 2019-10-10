@@ -1,0 +1,65 @@
+<merge xmlns:android="http://schemas.android.com/apk/res/android">
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:minHeight="45dp"
+        android:minWidth="45dp"
+        android:background="@color/colorTitleBar">
+
+
+        <ImageButton
+            android:id="@+id/title_back_icon"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="10dp"
+            android:layout_alignParentLeft="true"
+            android:layout_centerVertical="true"
+            android:scaleType="fitCenter"
+            android:background="@drawable/ic_arrow_back_black_24dp" />
+        <TextView
+            android:id="@+id/title_text"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_toRightOf="@+id/title_back_icon"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="10dp"
+            android:text="test"
+            android:textSize="18dp"
+            android:textColor="#ffffff"
+            />
+        <Chronometer
+        android:id="@+id/title_exam_chronometer"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerVertical="true"
+            android:layout_marginRight="30dp"
+            android:layout_alignParentRight="true"
+        android:textSize="12dp"
+        android:textColor="@color/colorRoundedButton"
+        ></Chronometer>
+        <ImageView
+        android:id="@+id/title_clock"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_toLeftOf="@+id/title_exam_chronometer"
+        android:layout_centerVertical="true"
+        android:layout_marginRight="30dp"
+        android:scaleType="fitCenter"
+        android:background="@drawable/ic_access_time_black_24dp"
+        />
+        <ImageButton
+            android:id="@+id/title_answer"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_toLeftOf="@+id/title_clock"
+            android:layout_marginRight="30dp"
+            android:layout_centerVertical="true"
+            android:paddingRight="10dp"
+            android:scaleType="fitCenter"
+            android:background="@drawable/ic_mode_edit_black_24dp"
+            />
+
+
+
+    </RelativeLayout>
+</merge>

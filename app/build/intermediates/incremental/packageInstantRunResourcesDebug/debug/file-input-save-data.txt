@@ -1,0 +1,11 @@
+#Internal package file, do not edit.
+#Thu Oct 10 09:25:44 CST 2019
+1.base=C\:\\Users\\rylene_li\\Desktop\\EXAMBa\\app\\build\\intermediates\\assets\\debug
+0.baseType=DIRECTORY
+1.baseType=DIRECTORY
+count=2
+1.set=ASSET
+0.path=image4_1.jpg
+0.set=ASSET
+0.base=C\:\\Users\\rylene_li\\Desktop\\EXAMBa\\app\\build\\intermediates\\assets\\debug
+1.path=fonts/xiyuan.TTF

@@ -1,0 +1,222 @@
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    >
+<LinearLayout
+
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:background="@color/colorbg"><!--homefragment-->
+    <com.example.UI.TitleBarView
+        android:id="@+id/mine"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        app:title_back_icon_visible="false"
+        app:title_answer_visible="false"
+        app:title_clock_visible="false"
+        app:title_exam_chronometer_visible="false"
+        app:title_text_text="学习">
+    </com.example.UI.TitleBarView>
+<RelativeLayout
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="70dp"
+        android:orientation="horizontal"
+        android:layout_centerInParent="true">
+
+        <ImageView
+            android:layout_width="70dp"
+            android:layout_height="70dp"
+            android:layout_toLeftOf="@+id/my_lesson"
+            android:layout_centerVertical="true"
+            android:layout_marginRight="10dp"
+            android:src="@drawable/ic_school_black_24dp"/>
+        <TextView
+            android:id="@+id/my_lesson"
+            android:layout_width="wrap_content"
+            android:layout_height="60dp"
+            android:layout_gravity="center_vertical"
+            android:gravity="center"
+            android:text="我的课程"
+            android:textSize="20dp"/>
+    </LinearLayout>
+</RelativeLayout>
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="150dp"
+        android:layout_below="@+id/view_underlesson"
+        android:orientation="vertical"
+
+        android:background="@drawable/rounded_layout">
+        <com.example.Object.MyListView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginTop="5dp"
+            android:layout_marginBottom="5dp"
+            android:layout_marginRight="20dp"
+            android:layout_marginLeft="20dp"
+            android:id="@+id/list_view"
+            >
+        </com.example.Object.MyListView>
+
+    </LinearLayout>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_weight="3"
+        android:orientation="vertical"
+        android:layout_alignParentBottom="true">
+        <Button
+            android:id="@+id/addlesson_button"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:layout_marginRight="40dp"
+            android:layout_marginLeft="40dp"
+            android:background="@drawable/rounded_button"
+            android:text="添加课程" />
+<LinearLayout
+    android:layout_marginTop="10dp"
+    android:layout_width="match_parent"
+    android:layout_height="47dp"
+    android:orientation="horizontal"
+    android:background="@drawable/rounded_edittext">
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@drawable/ic_local_florist_black_24dp"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp"
+        android:layout_gravity="center"/>
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:text="当前学习课程："/>
+    <TextView
+        android:id="@+id/learning_lesson"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:textColor="#32CD32"
+        android:text="test"/>
+
+</LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+            <TextView
+                android:id="@+id/lesson_test"
+                android:layout_width="match_parent"
+                android:layout_marginTop="10dp"
+                android:layout_height="45dp"
+                android:gravity="center"
+                android:text="题库/练习"
+                android:background="#ffffff"/>
+            <View
+                android:id="@+id/view_undertest"
+                android:layout_width="fill_parent"
+                android:layout_height="0.5dp"
+                android:background="#A9A9A9" />
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="#ffffff"
+                android:orientation="horizontal">
+                <RelativeLayout
+                    android:layout_width="0dp"
+                    android:layout_weight="1"
+                    android:layout_height="120dp">
+                    <com.example.UI.TestView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        app:imageview_drawable="@drawable/seque"
+                        android:layout_marginBottom="10dp"
+                        android:layout_centerInParent="true"
+                        app:textview_text="章节练习"></com.example.UI.TestView>
+                </RelativeLayout>
+
+                <RelativeLayout
+                    android:layout_width="0dp"
+                    android:layout_weight="1"
+                    android:layout_height="120dp">
+                    <com.example.UI.TestView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="10dp"
+                        android:layout_centerInParent="true"
+                        app:imageview_drawable="@drawable/random"
+                        app:textview_text="随机练习">
+                    </com.example.UI.TestView>
+                </RelativeLayout>
+                <RelativeLayout
+                    android:layout_width="0dp"
+                    android:layout_weight="1"
+                    android:layout_height="120dp">
+                    <com.example.UI.TestView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        app:imageview_drawable="@drawable/error"
+                        android:layout_marginBottom="10dp"
+                        android:layout_centerInParent="true"
+                        app:textview_text="错题练习">
+
+                    </com.example.UI.TestView>
+                </RelativeLayout>
+                <RelativeLayout
+                    android:layout_width="0dp"
+                    android:layout_weight="1"
+                    android:layout_height="120dp">
+                    <com.example.UI.TestView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="10dp"
+                        android:layout_centerInParent="true"
+                        app:imageview_drawable="@drawable/test"
+                        app:textview_text="模拟考试">
+                    </com.example.UI.TestView>
+                </RelativeLayout>
+            </LinearLayout>
+
+    </LinearLayout>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginTop="10dp"
+            android:background="#ffffff"
+            android:orientation="vertical">
+        <TextView
+            android:id="@+id/lesson_resource"
+            android:layout_width="match_parent"
+            android:layout_height="45dp"
+            android:gravity="center"
+            android:text="课程资源"
+            />
+            <View
+                android:id="@+id/view_underresource"
+                android:layout_width="fill_parent"
+                android:layout_height="0.5dp"
+                android:background="#A9A9A9" />
+            <com.example.Object.MyExpandableListView
+                android:id="@+id/elv"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+
+                android:indicatorLeft="50dp"
+                android:childIndicatorLeft="50dp"
+                />
+
+        </LinearLayout>
+    </LinearLayout>
+</LinearLayout>
+</ScrollView>

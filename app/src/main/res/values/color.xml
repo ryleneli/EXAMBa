@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+        <color name="colorPrimary">#fff</color>
+        <color name="colorPrimaryDark">#fff</color>
+        <color name="colorAccent">#FF4081</color>
+        <color name="colorRoundedButton">#00FA9A</color>
+        <color name="colorRoundedEditText">#7CCD7C</color>
+        <color name="colorTitleBar">#363636</color>
+        <color name="lightgray">#FFEEEEEE</color>
+        <color name="gray">#FFDDDDDD</color>
+        <color name="colorTab">#32CD32</color>
+        <color name="colorbg">#F5F5F5</color>
+</resources>
