@@ -29,9 +29,7 @@ public class MylessonAdapter extends ArrayAdapter {
         public View getView(int position, View convertView, ViewGroup parent) {
             Lesson lesson = (Lesson) getItem(position); // 获取当前项的Fruit实例
             View view = LayoutInflater.from(getContext()).inflate(resourceId, null);//实例化一个对象
-            ItemView LessonName = (ItemView) view.findViewById(R.id.lesson_name);//获取该布局内的文本视图
-            TextView textView = LessonName.getLeftText();
-            textView.setText(lesson.getName());//为文本视图设置文本内容
+
             return view;
         }
     }

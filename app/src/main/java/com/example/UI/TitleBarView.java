@@ -25,7 +25,6 @@ public class TitleBarView extends RelativeLayout {
     private static String TAG = "TitleBarView";
 
     public ImageButton titleBack,titleAnswer;
-    public ImageView titleClock;
     public TextView titleText;
     public Chronometer chronometer;
 
@@ -58,7 +57,6 @@ public class TitleBarView extends RelativeLayout {
         titleBack = findViewById(R.id.title_back_icon);
         titleAnswer = findViewById(R.id.title_answer);
         chronometer = findViewById(R.id.title_exam_chronometer);
-        titleClock = findViewById(R.id.title_clock);
 
         TypedArray attributes = context.obtainStyledAttributes(attrs, R.styleable.TitleBarView);
         //Log.i(TAG,"LRL ENTER INIT and obtain is ok");
@@ -92,14 +90,6 @@ public class TitleBarView extends RelativeLayout {
             } else {
                 chronometer.setVisibility(View.INVISIBLE);
             }
-
-            //时钟图标
-            boolean titleClockVisible = attributes.getBoolean(R.styleable.TitleBarView_title_clock_visible, false);
-            if (titleClockVisible) {
-                titleClock.setVisibility(View.VISIBLE);
-            } else {
-                titleClock.setVisibility(View.INVISIBLE);
-            }
             attributes.recycle();
         }
     }
@@ -110,9 +100,6 @@ public class TitleBarView extends RelativeLayout {
     }
     public ImageView getTitleAnswer() {
         return titleAnswer;
-    }
-    public ImageView getTitleClock() {
-        return titleClock;
     }
     public TextView getTitleText() {
         return titleText;
@@ -140,13 +127,6 @@ public class TitleBarView extends RelativeLayout {
             titleBack.setVisibility(View.VISIBLE);
         } else {
             titleBack.setVisibility(View.INVISIBLE);
-        }
-    }
-    public void setTitleClock(boolean visible) {
-        if (visible) {
-            titleClock.setVisibility(View.VISIBLE);
-        } else {
-            titleClock.setVisibility(View.INVISIBLE);
         }
     }
     public void setChronometer(boolean visible) {

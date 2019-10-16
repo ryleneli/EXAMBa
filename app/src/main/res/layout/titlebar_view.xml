@@ -25,39 +25,30 @@
             android:layout_marginLeft="10dp"
             android:text="test"
             android:textSize="18dp"
-            android:textColor="#ffffff"
+            android:textColor="@color/colorRoundedButton"
             />
-        <Chronometer
-        android:id="@+id/title_exam_chronometer"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_centerVertical="true"
-            android:layout_marginRight="30dp"
-            android:layout_alignParentRight="true"
-        android:textSize="12dp"
-        android:textColor="@color/colorRoundedButton"
-        ></Chronometer>
-        <ImageView
-        android:id="@+id/title_clock"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_toLeftOf="@+id/title_exam_chronometer"
-        android:layout_centerVertical="true"
-        android:layout_marginRight="30dp"
-        android:scaleType="fitCenter"
-        android:background="@drawable/ic_access_time_black_24dp"
-        />
         <ImageButton
             android:id="@+id/title_answer"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_toLeftOf="@+id/title_clock"
+            android:layout_alignParentRight="true"
             android:layout_marginRight="30dp"
             android:layout_centerVertical="true"
             android:paddingRight="10dp"
             android:scaleType="fitCenter"
             android:background="@drawable/ic_mode_edit_black_24dp"
             />
+        <Chronometer
+            android:id="@+id/title_exam_chronometer"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_marginRight="30dp"
+            android:layout_toLeftOf="@+id/title_answer"
+            android:textSize="12dp"
+            android:textColor="@color/colorRoundedButton"
+        ></Chronometer>
+
 
 
 
