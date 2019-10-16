@@ -4,6 +4,8 @@ import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -13,6 +15,7 @@ import android.widget.ListView;
 import android.widget.Toast;
 
 import com.example.Adapter.MyExpandableAdapter;
+import com.example.Adapter.MyRecyclerViewAdapter;
 import com.example.Object.Lesson;
 import com.example.Adapter.MylessonAdapter;
 import com.example.Object.MyListView;
@@ -29,7 +32,8 @@ public class HomeFragment extends Fragment {
     private static String TAG = "HomeFragment";
 
     private List<Lesson> lessonList = new ArrayList<Lesson>();
-
+    private RecyclerView recyclerView ;
+    private MyRecyclerViewAdapter recyclerViewAdapter;
     private ExpandableListView expandableListView;
     String[] groupNames = { "a", "b", "c" };
     String[][] childNames = new String[][] { { "a1", "a2", "a3" },
@@ -44,9 +48,13 @@ public class HomeFragment extends Fragment {
         super.onCreate(savedInstanceState);
         Log.i(TAG, "LRL CREAT HOME FRAGMENT");
         initFruits(); // 初始化水果数据
-        MylessonAdapter adapter = new MylessonAdapter(this.getContext(), R.layout.mylessons, lessonList);
-        MyListView listView = (MyListView) view.findViewById(R.id.list_view);
-        listView.setAdapter(adapter);
+
+        recyclerView = view.findViewById(R.id.rv);
+        LinearLayoutManager layoutManager = new LinearLayoutManager(getContext());
+        layoutManager.setOrientation(LinearLayoutManager.HORIZONTAL);
+        recyclerView.setLayoutManager(layoutManager);
+        recyclerViewAdapter = new MyRecyclerViewAdapter(getContext(),lessonList);
+        recyclerView.setAdapter(recyclerViewAdapter);
         expandableListView = (ExpandableListView) view.findViewById(R.id.elv);
 
         // 设置数据适配器
@@ -122,26 +130,6 @@ public class HomeFragment extends Fragment {
         lessonList.add(pear);
         Lesson grape = new Lesson("Grape");
         lessonList.add(grape);
-        Lesson pineapple = new Lesson("Pineapple");
-        lessonList.add(pineapple);
-        Lesson strawberry = new Lesson("Strawberry");
-        lessonList.add(strawberry);
-        Lesson cherry = new Lesson("Cherry");
-        lessonList.add(cherry);
-        Lesson mango = new Lesson("Mango");
-        lessonList.add(mango);
-        Lesson adv = new Lesson("adv");
-        lessonList.add(adv);
-        Lesson vvv = new Lesson("Grape");
-        lessonList.add(vvv);
-        Lesson adgf = new Lesson("Pineapple");
-        lessonList.add(adgf);
-        Lesson deeeee = new Lesson("Strawberry");
-        lessonList.add(deeeee);
-        Lesson hh = new Lesson("Cherry");
-        lessonList.add(hh);
-        Lesson hhhh = new Lesson("Mango");
-        lessonList.add(hhhh);
     }
     @Override
     public void onActivityCreated(Bundle savedInstanceState) {

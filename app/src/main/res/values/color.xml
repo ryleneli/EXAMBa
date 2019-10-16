@@ -9,5 +9,6 @@
         <color name="lightgray">#FFEEEEEE</color>
         <color name="gray">#FFDDDDDD</color>
         <color name="colorTab">#32CD32</color>
+        <color name="colorPurple">#9400D3</color>
         <color name="colorbg">#F5F5F5</color>
 </resources>
