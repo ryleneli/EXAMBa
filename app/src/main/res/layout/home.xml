@@ -37,7 +37,9 @@
                     app:left_icon_visible="true"
                     app:left_icon_drawable="@drawable/ic_school_black_24dp"
                     app:left_text_text="我的课程"
-                    app:right_arrow_drawable="@drawable/ic_keyboard_arrow_right_black_24dp">
+                    app:right_arrow_drawable="@drawable/ic_keyboard_arrow_right_black_24dp"
+                    app:right_text_text="查看全部"
+                    app:right_text_text_visible="true">
                 </com.example.UI.ItemView>
                 <View
                     android:id="@+id/view_undermylesson"
@@ -90,8 +92,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center"
-                        android:textColor="#32CD32"
-                        android:text="test"/>
+                        android:textColor="@color/colorPurple"/>
 
                 </LinearLayout>
 

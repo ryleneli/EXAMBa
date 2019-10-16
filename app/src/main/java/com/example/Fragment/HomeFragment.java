@@ -1,5 +1,6 @@
 package com.example.Fragment;
 
+import android.graphics.Color;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -12,6 +13,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ExpandableListView;
 import android.widget.ListView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.Adapter.MyExpandableAdapter;
@@ -19,6 +21,7 @@ import com.example.Adapter.MyRecyclerViewAdapter;
 import com.example.Object.Lesson;
 import com.example.Adapter.MylessonAdapter;
 import com.example.Object.MyListView;
+import com.example.itemClickListener;
 import com.example.testsys.R;
 
 import java.util.ArrayList;
@@ -32,9 +35,11 @@ public class HomeFragment extends Fragment {
     private static String TAG = "HomeFragment";
 
     private List<Lesson> lessonList = new ArrayList<Lesson>();
+    private Lesson lesson;
     private RecyclerView recyclerView ;
     private MyRecyclerViewAdapter recyclerViewAdapter;
     private ExpandableListView expandableListView;
+    private TextView learning_text;
     String[] groupNames = { "a", "b", "c" };
     String[][] childNames = new String[][] { { "a1", "a2", "a3" },
             { "b1", "b2", "b3", "b4", "b5" },
@@ -47,14 +52,29 @@ public class HomeFragment extends Fragment {
         View view = inflater.inflate(R.layout.home, container, false);
         super.onCreate(savedInstanceState);
         Log.i(TAG, "LRL CREAT HOME FRAGMENT");
-        initFruits(); // 初始化水果数据
+        initFruits();
 
         recyclerView = view.findViewById(R.id.rv);
+        learning_text = (TextView)view.findViewById(R.id.learning_lesson);
+        learning_text.setText(lessonList.get(0).getName());
         LinearLayoutManager layoutManager = new LinearLayoutManager(getContext());
         layoutManager.setOrientation(LinearLayoutManager.HORIZONTAL);
         recyclerView.setLayoutManager(layoutManager);
         recyclerViewAdapter = new MyRecyclerViewAdapter(getContext(),lessonList);
         recyclerView.setAdapter(recyclerViewAdapter);
+        recyclerViewAdapter.setItemClickListener(new itemClickListener() {
+            @Override
+            public void itemClick() {
+                lesson = lessonList.get(recyclerViewAdapter.mposition);
+                String text = lesson.getName();
+                Log.i(TAG,"LRL setItemClickListener is OK");
+                learning_text.setText(text);
+                //learning_text.setTextColor(getContext().getResources().getColor(R.color.colorPurple));代码设置颜色
+            }
+        });
+
+
+
         expandableListView = (ExpandableListView) view.findViewById(R.id.elv);
 
         // 设置数据适配器

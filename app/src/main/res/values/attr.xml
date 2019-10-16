@@ -14,6 +14,9 @@
 
         <attr name="right_arrow_visible" format="boolean" />
         <attr name="right_arrow_drawable" format="reference|integer" />
+
+        <attr name="right_text_text" format="string" />
+        <attr name="right_text_text_visible" format="boolean" />
     </declare-styleable>
     <declare-styleable name="TitleBarView">
         <!--<attr name="background_color" format="reference|integer" />-->

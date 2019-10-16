@@ -23,7 +23,7 @@ public class ItemView extends RelativeLayout {
     private static String TAG = "ItemView";
 
     public ImageView leftIcon,rightArrow,newMessage;
-    public TextView leftText;
+    public TextView leftText, rightText;
     private itemClickListener listener;
     //向外暴漏接口
     public void setItemClickListener(itemClickListener listener){
@@ -57,7 +57,7 @@ public class ItemView extends RelativeLayout {
         leftText = findViewById(R.id.left_text);
         newMessage = findViewById(R.id.new_message);
         rightArrow = findViewById(R.id.right_arrow);
-
+        rightText = findViewById(R.id.right_text);
         TypedArray attributes = context.obtainStyledAttributes(attrs, R.styleable.ItemView);
         //Log.i(TAG,"LRL ENTER INIT and obtain is ok");
         if (attributes != null) {
@@ -108,12 +108,20 @@ public class ItemView extends RelativeLayout {
             if (rightArrowDrawable != -1) {
                 rightArrow.setBackgroundResource(rightArrowDrawable);
             }
-
+            boolean rightTextVisible = attributes.getBoolean(R.styleable.ItemView_right_text_text_visible, false);
+            if (rightTextVisible) {
+                rightText.setVisibility(View.VISIBLE);
+            } else {
+                rightText.setVisibility(View.INVISIBLE);
+            }
             //设置右边按钮的文字
-            String text = attributes.getString(R.styleable.ItemView_left_text_text);
-            leftText.setText(text);
+            String left_text = attributes.getString(R.styleable.ItemView_left_text_text);
+            leftText.setText(left_text);
             int textcolor = attributes.getColor(R.styleable.ItemView_left_text_text_color, Color.BLACK);
             leftText.setTextColor(textcolor);
+            String right_text = attributes.getString(R.styleable.ItemView_right_text_text);
+            rightText.setText(right_text);
+
 
             attributes.recycle();
             view.setOnClickListener(new OnClickListener() {
