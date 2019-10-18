@@ -1,67 +1,17 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="80dp"
-    android:orientation="horizontal"
-    android:layout_margin="5dp"
-    android:background="@drawable/rounded_edittext"><!--mylessonssson listview的自定义布局-->
-    <ImageView
-        android:id="@+id/lessonname_lessonlist"
-        android:layout_width="40dp"
-        android:layout_height="40dp"
-        android:layout_marginLeft="20dp"
-        android:layout_alignParentLeft="true"
-        android:layout_centerVertical="true"
-        android:src="@drawable/ic_import_contacts_black_24dp"/>
-    <LinearLayout
-        android:layout_toRightOf="@+id/lessonname_lessonlist"
-        android:layout_width="wrap_content"
-        android:layout_height="match_parent"
-        android:layout_marginLeft="20dp"
-        android:orientation="vertical">
-        <RelativeLayout
-            android:layout_width="wrap_content"
-            android:layout_height="0dp"
-            android:layout_weight="1">
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center_vertical"
-                android:layout_alignParentBottom="true"
-                android:text="lessonname"
-                />
-        </RelativeLayout>
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    xmlns:app="http://schemas.android.com/apk/res-auto"><!--mylessonssson listview的自定义布局-->
 
-        <RelativeLayout
-            android:layout_width="wrap_content"
-            android:layout_height="0dp"
-            android:layout_weight="1"
-            android:orientation="horizontal">
-            <TextView
-                android:id="@+id/chapter_number"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center_vertical"
-                android:text="chapter_number"
-                />
-            <TextView
-                android:id="@+id/student_number"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center_vertical"
-                android:layout_toRightOf="@+id/chapter_number"
-                android:layout_marginLeft="5dp"
-                android:text="student_number"
-                />
-        </RelativeLayout>
-    </LinearLayout>
-    <ImageView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:src="@drawable/ic_check_black_24dp"
-        android:layout_alignParentRight="true"
-        android:layout_centerVertical="true"
-        android:layout_marginRight="20dp"
-        android:visibility="visible"/>
-
-</RelativeLayout>
+    <com.example.UI.LessonItemView
+        android:id="@+id/mylesson_listview"
+        android:layout_width="match_parent"
+        android:layout_height="80dp"
+        android:layout_margin="10dp"
+        app:lesson_background="@drawable/rounded_edittext2"
+        app:lessonimage_lessonlist_drawable="@drawable/ic_import_contacts_black_24dp"
+        >
+    </com.example.UI.LessonItemView>
+</LinearLayout>

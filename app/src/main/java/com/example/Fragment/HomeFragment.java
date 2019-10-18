@@ -1,5 +1,6 @@
 package com.example.Fragment;
 
+import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
@@ -11,11 +12,14 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.ExpandableListView;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.Activity.AllMyLesson;
+import com.example.Activity.MainActivity;
 import com.example.Adapter.MyExpandableAdapter;
 import com.example.Adapter.MyRecyclerViewAdapter;
 import com.example.Object.Lesson;
@@ -32,12 +36,13 @@ import java.util.List;
  */
 
 public class HomeFragment extends Fragment {
-    private static String TAG = "HomeFragment";
+    private static String TAG = "LRL HomeFragment";
 
     private List<Lesson> lessonList = new ArrayList<Lesson>();
     private Lesson lesson;
     private RecyclerView recyclerView ;
     private MyRecyclerViewAdapter recyclerViewAdapter;
+    private Button addLesson;
     private ExpandableListView expandableListView;
     private TextView learning_text;
     String[] groupNames = { "a", "b", "c" };
@@ -53,7 +58,7 @@ public class HomeFragment extends Fragment {
         super.onCreate(savedInstanceState);
         Log.i(TAG, "LRL CREAT HOME FRAGMENT");
         initFruits();
-
+        addLesson = (Button) view.findViewById(R.id.addlesson_button);
         recyclerView = view.findViewById(R.id.rv);
         learning_text = (TextView)view.findViewById(R.id.learning_lesson);
         learning_text.setText(lessonList.get(0).getName());
@@ -72,7 +77,13 @@ public class HomeFragment extends Fragment {
                 //learning_text.setTextColor(getContext().getResources().getColor(R.color.colorPurple));代码设置颜色
             }
         });
-
+        addLesson.setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View v){
+                Intent intent = new Intent((MainActivity)getActivity(), AllMyLesson.class);
+                startActivity(intent);
+            }
+        });
 
 
         expandableListView = (ExpandableListView) view.findViewById(R.id.elv);

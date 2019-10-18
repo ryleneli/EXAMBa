@@ -1,0 +1,67 @@
+<merge xmlns:android="http://schemas.android.com/apk/res/android">
+<RelativeLayout
+    android:layout_width="match_parent"
+    android:layout_height="80dp"
+    android:orientation="horizontal"><!--mylessonssson listview的自定义布局-->
+    <ImageView
+        android:id="@+id/lessonimage_lessonlist"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:layout_marginLeft="20dp"
+        android:layout_alignParentLeft="true"
+        android:layout_centerVertical="true" />
+    <LinearLayout
+        android:layout_toRightOf="@+id/lessonimage_lessonlist"
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:layout_marginLeft="20dp"
+        android:orientation="vertical">
+        <RelativeLayout
+            android:layout_width="wrap_content"
+            android:layout_height="0dp"
+            android:layout_weight="1">
+            <TextView
+                android:id="@+id/lessonname_lessonlist"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:layout_alignParentBottom="true"
+                android:text="test"
+                />
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:layout_width="wrap_content"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            android:orientation="horizontal">
+            <TextView
+                android:id="@+id/chapter_number"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:text="chapter_test"
+                />
+            <TextView
+                android:id="@+id/student_number"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:layout_toRightOf="@+id/chapter_number"
+                android:layout_marginLeft="5dp"
+                android:text="student_test"
+                />
+        </RelativeLayout>
+    </LinearLayout>
+    <ImageView
+        android:id="@+id/lesson_check"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@drawable/ic_check_black_24dp"
+        android:layout_alignParentRight="true"
+        android:layout_centerVertical="true"
+        android:layout_marginRight="20dp"
+        />
+
+</RelativeLayout>
+</merge>

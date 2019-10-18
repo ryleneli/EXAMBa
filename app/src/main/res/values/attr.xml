@@ -19,30 +19,23 @@
         <attr name="right_text_text_visible" format="boolean" />
     </declare-styleable>
     <declare-styleable name="TitleBarView">
-        <!--<attr name="background_color" format="reference|integer" />-->
-
         <attr name="title_back_icon_visible" format="boolean" />
-        <!--<attr name="left_icon_drawable" format="reference|integer" />-->
-
         <attr name="title_text_text" format="string" />
         <attr name="title_text_text_color" format="color" />
-        <!--<attr name="left_text_text_size" format="integer" />-->
         <attr name="title_answer_visible" format="boolean" />
-        <!--<attr name="new_message_drawable" format="reference|integer" />-->
-
         <attr name="title_exam_chronometer_visible" format="boolean" />
-        <!--<attr name="right_arrow_drawable" format="reference|integer" />-->
-
         <attr name="title_clock_visible" format="boolean" />
-        <!--<attr name="right_arrow_drawable" format="reference|integer" />-->
     </declare-styleable>
     <declare-styleable name="TestView">
-        <!--<attr name="background_color" format="reference|integer" />-->
-
         <attr name="imageview_drawable" format="reference|integer" />
-        <!--<attr name="left_icon_drawable" format="reference|integer" />-->
-
         <attr name="textview_text" format="string" />
-
+    </declare-styleable>
+    <declare-styleable name="LessonItemView">
+        <attr name="lesson_background" format="reference|integer" />
+        <attr name="lessonimage_lessonlist_drawable" format="reference|integer" />
+        <attr name="lessonname_lessonlist" format="string" />
+        <attr name="chapter_number" format="string" />
+        <attr name="student_number" format="string" />
+        <attr name="lesson_check_visible" format="boolean" />
     </declare-styleable>
 </resources>

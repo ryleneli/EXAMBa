@@ -51,7 +51,7 @@ public class ItemView extends RelativeLayout {
     }
 
     public void init(Context context, AttributeSet attrs) {
-        //Log.i(TAG,"LRL ENTER INIT");
+        Log.i(TAG,"LRL ENTER INIT");
         View view = LayoutInflater.from(context).inflate(R.layout.item_view, this);
         leftIcon = findViewById(R.id.left_icon);
         leftText = findViewById(R.id.left_text);

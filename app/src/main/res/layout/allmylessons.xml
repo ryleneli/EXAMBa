@@ -1,45 +1,49 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical"
     android:background="@color/colorbg">
     <com.example.UI.TitleBarView
+        android:id="@+id/allmylessons_title"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
         app:title_back_icon_visible="true"
         app:title_text_text="我的全部课程">
     </com.example.UI.TitleBarView>
-    <ScrollView
+    <Button
+        android:id="@+id/addlesson_mylessons"
+        android:layout_alignParentBottom="true"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        >
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:layout_marginRight="40dp"
+        android:layout_marginLeft="40dp"
+        android:layout_marginBottom="10dp"
+        android:background="@drawable/rounded_edittext2"
+        android:text="添加课程"
+        android:textColor="@color/colorPurple"/>
+    <View
+        android:id="@+id/view_aboveadd"
+        android:layout_above="@+id/addlesson_mylessons"
+        android:layout_width="fill_parent"
+        android:layout_height="0.5dp"
+        android:background="#A9A9A9" />
+
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="vertical"
->
+            android:layout_below="@+id/allmylessons_title"
+            android:layout_above="@+id/view_aboveadd"
+            android:orientation="vertical">
             <com.example.Object.MyListView
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_marginTop="5dp"
-                android:layout_marginBottom="5dp"
-                android:layout_marginRight="20dp"
-                android:layout_marginLeft="20dp"
+                android:layout_height="wrap_content"
                 android:id="@+id/list_view_mylessons"
                 >
             </com.example.Object.MyListView>
-            <Button
-                android:id="@+id/addlesson_mylessons"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="10dp"
-                android:layout_marginRight="40dp"
-                android:layout_marginLeft="40dp"
-                android:background="@drawable/rounded_edittext2"
-                android:text="添加课程"
-                android:textColor="@color/colorPurple"/>
         </LinearLayout>
-    </ScrollView>
-</LinearLayout>
+
+</RelativeLayout>

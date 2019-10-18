@@ -20,7 +20,7 @@ import com.example.testsys.R;
 
 
 public class MainActivity extends AppCompatActivity {
-
+	private static String TAG = "LRL MainActivity";
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

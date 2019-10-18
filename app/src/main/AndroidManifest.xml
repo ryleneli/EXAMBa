@@ -31,6 +31,12 @@
         <activity android:name="com.example.Activity.MainActivity" >
 
         </activity>
+        <activity android:name="com.example.Activity.AllMyLesson" >
+
+        </activity>
+        <activity android:name="com.example.Activity.AllLessons" >
+
+        </activity>
     </application>
 
 </manifest>
