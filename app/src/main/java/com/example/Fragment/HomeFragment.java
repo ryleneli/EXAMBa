@@ -19,12 +19,14 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.Activity.AllMyLesson;
+import com.example.Activity.ExamActivity;
 import com.example.Activity.MainActivity;
 import com.example.Adapter.MyExpandableAdapter;
 import com.example.Adapter.MyRecyclerViewAdapter;
 import com.example.Object.Lesson;
 import com.example.Adapter.MylessonAdapter;
 import com.example.Object.MyListView;
+import com.example.UI.TestView;
 import com.example.itemClickListener;
 import com.example.testsys.R;
 
@@ -43,6 +45,7 @@ public class HomeFragment extends Fragment {
     private RecyclerView recyclerView ;
     private MyRecyclerViewAdapter recyclerViewAdapter;
     private Button addLesson;
+    private TestView testView;
     private ExpandableListView expandableListView;
     private TextView learning_text;
     String[] groupNames = { "a", "b", "c" };
@@ -61,6 +64,7 @@ public class HomeFragment extends Fragment {
         addLesson = (Button) view.findViewById(R.id.addlesson_button);
         recyclerView = view.findViewById(R.id.rv);
         learning_text = (TextView)view.findViewById(R.id.learning_lesson);
+        testView = (TestView) view.findViewById(R.id.home_testbutton);
         learning_text.setText(lessonList.get(0).getName());
         LinearLayoutManager layoutManager = new LinearLayoutManager(getContext());
         layoutManager.setOrientation(LinearLayoutManager.HORIZONTAL);
@@ -84,7 +88,14 @@ public class HomeFragment extends Fragment {
                 startActivity(intent);
             }
         });
-
+        testView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Log.i(TAG, "LRL testView onclick is ok");
+                Intent intent2 = new Intent((MainActivity)getActivity(), ExamActivity.class);
+                startActivity(intent2);
+            }
+        });
 
         expandableListView = (ExpandableListView) view.findViewById(R.id.elv);
 

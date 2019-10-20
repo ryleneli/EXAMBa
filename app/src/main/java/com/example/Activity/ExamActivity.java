@@ -68,7 +68,7 @@ public class ExamActivity extends Activity {
 	RadioGroup radioGroup;
 	Button forword_btn;//上一题按钮
 	Button next_btn;//下一题按钮
-	Button check_btn;//交卷按钮
+	//Button check_btn;//交卷按钮
 	Button addWAset_btn;//加入错题库按钮
 	TextView promptText;
 	Chronometer chronometer;
@@ -86,7 +86,7 @@ public class ExamActivity extends Activity {
 		// TODO Auto-generated method stub
 		super.onCreate(savedInstanceState);
 
-		setContentView(R.layout.exercise);
+		setContentView(R.layout.test_fragment);
 		Init();
 		OnPaint();
 
@@ -150,17 +150,17 @@ public class ExamActivity extends Activity {
 
 			/*
 			 * 交卷
-			 */
+
 		check_btn.setOnClickListener(new OnClickListener() {
 			@Override
 			public void onClick(View v) {
 				showHandInAgainDialog();//点击交卷按钮弹出对话框
 			}
-		});
+		});*/
 
 			/*
 			 * 加入错题库
-			 */
+
 		addWAset_btn.setOnClickListener(new OnClickListener() {
 
 			@Override
@@ -169,12 +169,11 @@ public class ExamActivity extends Activity {
 				saveWaset();
 				ShowToast("加入成功");
 			}
-		});
+		});*/
 			/*
 			 * 选择radio
 			 */
-		radioGroup
-				.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
+		radioGroup.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
 
 					@Override
 					public void onCheckedChanged(RadioGroup group, int checkedId) {
@@ -200,9 +199,8 @@ public class ExamActivity extends Activity {
 					}
 				});
 
-		// 每秒时间改变
-		chronometer
-				.setOnChronometerTickListener(new OnChronometerTickListener() {
+		/*每秒时间改变
+		chronometer.setOnChronometerTickListener(new OnChronometerTickListener() {
 
 					@Override
 					public void onChronometerTick(Chronometer chronometer) {
@@ -226,7 +224,7 @@ public class ExamActivity extends Activity {
 							}
 						}
 					}
-				});
+				});*/
 	}
 
 	protected void showHandInAgainDialog() {
@@ -256,14 +254,13 @@ public class ExamActivity extends Activity {
 			 * 成绩统计 错题统计 isHandIn标志修改 时间标志改成加入错题库标志 上下题变成错题的上下题
 			 */
 
-		check_btn.setEnabled(false);
+		//check_btn.setEnabled(false);
 		isHandIn = true;
 
 		String tmpanswer;
 		for (int i = 19; i >= 0; i--) {
 			cursor.moveToPosition(testTurn[i]);
-			tmpanswer = cursor.getString(cursor
-					.getColumnIndex(DBAdapter.TESTANSWER));
+			tmpanswer = cursor.getString(cursor.getColumnIndex(DBAdapter.TESTANSWER));
 			if (tmpanswer.compareTo("对") == 0) {
 				testAnswer[i] = 1;
 			} else if (tmpanswer.compareTo("错") == 0) {
@@ -322,20 +319,20 @@ public class ExamActivity extends Activity {
 		radioB = (RadioButton) findViewById(R.id.radioB);
 		radioC = (RadioButton) findViewById(R.id.radioC);
 		radioD = (RadioButton) findViewById(R.id.radioD);
-		forword_btn = (Button) findViewById(R.id.forwordBtn);
-		next_btn = (Button) findViewById(R.id.nextBtn);
-		check_btn = (Button) findViewById(R.id.checkBtn);
-		addWAset_btn = (Button) findViewById(R.id.addWAsetBtn);
+		forword_btn = (Button) findViewById(R.id.last);
+		next_btn = (Button) findViewById(R.id.next);
+		//check_btn = (Button) findViewById(R.id.checkBtn);
+		//addWAset_btn = (Button) findViewById(R.id.addWAsetBtn);
 		radioGroup = (RadioGroup) findViewById(R.id.radioGroup);
-		promptText = (TextView) findViewById(R.id.promptText);//显示正确答案的
-		chronometer = (Chronometer) findViewById(R.id.exam_chronometer);
-		check_btn.setText("完 成");
-		addWAset_btn.setVisibility(View.GONE);
+		//promptText = (TextView) findViewById(R.id.promptText);//显示正确答案的
+		//chronometer = (Chronometer) findViewById(R.id.exam_chronometer);
+		//check_btn.setText("完 成");
+		//addWAset_btn.setVisibility(View.GONE);
 		minutes = 45;
 		seconds = 0;
-		chronometer.setText(nowtime());
+		/*chronometer.setText(nowtime());
 		chronometer.setVisibility(View.VISIBLE);
-		chronometer.start();
+		chronometer.start();*/
 		isHandIn = false;
 		resultInt = 0;
 
@@ -437,7 +434,7 @@ public class ExamActivity extends Activity {
 					.getColumnIndex(DBAdapter.IMAGENAME));
 			TESTTPYE = cursor.getInt(cursor.getColumnIndex(DBAdapter.TESTTPYE));
 			proTextView.setText((curIndex + 1) + "." + TESTSUBJECT);
-			// addWAset_btn.setText("结果");
+			/* addWAset_btn.setText("结果");
 
 			if (!isHandIn) {
 				promptText.setVisibility(View.GONE);
@@ -447,7 +444,7 @@ public class ExamActivity extends Activity {
 				promptText.setText("正确答案为: " + TESTANSWER);
 				promptText.setTextSize(20);
 				promptText.setTextColor(Color.RED);
-			}
+			}*/
 			// Toast.makeText(this, IMAGENAME+"--"+IMAGENAME.length(),
 			// Toast.LENGTH_LONG).show();
 

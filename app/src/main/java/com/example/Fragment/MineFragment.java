@@ -20,7 +20,7 @@ import com.example.testsys.R;
 
 public class MineFragment extends Fragment {
     private static String TAG = "MineFragment";
-    ItemView message;
+    private ItemView message;
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         final View view = inflater.inflate(R.layout.mine, container, false);
         message = (ItemView) view.findViewById(R.id.mine_message);

@@ -11,14 +11,15 @@
         android:layout_alignParentTop="true"
         app:title_back_icon_visible="true"
         app:title_answer_visible="true"
-        app:title_clock_visible="true"
         app:title_exam_chronometer_visible="true">
 
     </com.example.UI.TitleBarView>
     <RelativeLayout
+        android:id="@+id/question_type"
         android:layout_width="match_parent"
         android:layout_height="45dp"
         android:layout_below="@+id/test_titlebar"
+        android:layout_marginBottom="10dp"
         android:background="@color/gray">
 
         <TextView
@@ -38,16 +39,69 @@
             android:layout_centerVertical="true"
             android:text="TextView" />
     </RelativeLayout>
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_height="wrap_content"
+        android:layout_width="fill_parent"
+        android:layout_below="@+id/question_type"
+        android:scrollbars="vertical">
+        <TextView
+            android:id="@+id/pro_text"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="test"
+            android:layout_marginBottom="10dp"
+            android:layout_marginLeft="20dp">
+        </TextView>
 
+        <ImageView android:id="@+id/imageview"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:scaleType="fitCenter">
+        </ImageView>
+
+        <RadioGroup
+
+            android:id="@+id/radioGroup"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="20dp">
+            <RadioButton
+                android:id="@+id/radioA"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="A">
+            </RadioButton>
+
+            <RadioButton
+                android:id="@+id/radioB"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="B">
+            </RadioButton>
+
+            <RadioButton
+                android:id="@+id/radioC"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="C">
+            </RadioButton>
+
+            <RadioButton
+                android:id="@+id/radioD"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="D">
+            </RadioButton>
+        </RadioGroup>
+    </LinearLayout>
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
         android:layout_alignParentBottom="true"
         >
-
-
-        <TextView
+        <Button
             android:id="@+id/last"
             android:layout_width="0dp"
             android:layout_height="40dp"
@@ -61,7 +115,7 @@
             android:layout_width="0.5dp"
             android:layout_height="fill_parent"
             android:background="#A9A9A9" />
-        <TextView
+        <Button
             android:id="@+id/next"
             android:layout_width="0dp"
             android:layout_height="40dp"

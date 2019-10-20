@@ -37,6 +37,9 @@
         <activity android:name="com.example.Activity.AllLessons" >
 
         </activity>
+        <activity android:name="com.example.Activity.ExamActivity" >
+
+        </activity>
     </application>
 
 </manifest>
