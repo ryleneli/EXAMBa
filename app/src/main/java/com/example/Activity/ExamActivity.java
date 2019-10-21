@@ -17,6 +17,7 @@ import android.database.Cursor;
 import android.graphics.Color;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
@@ -29,7 +30,10 @@ import android.widget.TextView;
 import android.widget.Toast;
 import android.widget.Chronometer.OnChronometerTickListener;
 
+import static android.content.ContentValues.TAG;
+
 public class ExamActivity extends Activity {
+	private static String TAG = "ExamActivity12345";
 	public static final int TESTLIMIT = 25;
 	int curIndex;
 	String myAnswer;
@@ -101,8 +105,10 @@ public class ExamActivity extends Activity {
 					if (isHandIn)
 					{// 交卷后
 						int tindex = curIndex;
+						Log.i(TAG,"LRL isHandIn"+curIndex);
 						while (--tindex >= 0) {
-							if (mySelect[tindex] != testAnswer[tindex])
+							Log.i(TAG,"LRL mySelect"+mySelect[tindex]+"testAnswer"+testAnswer[tindex]);
+							if (mySelect[tindex] != testAnswer[tindex])//显示错题
 							{
 								curIndex = tindex;//交卷后为第一题
 								OnPaint();
@@ -179,19 +185,18 @@ public class ExamActivity extends Activity {
 					public void onCheckedChanged(RadioGroup group, int checkedId) {
 						// TODO Auto-generated method stub
 						if (!isHandIn) {
-							if (radioA.isChecked() && mySelect[curIndex] != 1) {
+							if (radioA.isChecked() && mySelect[curIndex] != 1) {//return to change answer
+								Log.i(TAG,"LRL mySelect"+mySelect[curIndex]);
 								mySelect[curIndex] = 1;
+								Log.i(TAG,"LRL mySelect"+mySelect[curIndex]);//for log test initvalue is 0
 
-							} else if (radioB.isChecked()
-									&& mySelect[curIndex] != 2) {
+							} else if (radioB.isChecked() && mySelect[curIndex] != 2) {
 								mySelect[curIndex] = 2;
 
-							} else if (radioC.isChecked()
-									&& mySelect[curIndex] != 3) {
+							} else if (radioC.isChecked() && mySelect[curIndex] != 3) {
 								mySelect[curIndex] = 3;
 
-							} else if (radioD.isChecked()
-									&& mySelect[curIndex] != 4) {
+							} else if (radioD.isChecked() && mySelect[curIndex] != 4) {
 								mySelect[curIndex] = 4;
 
 							}
@@ -258,7 +263,7 @@ public class ExamActivity extends Activity {
 		isHandIn = true;
 
 		String tmpanswer;
-		for (int i = 19; i >= 0; i--) {
+		for (int i = 24; i >= 0; i--) {
 			cursor.moveToPosition(testTurn[i]);
 			tmpanswer = cursor.getString(cursor.getColumnIndex(DBAdapter.TESTANSWER));
 			if (tmpanswer.compareTo("对") == 0) {
@@ -425,13 +430,10 @@ public class ExamActivity extends Activity {
 			if (mySelect[curIndex] == 0) {
 				radioGroup.clearCheck();
 			}
-			TESTSUBJECT = cursor.getString(cursor
-					.getColumnIndex(DBAdapter.TESTSUBJECT));
+			TESTSUBJECT = cursor.getString(cursor.getColumnIndex(DBAdapter.TESTSUBJECT));
 			TESTSUBJECT = TESTSUBJECT.replace("“|”", "下图");
-			TESTANSWER = cursor.getString(cursor
-					.getColumnIndex(DBAdapter.TESTANSWER));
-			IMAGENAME = cursor.getString(cursor
-					.getColumnIndex(DBAdapter.IMAGENAME));
+			TESTANSWER = cursor.getString(cursor.getColumnIndex(DBAdapter.TESTANSWER));
+			IMAGENAME = cursor.getString(cursor.getColumnIndex(DBAdapter.IMAGENAME));
 			TESTTPYE = cursor.getInt(cursor.getColumnIndex(DBAdapter.TESTTPYE));
 			proTextView.setText((curIndex + 1) + "." + TESTSUBJECT);
 			/* addWAset_btn.setText("结果");
@@ -456,27 +458,21 @@ public class ExamActivity extends Activity {
 					// Toast.makeText(this, IMAGENAME,
 					// Toast.LENGTH_LONG).show();
 					inputStream = super.getAssets().open(IMAGENAME);
-					imageview.setImageDrawable(Drawable.createFromStream(
-							inputStream, "assets"));
+					imageview.setImageDrawable(Drawable.createFromStream(inputStream, "assets"));
 					imageview.setVisibility(View.VISIBLE);
 					// imageview.setImageDrawable(Drawable.createFromPath("res.drawable."+IMAGENAME+".jpg"));
 				} catch (Exception e) {
 					// TODO Auto-generated catch block
-					Toast.makeText(this, e.toString(), Toast.LENGTH_LONG)
-							.show();
+					Toast.makeText(this, e.toString(), Toast.LENGTH_LONG).show();
 					e.printStackTrace();
 				}
 			} else {
 				imageview.setVisibility(View.GONE);
 			}
-			ANSWERA = cursor
-					.getString(cursor.getColumnIndex(DBAdapter.ANSWERA));
-			ANSWERB = cursor
-					.getString(cursor.getColumnIndex(DBAdapter.ANSWERB));
-			ANSWERC = cursor
-					.getString(cursor.getColumnIndex(DBAdapter.ANSWERC));
-			ANSWERD = cursor
-					.getString(cursor.getColumnIndex(DBAdapter.ANSWERD));
+			ANSWERA = cursor.getString(cursor.getColumnIndex(DBAdapter.ANSWERA));
+			ANSWERB = cursor.getString(cursor.getColumnIndex(DBAdapter.ANSWERB));
+			ANSWERC = cursor.getString(cursor.getColumnIndex(DBAdapter.ANSWERC));
+			ANSWERD = cursor.getString(cursor.getColumnIndex(DBAdapter.ANSWERD));
 			if (ANSWERA.compareTo("") == 0) {
 				// 判断题
 				radioA.setText("对");

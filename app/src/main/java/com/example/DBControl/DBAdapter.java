@@ -47,7 +47,7 @@ public class DBAdapter {
 	}
 
 	public long DBInsert(ContentValues cv){
-		return sqLiteDatabase.insert(DBAdapter.DATABSE_TABLE,null,cv);
+		return sqLiteDatabase.insert(DBAdapter.DATABSE_TABLE,null,cv);//插入数据的三个参数：表名，null，values
 	}
 	
 	 public Cursor getAllData(){
