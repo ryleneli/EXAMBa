@@ -33,7 +33,7 @@ import android.widget.Chronometer.OnChronometerTickListener;
 import static android.content.ContentValues.TAG;
 
 public class ExamActivity extends Activity {
-	private static String TAG = "ExamActivity12345";
+	private static String TAG = "ExamActivity";
 	public static final int TESTLIMIT = 25;
 	int curIndex;
 	String myAnswer;
