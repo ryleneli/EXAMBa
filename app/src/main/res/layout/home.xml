@@ -124,6 +124,7 @@
                             android:layout_weight="1"
                             android:layout_height="120dp">
                             <com.example.UI.TestView
+                                android:id="@+id/home_chapbutton"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 app:imageview_drawable="@drawable/seque"
@@ -137,6 +138,7 @@
                             android:layout_weight="1"
                             android:layout_height="120dp">
                             <com.example.UI.TestView
+                                android:id="@+id/home_randbutton"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_marginBottom="10dp"
@@ -150,6 +152,7 @@
                             android:layout_weight="1"
                             android:layout_height="120dp">
                             <com.example.UI.TestView
+                                android:id="@+id/home_errorbutton"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 app:imageview_drawable="@drawable/error"
