@@ -29,7 +29,6 @@ public class DBHelper extends SQLiteOpenHelper {
 	@Override
 	public void onCreate(SQLiteDatabase db) {
 		// TODO Auto-generated method stub
-		Log.i(TAG,"LRL DBHelper onCreate");
 		db.execSQL(DATABASE_CREATE);
 	}
 

@@ -7,6 +7,7 @@ import android.database.sqlite.SQLiteDatabase;
 import android.util.Log;
 
 public class DBAdapter {
+	private static String TAG = "DBAdapter";
 	public final static String DATABSE_TABLE = "TestSubject";
 	public static final String TESTID = "TestID";
 	public static final String TESTSUBJECT = "TestSubject";
@@ -32,7 +33,7 @@ public class DBAdapter {
 	/*
 	 * Open the Database;
 	 */
-	public void open(){
+	public SQLiteDatabase open(){
 		dataBaseHelper = new DBHelper(context);
 		try {
 			sqLiteDatabase = dataBaseHelper.getWritableDatabase();
@@ -40,6 +41,7 @@ public class DBAdapter {
 			sqLiteDatabase = dataBaseHelper.getReadableDatabase();
 			Log.i("open-->",e.toString());
 		}
+		return sqLiteDatabase;
 	}
 	 // Close the Database
 	public void close(){
@@ -56,4 +58,30 @@ public class DBAdapter {
 	        Log.i("GetAllData","YES");
 	        return sqLiteDatabase.query(dataBaseHelper.DATABASE_TABLE, searchResult, null, null, null, null, null);
 	 }
+	public static boolean HaveData(SQLiteDatabase db,String tablename){
+		Cursor cursor;
+		boolean a=false;
+		cursor = db.rawQuery("select name from sqlite_master where type='table' ", null);
+		while(cursor.moveToNext()){
+			//遍历出表名
+			String name = cursor.getString(0);
+			if(name.equals(tablename))
+			{
+				a=true;
+			}
+			Log.i("System.out", name);
+		}
+		if(a)
+		{
+			cursor=db.query(tablename,null,null,null,null,null,null);
+			//检查是不是空表
+			if(cursor.getCount()>0)
+				return true;
+			else
+				return false;
+		}
+		else
+			return false;
+
+	}
 }

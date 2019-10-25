@@ -1,4 +1,4 @@
-package io.agora.rtmpKit.common.utils;
+package com.example;
 
 /**
  * Created by yong on 2019/9/4.
@@ -13,10 +13,10 @@ public class LogUtil {
 
     public static boolean DEBUG = false;
 
-    private static String tag = "[rtmp_java]";
+    private static String tag = "[EXAMBa_java]";
     private String mClassName;
     private static LogUtil log;
-    private static final String USER_NAME = "agora";
+    private static final String USER_NAME = "ryleneli";
 
     private LogUtil(String name) {
         mClassName = name;

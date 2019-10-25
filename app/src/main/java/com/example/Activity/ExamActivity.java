@@ -6,14 +6,17 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.util.Random;
 
+import com.example.Constant;
 import com.example.DBControl.DBAdapter;
 import com.example.TestControl.TestCtrl;
+import com.example.UI.TitleBarView;
 import com.example.testsys.R;
 import com.example.DBControl.WrongSetShowList;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.AlertDialog.Builder;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.database.Cursor;
 import android.graphics.Color;
 import android.graphics.drawable.Drawable;
@@ -34,10 +37,12 @@ import android.widget.Chronometer.OnChronometerTickListener;
 import static android.content.ContentValues.TAG;
 
 public class ExamActivity extends Activity {
-	private static String TAG = "ExamActivity";
+	private static String TAG = "ExamActivity abcde";
 
+	TitleBarView titleBarView;
 	TextView proTextView;//问题
     TextView numText;
+    TextView TextMode;
 	RadioButton radioA;
 	RadioButton radioB;
 	RadioButton radioC;
@@ -48,12 +53,20 @@ public class ExamActivity extends Activity {
 	Chronometer chronometer;
 	Cursor cursor;
 	DBAdapter dbAdapter;
+	int[] problemRand = new int[160];//所有题目顺序
+	int[] testTurn = new int[15];//试题
+	int[] testAnswer = new int[15];//试题答案
+	int[] mySelect = new int[15];// 我的答案
+	String TextMode_text;
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		// TODO Auto-generated method stub
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.test_fragment);
+		titleBarView = (TitleBarView) findViewById(R.id.test_titlebar);
 		proTextView = (TextView) findViewById(R.id.pro_text);
+		numText = (TextView) findViewById(R.id.test_number);
+		TextMode = (TextView) findViewById(R.id.test_mode);
 		radioA = (RadioButton) findViewById(R.id.radioA);
 		radioB = (RadioButton) findViewById(R.id.radioB);
 		radioC = (RadioButton) findViewById(R.id.radioC);
@@ -62,11 +75,25 @@ public class ExamActivity extends Activity {
 		next_btn = (Button) findViewById(R.id.next);
 		radioGroup = (RadioGroup) findViewById(R.id.radioGroup);
 		dbAdapter = new DBAdapter(this);
-
-		final TestCtrl testctrl = new TestCtrl(this,dbAdapter,160,15,radioGroup,proTextView,numText,radioA,
+		dbAdapter.open();
+		cursor = dbAdapter.getAllData();
+		int numberOfAlltest = cursor.getCount();
+		int numberOfChosen = 15;
+		int[] problemRand = new int[numberOfAlltest];//所有题目顺序
+		int[] testTurn = new int[numberOfChosen];//试题
+		int[] testAnswer = new int[numberOfChosen];//试题答案
+		int[] mySelect = new int[numberOfChosen];// 我的答案
+		Intent intent = getIntent();
+		int flag = intent.getIntExtra("test_mode",0);
+		TextMode_text = testMode(flag);
+		titleBarView.getTitleText().setText(intent.getStringExtra("lesson_name"));
+		TextMode.setText(TextMode_text);
+		final TestCtrl testctrl = new TestCtrl(this,dbAdapter,cursor,numberOfAlltest,numberOfChosen,problemRand,testTurn,testAnswer,mySelect,radioGroup,proTextView,numText,radioA,
 				radioB,radioC,radioD);
 		//testctrl.random();
 		testctrl.testOfChosen(0);
+        testctrl.OnPaint();
+		numText.setText("1/15");
 		forword_btn.setOnClickListener(new OnClickListener() {
 			@Override
 			public void onClick(View v) {
@@ -89,12 +116,34 @@ public class ExamActivity extends Activity {
 				testctrl.myAnswerRecord();
 			}
 		});
+
 	}
 
 	@Override
 	protected void onDestroy() {
 		dbAdapter.close();
+		cursor.close();
 		super.onDestroy();
+	}
+	public String testMode(int flag) {
+		String mode = null;
+		switch (flag) {
+			case 1:
+			{mode = Constant.CHAPTER;}
+			break;
+			case 2:
+			{mode = Constant.RANDOM;;}
+			break;
+			case 3:
+			{mode = Constant.ERROR;}
+			break;
+			case 4:
+			{mode = Constant.TEST;}
+			break;
+			default:
+				break;
+		}
+		return mode;
 	}
 
 }

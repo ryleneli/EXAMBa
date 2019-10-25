@@ -23,7 +23,7 @@ import static android.content.ContentValues.TAG;
 
 public class TestCtrl {
     //具体的题目显示逻辑
-    private static String TAG = "LRL TestCtrl";
+    private static String TAG = "TestCtrl";
     private Context mcontext;
     private int m_numberOfAll;
     private int m_numberOfChosen;
@@ -34,10 +34,10 @@ public class TestCtrl {
     String myAnswer;
     int[] myWAset = new int[m_numberOfAll];// 以往错题
     //int[] problemTurn = new int[m_numberOfAll];//所有题目顺序
-    int[] problemRand = new int[160];//所有题目顺序
-    int[] testTurn = new int[15];//试题
-    int[] testAnswer = new int[15];//试题答案
-    int[] mySelect = new int[15];// 我的答案
+    int[] problemRand;//所有题目顺序
+    int[] testTurn;//试题
+    int[] testAnswer;//试题答案
+    int[] mySelect;// 我的答案
     int resultInt;
     boolean isHandIn;// 表示交卷后
     int minutes, seconds;
@@ -62,13 +62,18 @@ public class TestCtrl {
     DBAdapter dbAdapter;
 
 
-    public TestCtrl(Context context, DBAdapter dbAdapter,int numberOfAll,int numberOfChosen,RadioGroup radio_group,TextView textView1,TextView textView2,RadioButton radio_a,
+    public TestCtrl(Context context, DBAdapter dbAdapter,Cursor cursor_1,int numberOfAll,int numberOfChosen,int[]problemRand_1,int[]testTurn_1,int[]testAnswer_1,int[]mySelect_1,RadioGroup radio_group,TextView textView1,TextView textView2,RadioButton radio_a,
                       RadioButton radio_b,RadioButton radio_c,RadioButton radio_d)
     {
         this.mcontext = context;
         this.dbAdapter = dbAdapter;
+        this.cursor = cursor_1;
         this.m_numberOfAll = numberOfAll;
         this.m_numberOfChosen = numberOfChosen;
+        this.problemRand = problemRand_1;
+        this.testTurn = testTurn_1;
+        this.mySelect = mySelect_1;
+        this.testAnswer =testAnswer_1;
         this.radioGroup = radio_group;
         this.radioA = radio_a;
         this.radioB = radio_b;
@@ -83,9 +88,7 @@ public class TestCtrl {
         } else {
             if (isHandIn) {// 交卷后
                 int tindex = curIndex;
-                Log.i(TAG, "LRL isHandIn" + curIndex);
                 while (--tindex >= 0) {
-                    Log.i(TAG, "LRL mySelect" + mySelect[tindex] + "testAnswer" + testAnswer[tindex]);
                     if (mySelect[tindex] != testAnswer[tindex])//显示错题
                     {
                         curIndex = tindex;//交卷后为第一题
@@ -124,7 +127,7 @@ public class TestCtrl {
                 OnPaint();//直接下一题
                 String temp = (curIndex + 1) + "/" + m_numberOfChosen;
                 Log.i(TAG,"LRL mySelect"+temp);
-                //textView.setText(temp);
+                textView.setText(temp);
             }
         }
     }
@@ -133,9 +136,7 @@ public class TestCtrl {
     {
         if (!isHandIn) {
             if (radioA.isChecked() && mySelect[curIndex] != 1) {//return to change answer
-                Log.i(TAG,"LRL mySelect"+mySelect[curIndex]);
                 mySelect[curIndex] = 1;
-                Log.i(TAG,"LRL mySelect"+mySelect[curIndex]);//for log test initvalue is 0
 
             } else if (radioB.isChecked() && mySelect[curIndex] != 2) {
                 mySelect[curIndex] = 2;
@@ -199,7 +200,7 @@ public class TestCtrl {
         // TODO Auto-generated method stub
         isHandIn = true;
         String tmpAnswer;
-        for (int i = 24; i >= 0; i--) {
+        for (int i = m_numberOfChosen; i >= 0; i--) {
             cursor.moveToPosition(testTurn[i]);//试题游标
             tmpAnswer = cursor.getString(cursor.getColumnIndex(DBAdapter.TESTANSWER));
             if (tmpAnswer.compareTo("对") == 0) {
@@ -220,7 +221,7 @@ public class TestCtrl {
     private void toWrongItem()
     {
         curIndex = 0;
-        for (int i = 0; i < 24; i++) {
+        for (int i = 0; i < m_numberOfChosen; i++) {
             if (mySelect[i] != testAnswer[i]) {
                 curIndex = i;
                 break;
@@ -306,24 +307,18 @@ public class TestCtrl {
         Random r = new Random();
         int t, rt1, rt2;
         for (int i = 0; i < m_numberOfAll; i++) {
-
             this.problemRand[i] = i;
-            Log.i(TAG,"LRL ===== --------------===========");
         }
         for (int i = 0; i < m_numberOfAll; i++) {
-            Log.i(TAG,"LRL ===== is good");
             rt1 = r.nextInt(m_numberOfAll);
-            Log.i(TAG,"LRL ====="+rt1);
             rt2 = r.nextInt(m_numberOfAll);//160道题目中随机抽取，打乱顺序
-            Log.i(TAG,"LRL ====="+rt2);
             t = problemRand[rt1];
             problemRand[rt1] = problemRand[rt2];
             problemRand[rt2] = t;
-            Log.i(TAG,"LRL ===== -----------------------------------------------");
         }
         try {
-            dbAdapter.open();
-            cursor = dbAdapter.getAllData();
+
+
             int cnt = 0;
             for (int i = 0; cnt < 5; i++) {
                 cursor.moveToPosition(problemRand[i]);
@@ -336,11 +331,12 @@ public class TestCtrl {
                     testTurn[cnt++] = problemRand[i];
                 }
             }
-            for (int i = 0; cnt < 10; i++) {
+            for (int i = 0; cnt < 15; i++) {
                 cursor.moveToPosition(problemRand[i]);
                 if (cursor.getInt(cursor.getColumnIndex(DBAdapter.TESTTPYE)) == 1 && (chapterNum == 0)) {// 选择题
                     mySelect[cnt] = 0;
                     testTurn[cnt++] = problemRand[i];
+                    Log.i(TAG,"LRL testturn *********"+testTurn[cnt++]+"==="+cnt+"==="+i+"==="+problemRand[i]);
                 }else if (cursor.getInt(cursor.getColumnIndex(DBAdapter.TESTTPYE)) == 1 && cursor.getInt(cursor.getColumnIndex(DBAdapter.TESTBELONG)) == chapterNum)
                 {
                     mySelect[cnt] = 0;

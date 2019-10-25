@@ -42,10 +42,11 @@ public class HomeFragment extends Fragment {
 
     private List<Lesson> lessonList = new ArrayList<Lesson>();
     private Lesson lesson;
+    private int test_mode;
     private RecyclerView recyclerView ;
     private MyRecyclerViewAdapter recyclerViewAdapter;
     private Button addLesson;
-    private TestView testView;
+    private TestView chapterView,randomView,errorView,testView;
     private ExpandableListView expandableListView;
     private TextView learning_text;
     String[] groupNames = { "a", "b", "c" };
@@ -59,12 +60,15 @@ public class HomeFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.home, container, false);
         super.onCreate(savedInstanceState);
-        Log.i(TAG, "LRL CREAT HOME FRAGMENT");
         initFruits();
         addLesson = (Button) view.findViewById(R.id.addlesson_button);
         recyclerView = view.findViewById(R.id.rv);
         learning_text = (TextView)view.findViewById(R.id.learning_lesson);
+        chapterView = (TestView) view.findViewById(R.id.home_chapbutton);
+        randomView = (TestView) view.findViewById(R.id.home_randbutton);
+        errorView = (TestView) view.findViewById(R.id.home_errorbutton);
         testView = (TestView) view.findViewById(R.id.home_testbutton);
+        lesson = lessonList.get(0);
         learning_text.setText(lessonList.get(0).getName());
         LinearLayoutManager layoutManager = new LinearLayoutManager(getContext());
         layoutManager.setOrientation(LinearLayoutManager.HORIZONTAL);
@@ -76,7 +80,6 @@ public class HomeFragment extends Fragment {
             public void itemClick() {
                 lesson = lessonList.get(recyclerViewAdapter.mposition);
                 String text = lesson.getName();
-                Log.i(TAG,"LRL setItemClickListener is OK");
                 learning_text.setText(text);
                 //learning_text.setTextColor(getContext().getResources().getColor(R.color.colorPurple));代码设置颜色
             }
@@ -88,12 +91,45 @@ public class HomeFragment extends Fragment {
                 startActivity(intent);
             }
         });
+        final Intent intentToTest = new Intent((MainActivity)getActivity(), ExamActivity.class);
+        chapterView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                //Intent intent2 = new Intent((MainActivity)getActivity(), ExamActivity.class);
+                test_mode = 1;
+                intentToTest.putExtra("lesson_name",lesson.getName());
+                intentToTest.putExtra("test_mode",test_mode);
+                startActivity(intentToTest);
+            }
+        });
+        randomView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                //Intent intent2 = new Intent((MainActivity)getActivity(), ExamActivity.class);
+                test_mode = 2;
+                intentToTest.putExtra("lesson_name",lesson.getName());
+                intentToTest.putExtra("test_mode",test_mode);
+                startActivity(intentToTest);
+            }
+        });
+        errorView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                //Intent intent2 = new Intent((MainActivity)getActivity(), ExamActivity.class);
+                test_mode = 3;
+                intentToTest.putExtra("lesson_name",lesson.getName());
+                intentToTest.putExtra("test_mode",test_mode);
+                startActivity(intentToTest);
+            }
+        });
         testView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Log.i(TAG, "LRL testView onclick is ok");
-                Intent intent2 = new Intent((MainActivity)getActivity(), ExamActivity.class);
-                startActivity(intent2);
+                //Intent intent2 = new Intent((MainActivity)getActivity(), ExamActivity.class);
+                test_mode = 4;
+                intentToTest.putExtra("lesson_name",lesson.getName());
+                intentToTest.putExtra("test_mode",test_mode);
+                startActivity(intentToTest);
             }
         });
 
