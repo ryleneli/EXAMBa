@@ -67,7 +67,6 @@ public class SplashActivity extends Activity {
                         response = client.newCall(request).execute();
                         responseData = response.body().string();
                         setSplashImage(responseData);
-                        Log.i(TAG,"LRL mySelect == "+responseData);
                     }
                     else
                         Toast.makeText(SplashActivity.this, "server is unconnected", Toast.LENGTH_SHORT).show();
@@ -83,16 +82,13 @@ public class SplashActivity extends Activity {
             public void run() {
                 switch (responseData) {
                     case "1":
-                    { relativeLayout.setBackgroundResource(R.drawable.splash_bg3);
-                        Log.i(TAG,"LRL mySelect ** "+responseData);}
+                    { relativeLayout.setBackgroundResource(R.drawable.splash_bg3);}
                     break;
                     case "2":
-                    { relativeLayout.setBackgroundResource(R.drawable.splash_bg2);
-                        Log.i(TAG,"LRL mySelect ** "+responseData);}
+                    { relativeLayout.setBackgroundResource(R.drawable.splash_bg2);}
                     break;
                     case "3":
-                    { relativeLayout.setBackgroundResource(R.drawable.splash_bg);
-                        Log.i(TAG,"LRL mySelect ** "+responseData);}
+                    { relativeLayout.setBackgroundResource(R.drawable.splash_bg);}
                     break;
                     default:
                         break;
