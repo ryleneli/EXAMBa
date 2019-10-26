@@ -37,7 +37,7 @@ import android.widget.Chronometer.OnChronometerTickListener;
 import static android.content.ContentValues.TAG;
 
 public class ExamActivity extends Activity {
-	private static String TAG = "ExamActivity abcde";
+	private static String TAG = "ExamActivity";
 
 	TitleBarView titleBarView;
 	TextView proTextView;//问题
@@ -132,7 +132,7 @@ public class ExamActivity extends Activity {
 			{mode = Constant.CHAPTER;}
 			break;
 			case 2:
-			{mode = Constant.RANDOM;;}
+			{mode = Constant.RANDOM;}
 			break;
 			case 3:
 			{mode = Constant.ERROR;}
