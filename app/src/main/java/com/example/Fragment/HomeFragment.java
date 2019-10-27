@@ -26,6 +26,7 @@ import com.example.Adapter.MyRecyclerViewAdapter;
 import com.example.Object.Lesson;
 import com.example.Adapter.MylessonAdapter;
 import com.example.Object.MyListView;
+import com.example.Object.MyRecyclerView;
 import com.example.UI.TestView;
 import com.example.itemClickListener;
 import com.example.testsys.R;
@@ -43,7 +44,7 @@ public class HomeFragment extends Fragment {
     private List<Lesson> lessonList = new ArrayList<Lesson>();
     private Lesson lesson;
     private int test_mode;
-    private RecyclerView recyclerView ;
+    private MyRecyclerView recyclerView ;
     private MyRecyclerViewAdapter recyclerViewAdapter;
     private Button addLesson;
     private TestView chapterView,randomView,errorView,testView;

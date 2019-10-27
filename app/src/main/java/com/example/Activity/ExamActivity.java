@@ -11,30 +11,18 @@ import com.example.DBControl.DBAdapter;
 import com.example.TestControl.TestCtrl;
 import com.example.UI.TitleBarView;
 import com.example.testsys.R;
-import com.example.DBControl.WrongSetShowList;
 import android.app.Activity;
-import android.app.AlertDialog;
-import android.app.AlertDialog.Builder;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.database.Cursor;
-import android.graphics.Color;
-import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
 import android.widget.Chronometer;
-import android.widget.EditText;
-import android.widget.ImageView;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.TextView;
-import android.widget.Toast;
-import android.widget.Chronometer.OnChronometerTickListener;
-
-import static android.content.ContentValues.TAG;
 
 public class ExamActivity extends Activity {
 	private static String TAG = "ExamActivity";
@@ -85,27 +73,26 @@ public class ExamActivity extends Activity {
 		int[] mySelect = new int[numberOfChosen];// 我的答案
 		Intent intent = getIntent();
 		int flag = intent.getIntExtra("test_mode",0);
-		TextMode_text = testMode(flag);
+		final TestCtrl testctrl = new TestCtrl(this,dbAdapter,cursor,numberOfAlltest,numberOfChosen,problemRand,testTurn,testAnswer,mySelect);
+		TextMode_text = testctrl.testMode(flag);
 		titleBarView.getTitleText().setText(intent.getStringExtra("lesson_name"));
 		TextMode.setText(TextMode_text);
-		final TestCtrl testctrl = new TestCtrl(this,dbAdapter,cursor,numberOfAlltest,numberOfChosen,problemRand,testTurn,testAnswer,mySelect,radioGroup,proTextView,numText,radioA,
-				radioB,radioC,radioD);
-		//testctrl.random();
 		testctrl.testOfChosen(0);
-        testctrl.OnPaint();
+        testctrl.OnPaint(proTextView,radioGroup,radioA,radioB,radioC,radioD);
 		numText.setText("1/15");
+		forword_btn.setText("无");
 		forword_btn.setOnClickListener(new OnClickListener() {
 			@Override
 			public void onClick(View v) {
 				// TODO Auto-generated method stub
-				testctrl.forwordBtn();
+				testctrl.forwordBtn(forword_btn,next_btn,numText,proTextView,radioGroup,radioA,radioB,radioC,radioD);
 			}
 		});
 		next_btn.setOnClickListener(new OnClickListener() {
 			@Override
 			public void onClick(View v) {
 				// TODO Auto-generated method stub
-				testctrl.nextBtn();
+				testctrl.nextBtn(ExamActivity.this,forword_btn,next_btn,numText,proTextView,radioGroup,radioA,radioB,radioC,radioD);
 			}
 		});
 
@@ -113,10 +100,11 @@ public class ExamActivity extends Activity {
 			@Override
 			public void onCheckedChanged(RadioGroup group, int checkedId) {
 				// TODO Auto-generated method stub
-				testctrl.myAnswerRecord();
+				testctrl.myAnswerRecord(radioA,radioB,radioC,radioD);
 			}
 		});
-
+		//testctrl.myAnswerRecord(radioA,radioB,radioC,radioD);
+		//log (mySelect);
 	}
 
 	@Override
@@ -125,25 +113,9 @@ public class ExamActivity extends Activity {
 		cursor.close();
 		super.onDestroy();
 	}
-	public String testMode(int flag) {
-		String mode = null;
-		switch (flag) {
-			case 1:
-			{mode = Constant.CHAPTER;}
-			break;
-			case 2:
-			{mode = Constant.RANDOM;}
-			break;
-			case 3:
-			{mode = Constant.ERROR;}
-			break;
-			case 4:
-			{mode = Constant.TEST;}
-			break;
-			default:
-				break;
-		}
-		return mode;
-	}
+	private void log (int myanswer[])
+	{for (int i=0;i<15;i++)
+		Log.i(TAG,"LRL mySelect now is ******"+mySelect[i]);}
+
 
 }

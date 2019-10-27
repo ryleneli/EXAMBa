@@ -1,15 +1,22 @@
 package com.example.TestControl;
 
+import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.database.Cursor;
 import android.util.Log;
 import android.view.View;
+import android.widget.Button;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.TextView;
+import android.widget.Toast;
 
+import com.example.Activity.ExamActivity;
+import com.example.Activity.MyAnswerActivity;
+import com.example.Constant;
 import com.example.DBControl.DBAdapter;
 import com.example.UI.TestView;
 
@@ -39,7 +46,7 @@ public class TestCtrl {
     int[] testAnswer;//试题答案
     int[] mySelect;// 我的答案
     int resultInt;
-    boolean isHandIn;// 表示交卷后
+    boolean isHandIn = false;// 表示交卷后
     int minutes, seconds;
     public enum TESTMODE{ CHAPTER, ERROR, RANDOM, TEST };
     private TESTMODE flag;
@@ -54,16 +61,12 @@ public class TestCtrl {
     int TESTTPYE;
     int TESTBELONG;
     int EXPR1;
-    RadioGroup radioGroup;
-    TextView proTextView,textView;
-    RadioButton radioA,radioB,radioC,radioD;
 
     Cursor cursor;
     DBAdapter dbAdapter;
 
 
-    public TestCtrl(Context context, DBAdapter dbAdapter,Cursor cursor_1,int numberOfAll,int numberOfChosen,int[]problemRand_1,int[]testTurn_1,int[]testAnswer_1,int[]mySelect_1,RadioGroup radio_group,TextView textView1,TextView textView2,RadioButton radio_a,
-                      RadioButton radio_b,RadioButton radio_c,RadioButton radio_d)
+    public TestCtrl(Context context, DBAdapter dbAdapter,Cursor cursor_1,int numberOfAll,int numberOfChosen,int[]problemRand_1,int[]testTurn_1,int[]testAnswer_1,int[]mySelect_1)
     {
         this.mcontext = context;
         this.dbAdapter = dbAdapter;
@@ -74,25 +77,36 @@ public class TestCtrl {
         this.testTurn = testTurn_1;
         this.mySelect = mySelect_1;
         this.testAnswer =testAnswer_1;
-        this.radioGroup = radio_group;
-        this.radioA = radio_a;
-        this.radioB = radio_b;
-        this.radioC = radio_c;
-        this.radioD = radio_d;
-        this.proTextView = textView1;
-        this.textView = textView2;
     }
-    public void forwordBtn () {
-        if (curIndex == 0) {
-            //ShowToast("当前为第一题");
-        } else {
+    public String testMode(int flag) {
+        String mode = null;
+        switch (flag) {
+            case 1:
+            {mode = Constant.CHAPTER;}
+            break;
+            case 2:
+            {mode = Constant.RANDOM;}
+            break;
+            case 3:
+            {mode = Constant.ERROR;}
+            break;
+            case 4:
+            {mode = Constant.TEST;}
+            break;
+            default:
+                break;
+        }
+        return mode;
+    }
+    public void forwordBtn (Button button_for,Button button_nex,TextView textView_num, TextView textView_pro, RadioGroup radioGroup, RadioButton radio_a, RadioButton radio_b, RadioButton radio_c, RadioButton radio_d) {
+
             if (isHandIn) {// 交卷后
                 int tindex = curIndex;
                 while (--tindex >= 0) {
                     if (mySelect[tindex] != testAnswer[tindex])//显示错题
                     {
                         curIndex = tindex;//交卷后为第一题
-                        OnPaint();
+                        OnPaint(textView_pro,radioGroup,radio_a,radio_b,radio_c,radio_d);
                         return;
                     }
                 }
@@ -100,23 +114,30 @@ public class TestCtrl {
                 return;
             } else {
                 curIndex--;//不是第一页且没有交卷返回上一题
-                OnPaint();
+                if (curIndex <= m_numberOfChosen - 1) {
+                    button_nex.setText("下一题");
+                }
+                if (curIndex == 0) {
+                    button_for.setText("无");
+                }
+                if (curIndex < 0) {
+                    Toast.makeText(mcontext, "默认的Toast", Toast.LENGTH_SHORT).show();
+                    curIndex = 0;
+                }
+                Log.i(TAG,"LRL curIndex now is ======"+curIndex);
+                OnPaint(textView_pro,radioGroup,radio_a,radio_b,radio_c,radio_d);
                 String temp = (curIndex + 1) + "/" + m_numberOfChosen;
-                textView.setText(temp);
+                textView_num.setText(temp);
             }
-        }
     }
-    public void nextBtn()
+    public void nextBtn(Activity activity,Button button_for, Button button_nex, TextView textView_num, TextView textView_pro, RadioGroup radioGroup, RadioButton radio_a, RadioButton radio_b, RadioButton radio_c, RadioButton radio_d)
     {
-        if (curIndex == m_numberOfChosen - 1) {
-            //ShowToast("当前为最后一题");//如果做到最后一题还在下一题执行
-        } else {
             if (isHandIn) {
                 int tindex = curIndex;
                 while (++tindex < m_numberOfChosen) {
                     if (mySelect[tindex] != testAnswer[tindex]) {
                         curIndex = tindex;
-                        OnPaint();
+                        OnPaint(textView_pro,radioGroup,radio_a,radio_b,radio_c,radio_d);
                         return;
                     }
                 }
@@ -124,27 +145,46 @@ public class TestCtrl {
                 return;
             } else {
                 curIndex++;
-                OnPaint();//直接下一题
+                if (curIndex >= 1)
+                    button_for.setText("上一题");
+
+                if (curIndex == m_numberOfChosen - 1) {
+                    button_nex.setText("提交");
+                }
+                if (curIndex == 15)
+                {   Intent intent = new Intent(activity, MyAnswerActivity.class);
+                    intent.putExtra("answer",mySelect);
+                    mcontext.startActivity(intent);
+                    log ();
+                    curIndex = 14;
+                }
+                Log.i(TAG,"LRL curIndex now is ======"+curIndex);
+                OnPaint(textView_pro,radioGroup,radio_a,radio_b,radio_c,radio_d);//直接下一题
                 String temp = (curIndex + 1) + "/" + m_numberOfChosen;
-                Log.i(TAG,"LRL mySelect"+temp);
-                textView.setText(temp);
+                textView_num.setText(temp);
             }
+    }
+    private void log ()
+    {
+        for (int i=0;i<15;i++)
+        {
+            Log.i(TAG, "my answer is-------------------------  "+mySelect[i]);
         }
     }
     //记录答案
-    public void myAnswerRecord()
+    public void myAnswerRecord(RadioButton radio_a,RadioButton radio_b,RadioButton radio_c,RadioButton radio_d)
     {
         if (!isHandIn) {
-            if (radioA.isChecked() && mySelect[curIndex] != 1) {//return to change answer
+            if (radio_a.isChecked() && mySelect[curIndex] != 1) {//return to change answer
                 mySelect[curIndex] = 1;
 
-            } else if (radioB.isChecked() && mySelect[curIndex] != 2) {
+            } else if (radio_b.isChecked() && mySelect[curIndex] != 2) {
                 mySelect[curIndex] = 2;
 
-            } else if (radioC.isChecked() && mySelect[curIndex] != 3) {
+            } else if (radio_c.isChecked() && mySelect[curIndex] != 3) {
                 mySelect[curIndex] = 3;
 
-            } else if (radioD.isChecked() && mySelect[curIndex] != 4) {
+            } else if (radio_d.isChecked() && mySelect[curIndex] != 4) {
                 mySelect[curIndex] = 4;
 
             }
@@ -227,7 +267,7 @@ public class TestCtrl {
                 break;
             }
         }
-        OnPaint();
+        //OnPaint();
     }
     private int score(int my_answer[],int test_answer[])//计分
     {
@@ -255,29 +295,6 @@ public class TestCtrl {
         builder.create().show();
     }
 
-    public void problemTurn()//正序题目
-    {
-        for (int i = 0; i < m_numberOfAll; i++)
-        {
-            //problemTurn[i] = i;
-        }
-    }
-    public void random()//乱序题目
-    {
-        for (int i = 0; i < m_numberOfAll; i++)
-        {
-            problemRand[i] = i;
-        }
-        Random r = new Random();
-        int t, rt1, rt2;
-        for (int i = 0; i < m_numberOfAll; i++) {
-            rt1 = r.nextInt(m_numberOfAll);
-            rt2 = r.nextInt(m_numberOfAll);//160道题目中随机抽取，打乱顺序
-            t = problemRand[rt1];
-            problemRand[rt1] = problemRand[rt2];
-            problemRand[rt2] = t;
-        }
-    }
     public void testMode(TESTMODE flag) {
         switch (flag) {
             case CHAPTER:
@@ -358,7 +375,7 @@ public class TestCtrl {
         }
     }
 
-    public void OnPaint()//显示题目
+    public void OnPaint(TextView proTextView,RadioGroup radioGroup,RadioButton radio_a,RadioButton radio_b,RadioButton radio_c,RadioButton radio_d)//显示题目
     {
         if (cursor.getCount() == 0) {
             //Toast.makeText(this, "hello", Toast.LENGTH_LONG).show();
@@ -378,33 +395,33 @@ public class TestCtrl {
             ANSWERD = cursor.getString(cursor.getColumnIndex(DBAdapter.ANSWERD));
             if (ANSWERA.compareTo("") == 0) {
                 // 判断题
-                radioA.setText("对");
-                radioC.setText("错");
-                radioB.setVisibility(View.GONE);
-                radioD.setVisibility(View.GONE);
+                radio_a.setText("对");
+                radio_c.setText("错");
+                radio_b.setVisibility(View.GONE);
+                radio_d.setVisibility(View.GONE);
             } else {
                 // 选择题
-                radioA.setText("A." + ANSWERA);
-                radioB.setText("B." + ANSWERB);
-                radioC.setText("C." + ANSWERC);
-                radioD.setText("D." + ANSWERD);
-                radioA.setVisibility(View.VISIBLE);
-                radioB.setVisibility(View.VISIBLE);
-                radioC.setVisibility(View.VISIBLE);
-                radioD.setVisibility(View.VISIBLE);
+                radio_a.setText("A." + ANSWERA);
+                radio_b.setText("B." + ANSWERB);
+                radio_c.setText("C." + ANSWERC);
+                radio_d.setText("D." + ANSWERD);
+                radio_a.setVisibility(View.VISIBLE);
+                radio_b.setVisibility(View.VISIBLE);
+                radio_c.setVisibility(View.VISIBLE);
+                radio_d.setVisibility(View.VISIBLE);
             }
             switch (mySelect[curIndex]) {
                 case 1:
-                    radioA.setChecked(true);
+                    radio_a.setChecked(true);
                     break;
                 case 2:
-                    radioB.setChecked(true);
+                    radio_b.setChecked(true);
                     break;
                 case 3:
-                    radioC.setChecked(true);
+                    radio_c.setChecked(true);
                     break;
                 case 4:
-                    radioD.setChecked(true);
+                    radio_d.setChecked(true);
                     break;
                 default:
                     break;

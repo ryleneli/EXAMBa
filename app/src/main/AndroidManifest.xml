@@ -40,6 +40,9 @@
         <activity android:name="com.example.Activity.ExamActivity" >
 
         </activity>
+        <activity android:name="com.example.Activity.MyAnswerActivity" >
+
+        </activity>
     </application>
 
 </manifest>
