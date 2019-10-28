@@ -37,7 +37,7 @@ public class MyAnswerActivity extends Activity {
         recyclerView = (RecyclerView)findViewById(R.id.my_answer);
         GridLayoutManager layoutManager = new GridLayoutManager(this,5);
         recyclerView.setLayoutManager(layoutManager);
-        recyclerViewAdapter = new MyAnswerRecyclerView(this,myAnswer);
+        recyclerViewAdapter = new MyAnswerRecyclerView(this,MyAnswerActivity.this,myAnswer);
         recyclerView.setAdapter(recyclerViewAdapter);
         for (int i=0;i<15;i++)
         {

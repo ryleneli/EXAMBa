@@ -98,6 +98,10 @@ public class TestCtrl {
         }
         return mode;
     }
+    public void setIndex(int index)
+    {
+        curIndex = index;
+    }
     public void forwordBtn (Button button_for,Button button_nex,TextView textView_num, TextView textView_pro, RadioGroup radioGroup, RadioButton radio_a, RadioButton radio_b, RadioButton radio_c, RadioButton radio_d) {
 
             if (isHandIn) {// 交卷后
@@ -154,7 +158,7 @@ public class TestCtrl {
                 if (curIndex == 15)
                 {   Intent intent = new Intent(activity, MyAnswerActivity.class);
                     intent.putExtra("answer",mySelect);
-                    mcontext.startActivity(intent);
+                    activity.startActivityForResult(intent,1);
                     log ();
                     curIndex = 14;
                 }

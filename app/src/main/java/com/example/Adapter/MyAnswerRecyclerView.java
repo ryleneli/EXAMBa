@@ -1,6 +1,8 @@
 package com.example.Adapter;
 
+import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.Color;
 import android.support.annotation.NonNull;
 import android.support.v4.content.ContextCompat;
@@ -12,11 +14,15 @@ import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import com.example.Activity.ExamActivity;
+import com.example.Activity.MyAnswerActivity;
 import com.example.Object.Lesson;
 import com.example.itemClickListener;
 import com.example.testsys.R;
 
 import java.util.List;
+
+import static android.app.Activity.RESULT_OK;
 
 /**
  * Created by 15151 on 2019/10/27.
@@ -24,6 +30,7 @@ import java.util.List;
 
 public class MyAnswerRecyclerView extends RecyclerView.Adapter<MyAnswerRecyclerView.ViewHolder> {
 private Context mContext;
+private Activity activity;
 private int myAnswer[];
 public int mposition = 0;
 private itemClickListener listener;
@@ -39,8 +46,9 @@ private itemClickListener listener;
             relativeLayout = (RelativeLayout) view.findViewById(R.id.answerItem_layout);
         }
     }
-    public MyAnswerRecyclerView(Context mContext, int myAnswer[]) {
+    public MyAnswerRecyclerView(Context mContext, Activity activity,int myAnswer[]) {
         this.mContext = mContext;
+        this.activity = activity;
         this.myAnswer = myAnswer;
     }
 
@@ -54,12 +62,11 @@ private itemClickListener listener;
             public void onClick(View v) {
                 //将点击的位置传出去
                 mposition = holder.getAdapterPosition();
-                listener.itemClick();
-                /*在点击监听里最好写入setVisibility(View.VISIBLE);这样可以避免效果会闪
-                //holder.mListSelect.setVisibility(View.VISIBLE);
-                //刷新界面 notify 通知Data 数据set设置Changed变化
-                在这里运行notifyDataSetChanged 会导致下面的onBindViewHolder 重新加载一遍*/
                 notifyDataSetChanged();
+                Intent intent = new Intent(activity, ExamActivity.class);
+                intent.putExtra("select_index",mposition);
+                activity.setResult(RESULT_OK, intent);
+                activity.finish();
             }
         });
         return holder;
@@ -68,7 +75,7 @@ private itemClickListener listener;
     @Override
     public void onBindViewHolder(@NonNull MyAnswerRecyclerView.ViewHolder holder, int position) {
         int temp = myAnswer[position];
-        holder.answerNum.setText(position+"");
+        holder.answerNum.setText(position+1+"");
         int unSelectColor = ContextCompat.getColor(mContext, R.color.colorTitleBar);
         int selectColor = mContext.getResources().getColor(R.color.colorTab);//两种获取方式，学习context添加方法
         if (temp == 0) {

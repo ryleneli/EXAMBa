@@ -27,6 +27,9 @@ import android.widget.TextView;
 public class ExamActivity extends Activity {
 	private static String TAG = "ExamActivity";
 
+	int flag;
+	int index;
+	String title;
 	TitleBarView titleBarView;
 	TextView proTextView;//问题
     TextView numText;
@@ -46,8 +49,10 @@ public class ExamActivity extends Activity {
 	int[] testAnswer = new int[15];//试题答案
 	int[] mySelect = new int[15];// 我的答案
 	String TextMode_text;
+	TestCtrl testctrl;
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
+		Log.i(TAG,"LRL mySelect now is --------------------onCreate");
 		// TODO Auto-generated method stub
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.test_fragment);
@@ -71,11 +76,17 @@ public class ExamActivity extends Activity {
 		int[] testTurn = new int[numberOfChosen];//试题
 		int[] testAnswer = new int[numberOfChosen];//试题答案
 		int[] mySelect = new int[numberOfChosen];// 我的答案
-		Intent intent = getIntent();
-		int flag = intent.getIntExtra("test_mode",0);
-		final TestCtrl testctrl = new TestCtrl(this,dbAdapter,cursor,numberOfAlltest,numberOfChosen,problemRand,testTurn,testAnswer,mySelect);
+		Intent intent_H_E = getIntent();
+		flag = intent_H_E.getIntExtra("test_mode",0);
+		Log.i(TAG,"LRL mySelect now is --------------------"+flag);
+		title = intent_H_E.getStringExtra("lesson_name");
+		if (null != savedInstanceState) {
+			flag = savedInstanceState.getInt("test_mode");
+			title = savedInstanceState.getString("lesson_name");
+		}
+		testctrl = new TestCtrl(this,dbAdapter,cursor,numberOfAlltest,numberOfChosen,problemRand,testTurn,testAnswer,mySelect);
 		TextMode_text = testctrl.testMode(flag);
-		titleBarView.getTitleText().setText(intent.getStringExtra("lesson_name"));
+		titleBarView.getTitleText().setText(title);
 		TextMode.setText(TextMode_text);
 		testctrl.testOfChosen(0);
         testctrl.OnPaint(proTextView,radioGroup,radioA,radioB,radioC,radioD);
@@ -106,6 +117,42 @@ public class ExamActivity extends Activity {
 		//testctrl.myAnswerRecord(radioA,radioB,radioC,radioD);
 		//log (mySelect);
 	}
+	@Override
+	protected void onStart() {//ExamActivity走singletask模式，在活动站中只保存一个实例
+		super.onStart();
+		testctrl.setIndex(index);
+		String temp = (index + 1) + "/" + 15;
+		numText.setText(temp);
+		if (index == 0)
+			forword_btn.setText("无");
+		else if (index <= 14)
+			next_btn.setText("下一题");
+		testctrl.OnPaint(proTextView,radioGroup,radioA,radioB,radioC,radioD);
+		Log.i(TAG,"LRL mySelect now is --------------------"+index);
+		Log.i(TAG,"LRL mySelect now is -------------------on start");
+	}
+	@Override
+	protected void onRestart() {
+		super.onRestart();
+		Log.i(TAG,"LRL mySelect now is *****************"+index);
+		Log.i(TAG,"LRL mySelect now is *****************on start");
+	}
+	@Override
+	protected void onActivityResult(int requestCode, int resultCode, Intent data)
+	{
+		switch(requestCode)
+		{
+			case 1 :
+				if(resultCode == RESULT_OK)
+				{
+					index = data.getIntExtra("select_index",0);
+					Log.i(TAG,"LRL mySelect now is *****==========***"+index);
+				}
+				break;
+			default : break;
+		}
+	}
+
 
 	@Override
 	protected void onDestroy() {
@@ -113,9 +160,11 @@ public class ExamActivity extends Activity {
 		cursor.close();
 		super.onDestroy();
 	}
-	private void log (int myanswer[])
-	{for (int i=0;i<15;i++)
-		Log.i(TAG,"LRL mySelect now is ******"+mySelect[i]);}
-
+	@Override
+	protected void onSaveInstanceState(Bundle outState) {
+		super.onSaveInstanceState(outState);
+		outState.putInt("test_mode", flag);
+		outState.putString("lesson_name",title);
+	}
 
 }
