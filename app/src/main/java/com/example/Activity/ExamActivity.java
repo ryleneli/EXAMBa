@@ -89,6 +89,7 @@ public class ExamActivity extends Activity {
 		titleBarView.getTitleText().setText(title);
 		TextMode.setText(TextMode_text);
 		testctrl.testOfChosen(0);
+		testctrl.handlerOftestAnswer();
         testctrl.OnPaint(proTextView,radioGroup,radioA,radioB,radioC,radioD);
 		numText.setText("1/15");
 		forword_btn.setText("无");
@@ -114,8 +115,6 @@ public class ExamActivity extends Activity {
 				testctrl.myAnswerRecord(radioA,radioB,radioC,radioD);
 			}
 		});
-		//testctrl.myAnswerRecord(radioA,radioB,radioC,radioD);
-		//log (mySelect);
 	}
 	@Override
 	protected void onStart() {//ExamActivity走singletask模式，在活动站中只保存一个实例
@@ -125,7 +124,7 @@ public class ExamActivity extends Activity {
 		numText.setText(temp);
 		if (index == 0)
 			forword_btn.setText("无");
-		else if (index <= 14)
+		if (index < 14)
 			next_btn.setText("下一题");
 		testctrl.OnPaint(proTextView,radioGroup,radioA,radioB,radioC,radioD);
 		Log.i(TAG,"LRL mySelect now is --------------------"+index);
@@ -134,8 +133,8 @@ public class ExamActivity extends Activity {
 	@Override
 	protected void onRestart() {
 		super.onRestart();
-		Log.i(TAG,"LRL mySelect now is *****************"+index);
-		Log.i(TAG,"LRL mySelect now is *****************on start");
+		Log.i(TAG,"LRL mySelect now is -----------"+index);
+		Log.i(TAG,"LRL mySelect now is -----------onRestart");
 	}
 	@Override
 	protected void onActivityResult(int requestCode, int resultCode, Intent data)
@@ -159,12 +158,7 @@ public class ExamActivity extends Activity {
 		dbAdapter.close();
 		cursor.close();
 		super.onDestroy();
-	}
-	@Override
-	protected void onSaveInstanceState(Bundle outState) {
-		super.onSaveInstanceState(outState);
-		outState.putInt("test_mode", flag);
-		outState.putString("lesson_name",title);
+		Log.i(TAG,"LRL mySelect now is ------------onDestroy");
 	}
 
 }

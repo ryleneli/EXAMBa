@@ -11,4 +11,5 @@
         <color name="colorTab">#32CD32</color>
         <color name="colorPurple">#9400D3</color>
         <color name="colorbg">#F5F5F5</color>
+        <color name="colorRed">#EE2C2C</color>
 </resources>

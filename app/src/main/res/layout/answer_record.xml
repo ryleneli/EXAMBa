@@ -44,7 +44,7 @@
         android:layout_alignParentBottom="true"
         >
         <Button
-            android:id="@+id/last"
+            android:id="@+id/upload_button"
             android:layout_width="0dp"
             android:layout_height="45dp"
             android:layout_weight="1"
@@ -53,16 +53,51 @@
             android:textColor="@color/colorRoundedButton"
             android:background="@color/colorTitleBar"/>
     </LinearLayout>
-
-    <android.support.v7.widget.RecyclerView
-        android:layout_below="@+id/question_type_1"
-        android:layout_above="@+id/upload"
-        android:id="@+id/my_answer"
-        android:layout_marginTop="30dp"
-        android:layout_marginRight="20dp"
-        android:layout_marginLeft="20dp"
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent" />
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:layout_below="@+id/question_type_1"
+        android:layout_above="@+id/upload">
+        <android.support.v7.widget.RecyclerView
+
+            android:id="@+id/my_answer"
+            android:layout_marginTop="30dp"
+            android:layout_marginRight="20dp"
+            android:layout_marginLeft="20dp"
+            android:layout_marginBottom="20dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+        <View
+            android:id="@+id/view_last"
+            android:layout_width="fill_parent"
+            android:layout_height="0.5dp"
+            android:background="#A9A9A9"
+            android:visibility="gone"/>
+
+        <TextView
+            android:id="@+id/result"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:layout_marginLeft="20dp"
+            android:text="正确"
+            android:textSize="20dp"
+            android:visibility="gone"/>
+
+        <TextView
+            android:id="@+id/time"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:layout_marginLeft="20dp"
+            android:text="考试用时"
+            android:textSize="20dp"
+            android:visibility="gone"/>
+
+
+    </LinearLayout>
+
 
 
 </RelativeLayout>

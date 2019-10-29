@@ -158,6 +158,7 @@ public class TestCtrl {
                 if (curIndex == 15)
                 {   Intent intent = new Intent(activity, MyAnswerActivity.class);
                     intent.putExtra("answer",mySelect);
+                    intent.putExtra("test_answer",testAnswer);
                     activity.startActivityForResult(intent,1);
                     log ();
                     curIndex = 14;
@@ -173,6 +174,7 @@ public class TestCtrl {
         for (int i=0;i<15;i++)
         {
             Log.i(TAG, "my answer is-------------------------  "+mySelect[i]);
+            Log.i(TAG, "test answer is-------------------------  "+testAnswer[i]);
         }
     }
     //记录答案
@@ -240,11 +242,11 @@ public class TestCtrl {
     }
 
     // 处理交卷后
-    protected void handlerOftestAnswer() {//将答案转换成数据格式
+    public void handlerOftestAnswer() {//将答案转换成数据格式
         // TODO Auto-generated method stub
-        isHandIn = true;
+        //isHandIn = true;
         String tmpAnswer;
-        for (int i = m_numberOfChosen; i >= 0; i--) {
+        for (int i = m_numberOfChosen-1; i >= 0; i--) {
             cursor.moveToPosition(testTurn[i]);//试题游标
             tmpAnswer = cursor.getString(cursor.getColumnIndex(DBAdapter.TESTANSWER));
             if (tmpAnswer.compareTo("对") == 0) {
@@ -299,29 +301,6 @@ public class TestCtrl {
         builder.create().show();
     }
 
-    public void testMode(TESTMODE flag) {
-        switch (flag) {
-            case CHAPTER:
-            {
-
-            }
-            break;
-            case ERROR:
-            {
-
-            }
-            break;
-            case RANDOM:
-            {
-
-            }
-            case TEST:
-            {
-
-            }
-            break;
-        }
-    }
     public void testOfChosen(int chapterNum)//取题
     {   //顺序all,乱序all，chapter all,error all
         curIndex = 0;
