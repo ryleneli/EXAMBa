@@ -4,6 +4,7 @@ import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.io.Serializable;
 import java.util.Random;
 
 import com.example.Constant;
@@ -15,11 +16,13 @@ import android.app.Activity;
 import android.content.Intent;
 import android.database.Cursor;
 import android.os.Bundle;
+import android.os.SystemClock;
 import android.util.Log;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
 import android.widget.Chronometer;
+import android.widget.ImageButton;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.TextView;
@@ -27,32 +30,33 @@ import android.widget.TextView;
 public class ExamActivity extends Activity {
 	private static String TAG = "ExamActivity";
 
-	int flag;
-	int index;
-	String title;
-	TitleBarView titleBarView;
-	TextView proTextView;//问题
-    TextView numText;
-    TextView TextMode;
-	RadioButton radioA;
-	RadioButton radioB;
-	RadioButton radioC;
-	RadioButton radioD;//答案按钮组
-	RadioGroup radioGroup;
-	Button forword_btn;//上一题按钮
-	Button next_btn;//下一题按钮
-	Chronometer chronometer;
+	private int flag;
+	private int index;
+	private String title;
+	private TitleBarView titleBarView;
+	private TextView proTextView;//问题
+	private TextView numText;
+	private TextView TextMode;
+	private RadioButton radioA;
+	private RadioButton radioB;
+	private RadioButton radioC;
+	private RadioButton radioD;//答案按钮组
+	private RadioGroup radioGroup;
+	private Button forword_btn;//上一题按钮
+	private Button next_btn;//下一题按钮
+	public Chronometer chronometer;
+	private ImageButton answerButton;
+	private int temp;
 	Cursor cursor;
 	DBAdapter dbAdapter;
-	int[] problemRand = new int[160];//所有题目顺序
+	/*int[] problemRand = new int[160];//所有题目顺序
 	int[] testTurn = new int[15];//试题
 	int[] testAnswer = new int[15];//试题答案
-	int[] mySelect = new int[15];// 我的答案
+	int[] mySelect = new int[15];// 我的答案*/
 	String TextMode_text;
 	TestCtrl testctrl;
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
-		Log.i(TAG,"LRL mySelect now is --------------------onCreate");
 		// TODO Auto-generated method stub
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.test_fragment);
@@ -67,6 +71,11 @@ public class ExamActivity extends Activity {
 		forword_btn = (Button) findViewById(R.id.last);
 		next_btn = (Button) findViewById(R.id.next);
 		radioGroup = (RadioGroup) findViewById(R.id.radioGroup);
+		titleBarView.getTitleText().setText(title);
+		chronometer = titleBarView.getChronometer();
+		answerButton = titleBarView.getTitleAnswer();
+		chronometer.setBase(SystemClock.elapsedRealtime());
+		chronometer.start();
 		dbAdapter = new DBAdapter(this);
 		dbAdapter.open();
 		cursor = dbAdapter.getAllData();
@@ -74,19 +83,18 @@ public class ExamActivity extends Activity {
 		int numberOfChosen = 15;
 		int[] problemRand = new int[numberOfAlltest];//所有题目顺序
 		int[] testTurn = new int[numberOfChosen];//试题
-		int[] testAnswer = new int[numberOfChosen];//试题答案
-		int[] mySelect = new int[numberOfChosen];// 我的答案
+		final int[] testAnswer = new int[numberOfChosen];//试题答案
+		final int[] mySelect = new int[numberOfChosen];// 我的答案
 		Intent intent_H_E = getIntent();
 		flag = intent_H_E.getIntExtra("test_mode",0);
-		Log.i(TAG,"LRL mySelect now is --------------------"+flag);
 		title = intent_H_E.getStringExtra("lesson_name");
 		if (null != savedInstanceState) {
 			flag = savedInstanceState.getInt("test_mode");
 			title = savedInstanceState.getString("lesson_name");
 		}
-		testctrl = new TestCtrl(this,dbAdapter,cursor,numberOfAlltest,numberOfChosen,problemRand,testTurn,testAnswer,mySelect);
+		testctrl = new TestCtrl(this,dbAdapter,cursor,chronometer,numberOfAlltest,numberOfChosen,problemRand,testTurn,testAnswer,mySelect);
 		TextMode_text = testctrl.testMode(flag);
-		titleBarView.getTitleText().setText(title);
+
 		TextMode.setText(TextMode_text);
 		testctrl.testOfChosen(0);
 		testctrl.handlerOftestAnswer();
@@ -115,6 +123,45 @@ public class ExamActivity extends Activity {
 				testctrl.myAnswerRecord(radioA,radioB,radioC,radioD);
 			}
 		});
+		answerButton.setOnClickListener(new OnClickListener() {
+			@Override
+			public void onClick(View v) {
+				// TODO Auto-generated method stub
+				    Intent intent = new Intent(ExamActivity.this, MyAnswerActivity.class);
+					intent.putExtra("answer",mySelect);
+					intent.putExtra("test_answer",testAnswer);
+				    temp=testctrl.timeTrans();
+				Log.i(TAG,"LRL temp in listener  is =======-----------========"+temp );
+					intent.putExtra("timer",temp);
+					startActivity(intent);
+			}
+		});
+
+		/*
+		chronometer.setOnChronometerTickListener(new Chronometer.OnChronometerTickListener() {
+			@Override
+			public void onChronometerTick(Chronometer chronometer) {
+				// TODO Auto-generated method stub
+				seconds--;
+				if (seconds == -1) {
+					minutes--;
+					seconds = 59;
+				}
+				if (minutes < 0) {
+					chronometer.stop();
+					// 直接交卷！
+					handlerAfterHandIn();
+				} else {
+					if (minutes < 5) {
+						chronometer.setTextColor(Color.RED);
+						chronometer.setText(nowtime());
+					} else {
+						chronometer.setTextColor(Color.GREEN);
+						chronometer.setText(nowtime());
+					}
+				}
+			}
+		});*/
 	}
 	@Override
 	protected void onStart() {//ExamActivity走singletask模式，在活动站中只保存一个实例
@@ -127,14 +174,10 @@ public class ExamActivity extends Activity {
 		if (index < 14)
 			next_btn.setText("下一题");
 		testctrl.OnPaint(proTextView,radioGroup,radioA,radioB,radioC,radioD);
-		Log.i(TAG,"LRL mySelect now is --------------------"+index);
-		Log.i(TAG,"LRL mySelect now is -------------------on start");
 	}
 	@Override
 	protected void onRestart() {
 		super.onRestart();
-		Log.i(TAG,"LRL mySelect now is -----------"+index);
-		Log.i(TAG,"LRL mySelect now is -----------onRestart");
 	}
 	@Override
 	protected void onActivityResult(int requestCode, int resultCode, Intent data)
@@ -158,7 +201,6 @@ public class ExamActivity extends Activity {
 		dbAdapter.close();
 		cursor.close();
 		super.onDestroy();
-		Log.i(TAG,"LRL mySelect now is ------------onDestroy");
 	}
 
 }

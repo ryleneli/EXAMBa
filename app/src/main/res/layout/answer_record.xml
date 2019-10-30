@@ -11,7 +11,7 @@
         android:layout_alignParentTop="true"
         app:title_back_icon_visible="true"
         app:title_answer_visible="false"
-        app:title_exam_chronometer_visible="false">
+        app:title_exam_chronometer_visible="true">
     </com.example.UI.TitleBarView>
     <RelativeLayout
         android:id="@+id/question_type_1"

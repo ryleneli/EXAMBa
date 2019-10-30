@@ -27,6 +27,7 @@ public class TitleBarView extends RelativeLayout {
     public ImageButton titleBack,titleAnswer;
     public TextView titleText;
     public Chronometer chronometer;
+    private ImageView timer;
 
 
     public TitleBarView(Context context) {
@@ -57,6 +58,7 @@ public class TitleBarView extends RelativeLayout {
         titleBack = findViewById(R.id.title_back_icon);
         titleAnswer = findViewById(R.id.title_answer);
         chronometer = findViewById(R.id.title_exam_chronometer);
+        timer = findViewById(R.id.timer);
 
         TypedArray attributes = context.obtainStyledAttributes(attrs, R.styleable.TitleBarView);
         //Log.i(TAG,"LRL ENTER INIT and obtain is ok");
@@ -98,13 +100,13 @@ public class TitleBarView extends RelativeLayout {
     public ImageView getTitleBack() {
         return titleBack;
     }
-    public ImageView getTitleAnswer() {
+    public ImageButton getTitleAnswer() {
         return titleAnswer;
     }
     public TextView getTitleText() {
         return titleText;
     }
-    public TextView getChronometer() {
+    public Chronometer getChronometer() {
         return chronometer;
     }
 
@@ -134,6 +136,13 @@ public class TitleBarView extends RelativeLayout {
             chronometer.setVisibility(View.VISIBLE);
         } else {
             chronometer.setVisibility(View.INVISIBLE);
+        }
+    }
+    public void setTimer(boolean visible) {
+        if (visible) {
+            timer.setVisibility(View.VISIBLE);
+        } else {
+            timer.setVisibility(View.INVISIBLE);
         }
     }
 

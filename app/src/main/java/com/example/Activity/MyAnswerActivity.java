@@ -3,12 +3,14 @@ package com.example.Activity;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.SystemClock;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.Chronometer;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
@@ -32,6 +34,7 @@ public class MyAnswerActivity extends Activity {
     private Button button ;
     private RelativeLayout relativeLayout;
     private View view;
+    private Chronometer chronometer;
     private int myAnswer[] = new int [15];
     private int testAnswer[] = new int [15];
     boolean isHandIn = false;
@@ -46,6 +49,11 @@ public class MyAnswerActivity extends Activity {
         myAnswer = intent.getIntArrayExtra("answer");
         testAnswer = intent.getIntArrayExtra("test_answer");
         titleBarView = (TitleBarView) findViewById(R.id.myAnswer_titlebar);
+        chronometer = titleBarView.getChronometer();
+        int temp = intent.getIntExtra("timer",0);
+        Log.i(TAG, "my temp======================"+temp);
+        chronometer.setBase(SystemClock.elapsedRealtime()-temp*1000);
+        chronometer.start();
         button = (Button) findViewById(R.id.upload_button);
         relativeLayout = (RelativeLayout) findViewById(R.id.question_type_1);
         resultText = (TextView) findViewById(R.id.result);
@@ -73,6 +81,8 @@ public class MyAnswerActivity extends Activity {
                 timeText.setVisibility(View.VISIBLE);
                 view.setVisibility(View.VISIBLE);
                 titleBarView.setTitleText("结果报告");
+                titleBarView.setTimer(false);
+                chronometer.setVisibility(View.INVISIBLE);
                 recyclerViewAdapter = new MyAnswerRecyclerView(getBaseContext(),MyAnswerActivity.this,myAnswer,testAnswer,isHandIn);
                 recyclerView.setAdapter(recyclerViewAdapter);
                 sum = answerCount();

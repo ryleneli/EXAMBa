@@ -37,15 +37,11 @@
         <activity android:name="com.example.Activity.AllLessons" >
 
         </activity>
-        <activity
-            android:name="com.example.Activity.ExamActivity"
-            android:launchMode="singleTask">
+        <activity android:name="com.example.Activity.ExamActivity" >
 
         </activity>
-        <activity
-            android:name="com.example.Activity.MyAnswerActivity"
-
-            >
+        <activity android:name="com.example.Activity.MyAnswerActivity"
+            android:launchMode="singleTask">
 
         </activity>
     </application>

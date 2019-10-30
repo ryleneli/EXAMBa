@@ -9,6 +9,8 @@ import android.database.Cursor;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.Chronometer;
+import android.widget.ImageButton;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.TextView;
@@ -30,10 +32,11 @@ import static android.content.ContentValues.TAG;
 
 public class TestCtrl {
     //具体的题目显示逻辑
-    private static String TAG = "TestCtrl";
+    private static String TAG = "LRL ExamActivity";
     private Context mcontext;
     private int m_numberOfAll;
     private int m_numberOfChosen;
+    private int temp;
 
 
     // public static final int TESTLIMIT = 25;
@@ -64,13 +67,15 @@ public class TestCtrl {
 
     Cursor cursor;
     DBAdapter dbAdapter;
+    Chronometer chronometer;
 
 
-    public TestCtrl(Context context, DBAdapter dbAdapter,Cursor cursor_1,int numberOfAll,int numberOfChosen,int[]problemRand_1,int[]testTurn_1,int[]testAnswer_1,int[]mySelect_1)
+    public TestCtrl(Context context, DBAdapter dbAdapter, Cursor cursor_1, Chronometer chronometer,int numberOfAll, int numberOfChosen, int[]problemRand_1, int[]testTurn_1, int[]testAnswer_1, int[]mySelect_1)
     {
         this.mcontext = context;
         this.dbAdapter = dbAdapter;
         this.cursor = cursor_1;
+        this.chronometer = chronometer;
         this.m_numberOfAll = numberOfAll;
         this.m_numberOfChosen = numberOfChosen;
         this.problemRand = problemRand_1;
@@ -102,6 +107,16 @@ public class TestCtrl {
     {
         curIndex = index;
     }
+    public void setTemp(int time)
+    {
+        temp = time;
+    }
+    public int timeTrans ( )
+    {
+        int temp0 = Integer.parseInt(chronometer.getText().toString().split(":")[0]);
+        int temp1 =Integer.parseInt(chronometer.getText().toString().split(":")[1]);
+        return temp0*60+temp1;
+    }
     public void forwordBtn (Button button_for,Button button_nex,TextView textView_num, TextView textView_pro, RadioGroup radioGroup, RadioButton radio_a, RadioButton radio_b, RadioButton radio_c, RadioButton radio_d) {
 
             if (isHandIn) {// 交卷后
@@ -128,13 +143,13 @@ public class TestCtrl {
                     Toast.makeText(mcontext, "默认的Toast", Toast.LENGTH_SHORT).show();
                     curIndex = 0;
                 }
-                Log.i(TAG,"LRL curIndex now is ======"+curIndex);
+
                 OnPaint(textView_pro,radioGroup,radio_a,radio_b,radio_c,radio_d);
                 String temp = (curIndex + 1) + "/" + m_numberOfChosen;
                 textView_num.setText(temp);
             }
     }
-    public void nextBtn(Activity activity,Button button_for, Button button_nex, TextView textView_num, TextView textView_pro, RadioGroup radioGroup, RadioButton radio_a, RadioButton radio_b, RadioButton radio_c, RadioButton radio_d)
+    public void nextBtn(Activity activity, Button button_for, Button button_nex, TextView textView_num, TextView textView_pro, RadioGroup radioGroup, RadioButton radio_a, RadioButton radio_b, RadioButton radio_c, RadioButton radio_d)
     {
             if (isHandIn) {
                 int tindex = curIndex;
@@ -159,8 +174,10 @@ public class TestCtrl {
                 {   Intent intent = new Intent(activity, MyAnswerActivity.class);
                     intent.putExtra("answer",mySelect);
                     intent.putExtra("test_answer",testAnswer);
+                    temp = timeTrans();
+                    intent.putExtra("timer",temp);
+                    Log.i(TAG,"LRL temp  is ============================="+temp );
                     activity.startActivityForResult(intent,1);
-                    log ();
                     curIndex = 14;
                 }
                 Log.i(TAG,"LRL curIndex now is ======"+curIndex);
@@ -197,51 +214,8 @@ public class TestCtrl {
         }
     }
 
-    //仅在考试场景使用
-    /*
-		chronometer.setOnChronometerTickListener(new Chronometer.OnChronometerTickListener() {
-					@Override
-					public void onChronometerTick(Chronometer chronometer) {
-						// TODO Auto-generated method stub
-						seconds--;
-						if (seconds == -1) {
-							minutes--;
-							seconds = 59;
-						}
-						if (minutes < 0) {
-							chronometer.stop();
-							// 直接交卷！
-							handlerAfterHandIn();
-						} else {
-							if (minutes < 5) {
-								chronometer.setTextColor(Color.RED);
-								chronometer.setText(nowtime());
-							} else {
-								chronometer.setTextColor(Color.GREEN);
-								chronometer.setText(nowtime());
-							}
-						}
-					}
-				});*/
 
-
-    protected void showHandInAgainDialog(Context context) {//考试场景使用
-        // TODO Auto-generated method stub
-        AlertDialog.Builder builder = new AlertDialog.Builder(context);
-        builder.setMessage("确认交卷吗？");
-        builder.setTitle("提示");
-        builder.setPositiveButton("确认",new android.content.DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface v, int which) {
-                // TODO Auto-generated method stub
-                //handlerAfterHandIn();
-            }
-        });
-        builder.setNegativeButton("取消", null);
-        builder.create().show();
-    }
-
-    // 处理交卷后
+    //
     public void handlerOftestAnswer() {//将答案转换成数据格式
         // TODO Auto-generated method stub
         //isHandIn = true;
@@ -275,31 +249,8 @@ public class TestCtrl {
         }
         //OnPaint();
     }
-    private int score(int my_answer[],int test_answer[])//计分
-    {
-        int sum = 0;
-        for (int i = m_numberOfChosen; i >= 0; i--)
-        {
-            if (test_answer[i] == my_answer[i]) {
-                sum = sum+4;
-            }
-        }
-        return sum;
-    }
-    private void showScore() {//仅在考试场景使用
-        // TODO Auto-generated method stub
-        AlertDialog.Builder builder = new AlertDialog.Builder(mcontext);
-        builder.setTitle("结果");
-        if (resultInt == 100) {
-            builder.setMessage("满分！请继续保持");
-        } else if (resultInt >= 60) {
-            builder.setMessage("合格了！成绩为： " + resultInt + "分,请再接再厉");
-        } else {
-            builder.setMessage("不合格！成绩为：" + resultInt + "分,请继续努力");
-        }
-        builder.setPositiveButton("确定", null);
-        builder.create().show();
-    }
+
+
 
     public void testOfChosen(int chapterNum)//取题
     {   //顺序all,乱序all，chapter all,error all
@@ -348,15 +299,7 @@ public class TestCtrl {
         }
     }
 
-    // 剩余时间string
-    public String nowtime() {//考试结束前十分钟跳出弹窗提示考试即将结束
-        // TODO Auto-generated method stub
-        if (seconds < 10) {
-            return (minutes + ":0" + seconds);
-        } else {
-            return (minutes + ":" + seconds);
-        }
-    }
+
 
     public void OnPaint(TextView proTextView,RadioGroup radioGroup,RadioButton radio_a,RadioButton radio_b,RadioButton radio_c,RadioButton radio_d)//显示题目
     {
