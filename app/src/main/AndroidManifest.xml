@@ -37,7 +37,8 @@
         <activity android:name="com.example.Activity.AllLessons" >
 
         </activity>
-        <activity android:name="com.example.Activity.ExamActivity" >
+        <activity android:name="com.example.Activity.ExamActivity"
+            android:launchMode="singleTask">
 
         </activity>
         <activity android:name="com.example.Activity.MyAnswerActivity"

@@ -100,6 +100,9 @@ public class TitleBarView extends RelativeLayout {
     public ImageView getTitleBack() {
         return titleBack;
     }
+    public ImageView getTimerBack() {
+        return timer;
+    }
     public ImageButton getTitleAnswer() {
         return titleAnswer;
     }

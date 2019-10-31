@@ -50,7 +50,7 @@ public class MyAnswerActivity extends Activity {
         testAnswer = intent.getIntArrayExtra("test_answer");
         titleBarView = (TitleBarView) findViewById(R.id.myAnswer_titlebar);
         chronometer = titleBarView.getChronometer();
-        int temp = intent.getIntExtra("timer",0);
+        final int temp = intent.getIntExtra("timer",0);
         Log.i(TAG, "my temp======================"+temp);
         chronometer.setBase(SystemClock.elapsedRealtime()-temp*1000);
         chronometer.start();
@@ -67,27 +67,45 @@ public class MyAnswerActivity extends Activity {
         recyclerView.setAdapter(recyclerViewAdapter);
         for (int i=0;i<15;i++)
         {
-            Log.i(TAG, "my answer====="+i+" is  ==========="+myAnswer[i]);
-            Log.i(TAG, "test answer*******"+i+" is  ************"+testAnswer[i]);
+            //Log.i(TAG, "my answer====="+i+" is  ==========="+myAnswer[i]);
+            //Log.i(TAG, "test answer*******"+i+" is  ************"+testAnswer[i]);
         }
         button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 // TODO Auto-generated method stub
-                isHandIn = true ;
-                button.setText("查看试题");
-                relativeLayout.setVisibility(GONE);
-                resultText.setVisibility(View.VISIBLE);
-                timeText.setVisibility(View.VISIBLE);
-                view.setVisibility(View.VISIBLE);
-                titleBarView.setTitleText("结果报告");
-                titleBarView.setTimer(false);
-                chronometer.setVisibility(View.INVISIBLE);
-                recyclerViewAdapter = new MyAnswerRecyclerView(getBaseContext(),MyAnswerActivity.this,myAnswer,testAnswer,isHandIn);
-                recyclerView.setAdapter(recyclerViewAdapter);
-                sum = answerCount();
-                String temp = "正确："+sum + "/15";
-                resultText.setText(temp);
+                if (!isHandIn)
+                {
+                    isHandIn = true ;
+                    button.setText("查看试题");
+                    relativeLayout.setVisibility(GONE);
+                    resultText.setVisibility(View.VISIBLE);
+                    timeText.setVisibility(View.VISIBLE);
+                    view.setVisibility(View.VISIBLE);
+                    titleBarView.setTitleText("结果报告");
+                    titleBarView.setTimer(false);
+                    chronometer.stop();
+                    chronometer.setVisibility(View.INVISIBLE);
+                    recyclerViewAdapter = new MyAnswerRecyclerView(getBaseContext(),MyAnswerActivity.this,myAnswer,testAnswer,isHandIn);
+                    recyclerView.setAdapter(recyclerViewAdapter);
+                    sum = answerCount();
+                    String temp_text = "正确："+sum + "/15";
+                    resultText.setText(temp_text);
+                    int minute = temp/60;
+                    int second = temp%60;
+                    Log.i(TAG, "my answer====="+minute+" is  ==========="+second);
+                    String time_text = "考试用时："+minute + ":"+second;
+                    timeText.setText(time_text);
+                }
+                else
+                {
+                    Log.i(TAG, "my answer====================ready to enter exam");
+                    Intent intent = new Intent(MyAnswerActivity.this, ExamActivity.class);
+                    intent.putExtra("isHandIn",isHandIn);
+                    setResult(RESULT_OK, intent);
+                    MyAnswerActivity.this.finish();
+                }
+
             }
         });
     }
