@@ -29,7 +29,7 @@ public class MyRecyclerViewAdapter extends RecyclerView.Adapter<MyRecyclerViewAd
     private itemClickListener listener;
 
     static class ViewHolder extends RecyclerView.ViewHolder {
-        ImageView imageView;
+        TextView textView;
         TextView lessonName;
 
         RelativeLayout relativeLayout;
@@ -37,7 +37,7 @@ public class MyRecyclerViewAdapter extends RecyclerView.Adapter<MyRecyclerViewAd
         public ViewHolder(View view) {
             super(view);
             lessonName = (TextView) view.findViewById(R.id.my_lesson_name_recyview);
-            imageView = (ImageView) view.findViewById(R.id.my_lesson_image);
+            textView = (TextView) view.findViewById(R.id.my_lesson_image);
             relativeLayout = (RelativeLayout) view.findViewById(R.id.my_lesson_rela_layout);
         }
     }
@@ -72,6 +72,7 @@ public class MyRecyclerViewAdapter extends RecyclerView.Adapter<MyRecyclerViewAd
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
         Lesson lesson = myLessonList.get(position);
         holder.lessonName.setText(lesson.getName());
+        holder.textView.setText(lesson.getName().substring(0,1));
         int checkColor = ContextCompat.getColor(mContext, R.color.colorPurple);
         int unCheckColor = mContext.getResources().getColor(R.color.colorTab);//两种获取方式，学习context添加方法
         if (position == mposition) {
@@ -81,7 +82,8 @@ public class MyRecyclerViewAdapter extends RecyclerView.Adapter<MyRecyclerViewAd
             holder.relativeLayout.setBackgroundResource(R.drawable.rounded_edittext);
             holder.lessonName.setTextColor(Color.GRAY);
         }
-        holder.imageView.setColorFilter(mposition==position? checkColor:unCheckColor);
+        //holder.imageView.setColorFilter(mposition==position? checkColor:unCheckColor);注意view setcolor的方法
+        holder.textView.setTextColor(mposition==position? checkColor:unCheckColor);
     }
 
     @Override
