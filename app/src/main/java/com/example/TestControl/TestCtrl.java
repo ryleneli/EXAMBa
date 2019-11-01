@@ -149,7 +149,7 @@ public class TestCtrl {
                 textView_num.setText(temp);
             }
     }
-    public void nextBtn(Activity activity, Button button_for, Button button_nex, TextView textView_num, TextView textView_pro, RadioGroup radioGroup, RadioButton radio_a, RadioButton radio_b, RadioButton radio_c, RadioButton radio_d)
+    public void nextBtn(Activity activity, boolean handIn,Button button_for, Button button_nex, TextView textView_num, TextView textView_pro, RadioGroup radioGroup, RadioButton radio_a, RadioButton radio_b, RadioButton radio_c, RadioButton radio_d)
     {
             if (isHandIn) {
                 int tindex = curIndex;
@@ -180,6 +180,12 @@ public class TestCtrl {
                     activity.startActivityForResult(intent,1);
                     curIndex = 14;
                 }
+                if (handIn && curIndex == 14)
+                {
+                    button_nex.setEnabled(false);
+                    button_nex.setText("无");
+                }
+                else button_nex.setEnabled(true);
                 Log.i(TAG,"LRL curIndex now is ======"+curIndex);
                 OnPaint(textView_pro,radioGroup,radio_a,radio_b,radio_c,radio_d);//直接下一题
                 String temp = (curIndex + 1) + "/" + m_numberOfChosen;

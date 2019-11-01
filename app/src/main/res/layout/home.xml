@@ -27,6 +27,36 @@
             android:orientation="vertical"
             >
             <LinearLayout
+                android:background="#ffffff"
+                android:layout_width="match_parent"
+                android:layout_height="47dp"
+                android:orientation="horizontal">
+                <ImageView
+                    android:layout_width="27dp"
+                    android:layout_height="27dp"
+                    android:src="@drawable/fire_609"
+                    android:scaleType="centerInside"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginRight="10dp"
+                    android:layout_gravity="center"/>
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:textColor="@color/colorRed"
+                    android:text="HOT："/>
+                <TextView
+                    android:id="@+id/hot_lesson"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:textColor="@color/colorRed"/>
+            </LinearLayout>
+            <View
+                android:layout_width="fill_parent"
+                android:layout_height="0.5dp"
+                android:background="#A9A9A9" />
+            <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="vertical"
@@ -46,12 +76,14 @@
                     android:layout_width="fill_parent"
                     android:layout_height="0.5dp"
                     android:background="#A9A9A9" />
+
                 <com.example.Object.MyRecyclerView
                     android:id="@+id/rv"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content">
                 </com.example.Object.MyRecyclerView>
             </LinearLayout>
+
 
 
 
@@ -87,7 +119,7 @@
                         android:layout_height="wrap_content"
                         android:layout_gravity="center"
                         android:text="当前学习课程："/>
-                    <TextView
+                    <com.example.Object.MyTextView
                         android:id="@+id/learning_lesson"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"

@@ -112,7 +112,7 @@ public class ExamActivity extends Activity {
 			@Override
 			public void onClick(View v) {
 				// TODO Auto-generated method stub
-				testctrl.nextBtn(ExamActivity.this,forword_btn,next_btn,numText,proTextView,radioGroup,radioA,radioB,radioC,radioD);
+				testctrl.nextBtn(ExamActivity.this,isHandIn,forword_btn,next_btn,numText,proTextView,radioGroup,radioA,radioB,radioC,radioD);
 			}
 		});
 

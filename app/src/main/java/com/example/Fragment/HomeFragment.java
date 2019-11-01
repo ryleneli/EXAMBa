@@ -4,6 +4,8 @@ import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Message;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v7.widget.LinearLayoutManager;
@@ -33,6 +35,8 @@ import com.example.testsys.R;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Timer;
+import java.util.TimerTask;
 
 /**
  * Created by rylene_li on 2019/9/30.
@@ -49,7 +53,11 @@ public class HomeFragment extends Fragment {
     private Button addLesson;
     private TestView chapterView,randomView,errorView,testView;
     private ExpandableListView expandableListView;
-    private TextView learning_text;
+    private TextView hotLesson,learning_text;
+    private Handler handler;
+    private final Timer timer = new Timer();
+    private TimerTask task;
+    int index;
     String[] groupNames = { "a", "b", "c" };
     String[][] childNames = new String[][] { { "a1", "a2", "a3" },
             { "b1", "b2", "b3", "b4", "b5" },
@@ -64,6 +72,7 @@ public class HomeFragment extends Fragment {
         initFruits();
         addLesson = (Button) view.findViewById(R.id.addlesson_button);
         recyclerView = view.findViewById(R.id.rv);
+        hotLesson = (TextView) view.findViewById(R.id.hot_lesson);
         learning_text = (TextView)view.findViewById(R.id.learning_lesson);
         chapterView = (TestView) view.findViewById(R.id.home_chapbutton);
         randomView = (TestView) view.findViewById(R.id.home_randbutton);
@@ -76,6 +85,28 @@ public class HomeFragment extends Fragment {
         recyclerView.setLayoutManager(layoutManager);
         recyclerViewAdapter = new MyRecyclerViewAdapter(getContext(),lessonList);
         recyclerView.setAdapter(recyclerViewAdapter);
+
+        handler = new Handler() {
+            @Override
+            public void handleMessage(Message msg) {
+                // TODO Auto-generated method stub
+                if (msg.what == 1 && index < lessonList.size()){
+                    hotLesson.setText(lessonList.get(index).getName());
+                    index++;
+                }else index = 0;
+                super.handleMessage(msg);
+            }
+        };
+        task = new TimerTask() {
+            @Override
+            public void run() {
+                // TODO Auto-generated method stub
+                Message message = new Message();
+                message.what = 1;
+                handler.sendMessage(message);
+            }
+        };
+        timer.schedule(task, 0, 3000);
         recyclerViewAdapter.setItemClickListener(new itemClickListener() {
             @Override
             public void itemClick() {
@@ -197,17 +228,17 @@ public class HomeFragment extends Fragment {
     }
 
     private void initFruits() {
-        Lesson apple = new Lesson("Apple");
+        Lesson apple = new Lesson("通信原理");
         lessonList.add(apple);
-        Lesson banana = new Lesson("Banana");
+        Lesson banana = new Lesson("C程序设计");
         lessonList.add(banana);
-        Lesson orange = new Lesson("Orange");
+        Lesson orange = new Lesson("C++");
         lessonList.add(orange);
-        Lesson watermelon = new Lesson("Watermelon");
+        Lesson watermelon = new Lesson("JAVA");
         lessonList.add(watermelon);
-        Lesson pear = new Lesson("Pear");
+        Lesson pear = new Lesson("电路原理");
         lessonList.add(pear);
-        Lesson grape = new Lesson("Grape");
+        Lesson grape = new Lesson("计算机基础");
         lessonList.add(grape);
     }
     @Override
