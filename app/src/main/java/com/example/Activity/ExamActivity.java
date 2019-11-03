@@ -94,8 +94,6 @@ public class ExamActivity extends Activity {
 		final int[] mySelect = new int[numberOfChosen];// 我的答案
 
 		testctrl = new TestCtrl(this,dbAdapter,cursor,chronometer,numberOfAlltest,numberOfChosen,problemRand,testTurn,testAnswer,mySelect);
-
-
 		testctrl.testOfChosen(0);
 		testctrl.handlerOftestAnswer();
         //testctrl.OnPaint(proTextView,radioGroup,radioA,radioB,radioC,radioD);
@@ -131,7 +129,6 @@ public class ExamActivity extends Activity {
 					intent.putExtra("answer",mySelect);
 					intent.putExtra("test_answer",testAnswer);
 				    temp=testctrl.timeTrans();
-				Log.i(TAG,"LRL temp in listener  is =======-----------========"+temp );
 					intent.putExtra("timer",temp);
 				    startActivityForResult(intent,1);
 			}
@@ -165,14 +162,12 @@ public class ExamActivity extends Activity {
 	}
 	@Override
 	protected void onStart() {//ExamActivity走singletask模式，在活动站中只保存一个实例
-		Log.i(TAG,"LRL =======-----------========onStart" );
 		super.onStart();
 		Intent intent_H_E = getIntent();
 		flag = intent_H_E.getIntExtra("test_mode",0);
 		title = intent_H_E.getStringExtra("lesson_name");
 		if (isHandIn)
 		{
-			Log.i(TAG,"LRL =======-----------========onStart&&&&&&&&&ishandein == false" );
 			answerButton.setVisibility(View.INVISIBLE);
 			imageView.setVisibility(View.INVISIBLE);
 			chronometer.stop();
@@ -187,29 +182,24 @@ public class ExamActivity extends Activity {
 		testctrl.setIndex(index);
 		String temp = (index + 1) + "/" + 15;
 		numText.setText(temp);
-		Log.i(TAG,"LRL index  is =======-----------========"+index );
 		if (index == 0)
 		{
 			forword_btn.setText("无");
 			next_btn.setText("下一题");
-			Log.i(TAG,"LRL index  is =======-----------========enter 00000？？？" );
 		}else if (index == 14)
 		{
 			forword_btn.setText("上一题");
 			next_btn.setText("提交");
-			Log.i(TAG,"LRL index  is =======-----------========enter 141414141？？？" );
 		}else
 		{
 			forword_btn.setText("上一题");
 			next_btn.setText("下一题");
-			Log.i(TAG,"LRL index  is =======-----------========enter -----？？？" );
 		}
 
 		testctrl.OnPaint(proTextView,radioGroup,radioA,radioB,radioC,radioD);
 	}
 	@Override
 	protected void onRestart() {
-		Log.i(TAG,"LRL =======-----------========onRestart" );
 		super.onRestart();
 	}
 	@Override
@@ -221,7 +211,6 @@ public class ExamActivity extends Activity {
 				if(resultCode == RESULT_OK)
 				{
 					index = data.getIntExtra("select_index",0);
-					Log.i(TAG,"LRL mySelect now is *****==========***"+index);
 					isHandIn = data.getBooleanExtra("isHandIn",false);
 				}
 				break;

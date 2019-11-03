@@ -122,16 +122,13 @@ public class MyAnswerActivity extends Activity {
     @Override
     protected void onStart() {//ExamActivity走singletask模式，在活动站中只保存一个实例
         super.onStart();
-        Log.i(TAG,"LRL mySelect now is **********on start");
     }
     @Override
     protected void onRestart() {
         super.onRestart();
-        Log.i(TAG,"LRL mySelect now is **********onRestart");
     }
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        Log.i(TAG,"LRL mySelect now is **********onDestroy");
     }
 }

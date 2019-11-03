@@ -33,7 +33,6 @@ public class MylessonAdapter extends ArrayAdapter {
         @Override
         public View getView(int position, View convertView, ViewGroup parent) {
             Lesson lesson = (Lesson) getItem(position); // 获取当前项的Fruit实例
-            Log.i(TAG,"LRL myLessonList size =======is "+position);
             View view = LayoutInflater.from(getContext()).inflate(resourceId, null);//实例化一个对象
             LessonItemView lessonItemView = view.findViewById(R.id.mylesson_listview);
             imageView = lessonItemView.getLessonIcon();

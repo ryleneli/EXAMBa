@@ -71,7 +71,7 @@ public class MyTextView extends android.support.v7.widget.AppCompatTextView {
         //关键代码通过矩阵的平移实现
         matrix.setTranslate(deltaX, 0);
         gradient.setLocalMatrix(matrix);
-        postInvalidateDelayed(50);
+        postInvalidateDelayed(100);
     }
 }
 

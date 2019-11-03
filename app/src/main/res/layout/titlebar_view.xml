@@ -47,6 +47,7 @@
             android:paddingRight="10dp"
             android:layout_marginRight="10dp"
             android:scaleType="fitCenter"
+            android:visibility="invisible"
             android:background="@drawable/ic_access_time_black_24dp"
             />
 
