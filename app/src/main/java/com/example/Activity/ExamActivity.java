@@ -33,14 +33,14 @@ public class ExamActivity extends Activity {
 
 	private int flag;
 	private int index;
-	private boolean isHandIn;
+	public boolean isHandIn;
 	private String title;
 	private TitleBarView titleBarView;
 	private TextView proTextView;//问题
 	private TextView numText;
 	private TextView TextMode;
-	private TextView rightAnswer;
-	private TextView myAnswer;
+	public TextView rightAnswer;
+	public TextView myAnswer;
 	private RadioButton radioA;
 	private RadioButton radioB;
 	private RadioButton radioC;
@@ -48,6 +48,8 @@ public class ExamActivity extends Activity {
 	private RadioGroup radioGroup;
 	private Button forword_btn;//上一题按钮
 	private Button next_btn;//下一题按钮
+	private int[] testAnswer = new int[15];//试题答案
+	private int[] mySelect = new int[15];// 我的答案
 	public Chronometer chronometer;
 	private ImageButton answerButton;
 	private ImageView imageView;
@@ -81,6 +83,7 @@ public class ExamActivity extends Activity {
 		chronometer = titleBarView.getChronometer();
 		answerButton = titleBarView.getTitleAnswer();
 		imageView = titleBarView.getTimerBack();
+		imageView.setVisibility(View.VISIBLE);
 		chronometer.setBase(SystemClock.elapsedRealtime());
 		chronometer.start();
 		dbAdapter = new DBAdapter(this);
@@ -90,10 +93,9 @@ public class ExamActivity extends Activity {
 		int numberOfChosen = 15;
 		int[] problemRand = new int[numberOfAlltest];//所有题目顺序
 		int[] testTurn = new int[numberOfChosen];//试题
-		final int[] testAnswer = new int[numberOfChosen];//试题答案
-		final int[] mySelect = new int[numberOfChosen];// 我的答案
 
-		testctrl = new TestCtrl(this,dbAdapter,cursor,chronometer,numberOfAlltest,numberOfChosen,problemRand,testTurn,testAnswer,mySelect);
+
+		testctrl = new TestCtrl(this,this,dbAdapter,cursor,chronometer,numberOfAlltest,numberOfChosen,problemRand,testTurn,testAnswer,mySelect);
 		testctrl.testOfChosen(0);
 		testctrl.handlerOftestAnswer();
         //testctrl.OnPaint(proTextView,radioGroup,radioA,radioB,radioC,radioD);
@@ -133,6 +135,7 @@ public class ExamActivity extends Activity {
 				    startActivityForResult(intent,1);
 			}
 		});
+
 
 		/*
 		chronometer.setOnChronometerTickListener(new Chronometer.OnChronometerTickListener() {
@@ -175,7 +178,14 @@ public class ExamActivity extends Activity {
 			index = 0;
 			rightAnswer.setVisibility(View.VISIBLE);
 			myAnswer.setVisibility(View.VISIBLE);
+
+			for (int i=0;i<15;i++)
+			{
+				Log.i(TAG, "my answer====="+i+" is  ==========="+mySelect[i]);
+				Log.i(TAG, "test answer*******"+i+" is  ************"+testAnswer[i]);
+			}
 		}
+
 		TextMode_text = testctrl.testMode(flag);
 		titleBarView.getTitleText().setText(title);
 		TextMode.setText(TextMode_text);
@@ -212,6 +222,7 @@ public class ExamActivity extends Activity {
 				{
 					index = data.getIntExtra("select_index",0);
 					isHandIn = data.getBooleanExtra("isHandIn",false);
+					mySelect = data.getIntArrayExtra("answer");
 				}
 				break;
 			default : break;

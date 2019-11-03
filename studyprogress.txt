@@ -1,6 +1,14 @@
 ~至11.3
 计划完成：（10/27）
+userlogin                = bug
+userRigister             = bug
+test myAnswerlayout + score +problew locate + chapter + timer   完成 （除chapter）
+floatwindow              = 未进行
+
+~至11.10
+计划完成：（11/3）
+floatwindow
 userlogin
-userRigister
-test myAnswerlayout + score +problew locate + chapter + timer
-floatwindow 
+userRigister 
+activity解耦
+chapter && errorList

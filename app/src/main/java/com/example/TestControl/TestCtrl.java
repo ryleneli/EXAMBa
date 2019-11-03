@@ -17,6 +17,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.Activity.ExamActivity;
+import com.example.Activity.LoginActivity;
 import com.example.Activity.MyAnswerActivity;
 import com.example.Constant;
 import com.example.DBControl.DBAdapter;
@@ -68,11 +69,12 @@ public class TestCtrl {
     Cursor cursor;
     DBAdapter dbAdapter;
     Chronometer chronometer;
+    private ExamActivity examActivity;
 
-
-    public TestCtrl(Context context, DBAdapter dbAdapter, Cursor cursor_1, Chronometer chronometer,int numberOfAll, int numberOfChosen, int[]problemRand_1, int[]testTurn_1, int[]testAnswer_1, int[]mySelect_1)
+    public TestCtrl(Context context, ExamActivity examActivity,DBAdapter dbAdapter, Cursor cursor_1, Chronometer chronometer,int numberOfAll, int numberOfChosen, int[]problemRand_1, int[]testTurn_1, int[]testAnswer_1, int[]mySelect_1)
     {
         this.mcontext = context;
+        this.examActivity = examActivity;
         this.dbAdapter = dbAdapter;
         this.cursor = cursor_1;
         this.chronometer = chronometer;
@@ -244,6 +246,40 @@ public class TestCtrl {
             }
         }
     }
+    public void handleOfAnswer(int curIndex)
+    {
+        String temp = null;
+        if (curIndex<=4)
+        {
+            if (mySelect[curIndex] == 1) {
+                temp = "对";
+                examActivity.myAnswer.setText("您的答案"+temp);
+            } else if (mySelect[curIndex] == 3) {
+                temp = "错";
+                examActivity.myAnswer.setText("您的答案"+temp);
+            }
+            else if (mySelect[curIndex] == 0) {
+                temp = "未选";
+                examActivity.myAnswer.setText("您的答案："+temp);
+            }
+        }
+        else if (curIndex > 4 && curIndex <=14)
+        {
+            if (mySelect[curIndex] == 1) {
+                temp = "A";
+                examActivity.myAnswer.setText("您的答案"+temp);
+            } else if (mySelect[curIndex] == 2) {
+                temp = "B";
+                examActivity.myAnswer.setText("您的答案"+temp);
+            } else if (mySelect[curIndex] == 3) {
+                temp = "C";
+                examActivity.myAnswer.setText("您的答案"+temp);
+            } else if (mySelect[curIndex] == 4) {
+                temp = "D";
+                examActivity.myAnswer.setText("您的答案"+temp);
+            }
+        }
+    }
     private void toWrongItem()
     {
         curIndex = 0;
@@ -293,7 +329,6 @@ public class TestCtrl {
                 if (cursor.getInt(cursor.getColumnIndex(DBAdapter.TESTTPYE)) == 1 && (chapterNum == 0)) {// 选择题
                     mySelect[cnt] = 0;
                     testTurn[cnt++] = problemRand[i];
-                    Log.i(TAG,"LRL testturn *********"+testTurn[cnt++]+"==="+cnt+"==="+i+"==="+problemRand[i]);
                 }else if (cursor.getInt(cursor.getColumnIndex(DBAdapter.TESTTPYE)) == 1 && cursor.getInt(cursor.getColumnIndex(DBAdapter.TESTBELONG)) == chapterNum)
                 {
                     mySelect[cnt] = 0;
@@ -359,5 +394,14 @@ public class TestCtrl {
                     break;
             }
         }
+        //ExamActivity examActivity = new ExamActivity();
+        if (examActivity.isHandIn)
+        {
+            handleOfAnswer(curIndex);
+            //examActivity.myAnswer.setText("nindedaa："+mySelect[curIndex]);
+            //examActivity.myAnswer.setVisibility(View.VISIBLE);
+            examActivity.rightAnswer.setText("正确答案："+TESTANSWER);
+        }
+
     }
 }

@@ -102,6 +102,8 @@ public class MyAnswerActivity extends Activity {
                     Log.i(TAG, "my answer====================ready to enter exam");
                     Intent intent = new Intent(MyAnswerActivity.this, ExamActivity.class);
                     intent.putExtra("isHandIn",isHandIn);
+                    intent.putExtra("answer",myAnswer);
+                    //intent.putExtra("test_answer",testAnswer);
                     setResult(RESULT_OK, intent);
                     MyAnswerActivity.this.finish();
                 }
