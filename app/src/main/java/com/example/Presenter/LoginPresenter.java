@@ -42,9 +42,9 @@ public class LoginPresenter{
                 //获取填写的注册信息
                 String username =loginActivity.account.getText().toString();
                 String password =loginActivity.password.getText().toString();
-                //if(username.trim().length()==0||password.trim().length()==0){
-                 //   loginActivity.showToast("用户名和密码为空");
-                //}else{
+                if(username.trim().length()==0||password.trim().length()==0){
+                    loginActivity.showToast("用户名和密码为空");
+                }else{
                     User user = new User();
                     user.setUsername(username);
                     user.setPassword(password);
@@ -52,7 +52,7 @@ public class LoginPresenter{
                     user.setState(1);
                     login(user);
 
-                //}
+                }
 
           /*  }else{
                 loginActivity.showToast("您的设备未联网啊，请检查设备网络状况...");
@@ -87,8 +87,8 @@ public class LoginPresenter{
 
     public void login(User user) {
         //登录用户信息
-        //Log.i(TAG,"getUserInfo error------------------ :"+gson.toJson(user));
-        NetWorks.connectTest("connectedTest",new Observer<String>() {
+
+        NetWorks.userLogin("userLogin",gson.toJson(user),new Observer<String>() {
             @Override
             public void onCompleted() {}
 
@@ -105,8 +105,8 @@ public class LoginPresenter{
                 }
                 else{
                     //获取登录相关的信息，并更新本地的信息 ,主要更新最后登录时间
-                    //User loginUser= gson.fromJson(info,User.class);
-                    //Log.i(TAG,"getUserInfo error------------------ :"+gson.fromJson(info,User.class));
+                    User loginUser= gson.fromJson(info,User.class);
+
                     //StaticVariable.LOCAL_USER_INFO.setLastLoginDate(loginUser.getLastLoginDate());
                     //localUser.saveInfoLocal(StaticVariable.LOCAL_USER_INFO, StaticVariable.USER_FILE);
                     //赋值个人信息到全局变量中
