@@ -1,5 +1,8 @@
 package com.example.webConnect;
 
+import retrofit2.http.Field;
+import retrofit2.http.FormUrlEncoded;
+import retrofit2.http.Headers;
 import retrofit2.http.POST;
 import retrofit2.http.Query;
 import rx.Observable;
@@ -27,28 +30,45 @@ public class NetWorks extends RetrofitUtils {
     private interface NetService {
 
         //定义web接口的地方
+        @FormUrlEncoded
         @POST("WebService")//通过@GET, @POST, @PUT, @DELETE和@HEAD指定对应的请求方式，参数是请求路径
-        Observable<String> connectedTest(@Query("action") String action);
+        @Headers("Content-Type:application/x-www-form-urlencoded; charset=utf-8")
+        Observable<String> connectedTest(@Field("action") String action);
 
+        @FormUrlEncoded
         @POST("WebService")
-        Observable<String> getUserInfo(@Query("action") String action,@Query("userId") int userId);
+        @Headers("Content-Type:application/x-www-form-urlencoded; charset=utf-8")
+        Observable<String> getUserInfo(@Field("action") String action,@Field("userId") int userId);
 
+        @FormUrlEncoded
         @POST("WebService")
-        Observable<String> addNewUser(@Query("action") String action,@Query("userInfo") String userInfo);
+        @Headers("Content-Type:application/x-www-form-urlencoded; charset=utf-8")
+        Observable<String> addNewUser(@Field("action") String action,@Field("userInfo") String userInfo);
 
+        @FormUrlEncoded
         @POST("WebService")
-        Observable<String> userLogin(@Query("action") String action,@Query("userInfo") String userInfo);
+        @Headers("Content-Type:application/x-www-form-urlencoded; charset=utf-8")
+        Observable<String> userLogin(@Field("action") String action,@Field("userInfo") String userInfo);
 
+        @FormUrlEncoded
         @POST("WebService")
-        Observable<String> getRoomList(@Query("action") String action,@Query("state") int state);
+        @Headers("Content-Type:application/x-www-form-urlencoded; charset=utf-8")
+        Observable<String> getRoomList(@Field("action") String action,@Field("state") int state);
 
+        @FormUrlEncoded
         @POST("WebService")
-        Observable<String> addNewRoom(@Query("action") String action,@Query("roomInfo") String roomInfo);
+        @Headers("Content-Type:application/x-www-form-urlencoded; charset=utf-8")
+        Observable<String> addNewRoom(@Field("action") String action,@Field("roomInfo") String roomInfo);
 
+        @FormUrlEncoded
         @POST("WebService")
-        Observable<String> updateRoomInfo(@Query("action") String action,@Query("roomInfo") String roomInfo);
+        @Headers("Content-Type:application/x-www-form-urlencoded; charset=utf-8")
+        Observable<String> updateRoomInfo(@Field("action") String action,@Field("roomInfo") String roomInfo);
+
+        @FormUrlEncoded
         @POST("WebService")
-        Observable<String> getRoomInfo(@Query("action") String action,@Query("roomId") String roomId);
+        @Headers("Content-Type:application/x-www-form-urlencoded; charset=utf-8")
+        Observable<String> getRoomInfo(@Field("action") String action,@Field("roomId") String roomId);
     }
 
     //测试连接状态
