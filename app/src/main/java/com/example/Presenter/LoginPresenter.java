@@ -36,15 +36,15 @@ public class LoginPresenter{
 
     public void login() {
         ConnectivityManager cwjManager=(ConnectivityManager)this.context.getSystemService(Context.CONNECTIVITY_SERVICE);
-        //if(cwjManager.getActiveNetworkInfo()!=null){
-            //if(cwjManager.getActiveNetworkInfo().isAvailable()){
+        if(cwjManager.getActiveNetworkInfo()!=null){
+            if(cwjManager.getActiveNetworkInfo().isAvailable()){
 
                 //获取填写的注册信息
                 String username =loginActivity.account.getText().toString();
                 String password =loginActivity.password.getText().toString();
-                //if(username.trim().length()==0||password.trim().length()==0){
-                 //   loginActivity.showToast("用户名和密码为空");
-               // }else{
+                if(username.trim().length()==0||password.trim().length()==0){
+                    loginActivity.showToast("用户名和密码为空");
+                }else{
                     User user = new User();
                     user.setUsername(username);
                     user.setPassword(password);
@@ -52,19 +52,20 @@ public class LoginPresenter{
                     user.setState(1);
                     login(user);
 
-                //}
+                }
 
-          /*  }else{
+          }else{
                 loginActivity.showToast("您的设备未联网啊，请检查设备网络状况...");
             }
-        }else{
+        }else {
             loginActivity.showToast("您的设备未联网啊，请检查设备网络状况...");
-        //}*/
+        }
 
 
     }
 
     public void toRegister() {
+        Log.i(TAG,"7778877");
         loginActivity.showToast("跳转到注册界面");
         Intent intent = new Intent(context, RegisterActivity.class);
         context.startActivity(intent);
@@ -88,7 +89,7 @@ public class LoginPresenter{
     public void login(User user) {
         //登录用户信息
 
-        NetWorks.connectTest("connectedTest",new Observer<String>() {
+        NetWorks.userLogin("userLogin",gson.toJson(user),new Observer<String>() {
             @Override
             public void onCompleted() {}
 
@@ -105,7 +106,7 @@ public class LoginPresenter{
                 }
                 else{
                     //获取登录相关的信息，并更新本地的信息 ,主要更新最后登录时间
-                    //User loginUser= gson.fromJson(info,User.class);
+                    User loginUser= gson.fromJson(info,User.class);
 
                     //StaticVariable.LOCAL_USER_INFO.setLastLoginDate(loginUser.getLastLoginDate());
                     //localUser.saveInfoLocal(StaticVariable.LOCAL_USER_INFO, StaticVariable.USER_FILE);

@@ -32,6 +32,7 @@ public class LoginActivity extends Activity implements View.OnClickListener{
         register = (TextView) findViewById(R.id.register_textView);
         loginPresenter = new LoginPresenter(this,this);
         login_button.setOnClickListener(this);
+        register.setOnClickListener(this);
     }
     @Override
     public void onClick(View view) {

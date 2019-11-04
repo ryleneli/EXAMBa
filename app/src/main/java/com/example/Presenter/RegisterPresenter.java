@@ -49,13 +49,14 @@ public class RegisterPresenter {
             }
 
 
-        }else{
+       }else{
             registerActivity.showToast("您的设备未联网啊，请检查设备网络状况...");
         }
     }
 
     private void registerToWeb(final User user) {
         //注册用户信息
+        Log.i(TAG,"7778877-------------");
         NetWorks.addNewUser("addNewUser",gson.toJson(user),new Observer<String>() {
             @Override
             public void onCompleted() {}
@@ -82,7 +83,7 @@ public class RegisterPresenter {
         });
     }
     public void toWebInfo(final User user) {
-
+        Log.i(TAG,"7778877****************");
         //获取登录相关的信息，并更新本地的信息
         NetWorks.userLogin("userLogin",gson.toJson(user),new Observer<String>() {
             @Override
