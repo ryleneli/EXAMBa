@@ -3,6 +3,8 @@ package com.example.Activity;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.v4.app.FragmentActivity;
+import android.support.v4.app.FragmentManager;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -16,12 +18,13 @@ import com.example.testsys.R;
  * Created by rylene_li on 2019/9/27.
  */
 
-public class LoginActivity extends Activity implements View.OnClickListener{
+public class LoginActivity extends FragmentActivity implements View.OnClickListener{
 
     private Button login_button;
     private LoginPresenter loginPresenter;
     public EditText account,password;
     public TextView register;
+    public FragmentManager fm = getSupportFragmentManager();
     protected void onCreate(Bundle savedInstanceState)
     {
         super.onCreate(savedInstanceState);
@@ -31,6 +34,7 @@ public class LoginActivity extends Activity implements View.OnClickListener{
         password = (EditText) findViewById(R.id.password);
         register = (TextView) findViewById(R.id.register_textView);
         loginPresenter = new LoginPresenter(this,this);
+
         login_button.setOnClickListener(this);
         register.setOnClickListener(this);
     }

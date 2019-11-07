@@ -54,7 +54,7 @@ public class HomeFragment extends Fragment {
     private TestView chapterView,randomView,errorView,testView;
     private ExpandableListView expandableListView;
     private TextView hotLesson,learning_text;
-    private Handler handler;
+    private Handler handler = new Handler();
     private final Timer timer = new Timer();
     private TimerTask task;
     int index;
@@ -85,28 +85,7 @@ public class HomeFragment extends Fragment {
         recyclerView.setLayoutManager(layoutManager);
         recyclerViewAdapter = new MyRecyclerViewAdapter(getContext(),lessonList);
         recyclerView.setAdapter(recyclerViewAdapter);
-
-        handler = new Handler() {
-            @Override
-            public void handleMessage(Message msg) {
-                // TODO Auto-generated method stub
-                if (msg.what == 1 && index < lessonList.size()){
-                    hotLesson.setText(lessonList.get(index).getName());
-                    index++;
-                }else index = 0;
-                super.handleMessage(msg);
-            }
-        };
-        task = new TimerTask() {
-            @Override
-            public void run() {
-                // TODO Auto-generated method stub
-                Message message = new Message();
-                message.what = 1;
-                handler.sendMessage(message);
-            }
-        };
-        timer.schedule(task, 0, 3000);
+        handler.post(mUpdate);
         recyclerViewAdapter.setItemClickListener(new itemClickListener() {
             @Override
             public void itemClick() {
@@ -226,7 +205,17 @@ public class HomeFragment extends Fragment {
         return view;
 
     }
+    private Runnable mUpdate = new Runnable() {
+        public void run() {
 
+            if (index < lessonList.size()){
+                hotLesson.setText(lessonList.get(index).getName());
+                index++;
+            }else index = 0;
+            handler.postDelayed(this, 1000);
+
+        }
+    };
     private void initFruits() {
         Lesson apple = new Lesson("通信原理");
         lessonList.add(apple);

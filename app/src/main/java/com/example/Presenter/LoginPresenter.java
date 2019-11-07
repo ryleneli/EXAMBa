@@ -3,12 +3,14 @@ package com.example.Presenter;
 import android.content.Context;
 import android.content.Intent;
 import android.net.ConnectivityManager;
+import android.support.v4.app.FragmentManager;
 import android.util.Log;
 
 import com.example.Activity.MainActivity;
-import com.example.Activity.RegisterActivity;
+//import com.example.Activity.RegisterActivity;
+import com.example.Fragment.RegisterDialogFragment;
 import com.google.gson.Gson;
-
+import android.support.v4.app.FragmentManager;
 import rx.Observer;
 import com.example.webConnect.NetWorks;
 import com.example.LocalRecord.LocalRecord;
@@ -65,11 +67,12 @@ public class LoginPresenter{
     }
 
     public void toRegister() {
-        Log.i(TAG,"7778877");
         loginActivity.showToast("跳转到注册界面");
-        Intent intent = new Intent(context, RegisterActivity.class);
-        context.startActivity(intent);
-        this.loginActivity.finish();
+        showEditDialog();
+    }
+    private void showEditDialog() {
+        RegisterDialogFragment fragment = new RegisterDialogFragment();
+        fragment.show(loginActivity.fm, "fragment_edit_name");
     }
 /*
     public void toWebInfo() {
