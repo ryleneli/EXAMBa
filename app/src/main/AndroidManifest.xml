@@ -17,10 +17,7 @@
         <activity
             android:name="com.example.Activity.SplashActivity"
             android:theme="@style/SplashTheme">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
+
         </activity>
 
         <activity android:name="com.example.Activity.LoginModeActivity" >
@@ -45,6 +42,12 @@
         <activity android:name="com.example.Activity.MyAnswerActivity"
             android:launchMode="singleTask">
 
+        </activity>
+        <activity android:name="com.example.Activity.FloatWindow">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
         </activity>
     </application>
 
