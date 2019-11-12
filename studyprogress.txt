@@ -7,8 +7,14 @@ floatwindow              = 未进行
 
 ~至11.10
 计划完成：（11/3）
-floatwindow
+floatwindow（动画弹出，自由移动）
 userlogin
 userRigister 
 activity解耦
 chapter && errorList
+
+~至11.17
+计划完成：（11/12）
+完成以上任务。。。
+修正滑动卡顿，OOM等问题。
+UI想法：recyclerview item长按动态删除，其他item自动对齐；home页面上滑，顶部悬浮

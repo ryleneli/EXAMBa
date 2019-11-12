@@ -67,12 +67,17 @@ public class FloatWindow extends Activity implements View.OnClickListener {
         enterTest.setVisibility(View.VISIBLE);
         exitTest.setVisibility(View.VISIBLE);
         //for循环来开始小图标的出现动画
-
+        //float density = getResources().getDisplayMetrics().density;
         for (int i = 0; i < textViews.size(); i++) {
             AnimatorSet set = new AnimatorSet();
+            int dp_tv1_X = 43;
+            int px_tv1_X = dip2px(dp_tv1_X);
+            int dp_tv2_X = 76;
+            int px_tv2_X = dip2px(dp_tv2_X);
+            int pxTemp[] = {px_tv1_X,px_tv2_X};
             set.playTogether(
-                    ObjectAnimator.ofFloat(textViews.get(i),"translationX",(float)0,-40-i*1*100),
-                    ObjectAnimator.ofFloat(textViews.get(i),"translationY",(float)0,-140+i*1*100)
+                    ObjectAnimator.ofFloat(textViews.get(i),"translationX",(float)0,pxTemp[i])
+                   // , ObjectAnimator.ofFloat(textViews.get(i),"translationY",(float)0,-140+i*1*100)
                     , ObjectAnimator.ofFloat(textViews.get(i), "alpha", 0, 1).setDuration(2000)
             );
             set.setInterpolator(new BounceInterpolator());
