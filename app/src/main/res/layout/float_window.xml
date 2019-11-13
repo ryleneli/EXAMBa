@@ -46,32 +46,24 @@
         android:src="@drawable/rounded_puple2"
         android:visibility="gone"
         android:alpha="0"/>
-    <TextView
+    <ImageView
         android:id="@+id/enter_test"
-        android:layout_width="36dp"
-        android:layout_height="36dp"
+        android:layout_width="24dp"
+        android:layout_height="24dp"
         android:layout_centerInParent="true"
-        android:layout_marginBottom="30dp"
-        android:layout_marginRight="30dp"
-        android:gravity="center"
-        android:text="ENTER"
-        android:textSize="8dp"
-        android:textColor="#000000"
-        android:visibility="gone"
-        android:background="@drawable/rounded_imagebutton"
+        android:visibility="visible"
+        android:background="@drawable/rounded_puple"
+        android:src="@drawable/ic_close_black_24dp"
+        android:alpha="0"
         />
-    <TextView
+    <ImageView
         android:id="@+id/exit_test"
-        android:layout_width="30dp"
-        android:layout_height="30dp"
+        android:layout_width="24dp"
+        android:layout_height="24dp"
         android:layout_centerInParent="true"
-        android:layout_marginBottom="30dp"
-        android:layout_marginRight="30dp"
-        android:gravity="center"
-        android:text="EXIT"
-        android:textSize="8dp"
-        android:textColor="#000000"
-        android:visibility="gone"
-        android:background="@drawable/rounded_imagebutton"
+        android:visibility="visible"
+        android:background="@drawable/rounded_puple"
+        android:src="@drawable/ic_arrow_forward_black_24dp"
+        android:alpha="0"
         />
 </RelativeLayout>

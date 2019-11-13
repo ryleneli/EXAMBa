@@ -26,10 +26,10 @@ public class FloatWindow extends Activity implements View.OnClickListener {
     private static String TAG = "FloatWindow";
     private RelativeLayout menu;
     private ImageView purple_1,purple_2;
-    private TextView enterTest;
-    private TextView exitTest;
+    private ImageView enterTest;
+    private ImageView exitTest;
     private boolean isMenuOpen = false;
-    private List<TextView> textViews = new ArrayList<>();
+    private List<ImageView> imageViews = new ArrayList<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -38,11 +38,11 @@ public class FloatWindow extends Activity implements View.OnClickListener {
         menu = (RelativeLayout) findViewById(R.id.menu_floatWindow);
         purple_1 = (ImageView) findViewById(R.id.purple1);
         purple_2 = (ImageView) findViewById(R.id.purple2);
-        enterTest = (TextView) findViewById(R.id.enter_test);
-        exitTest = (TextView) findViewById(R.id.exit_test);
+        enterTest = (ImageView) findViewById(R.id.enter_test);
+        exitTest = (ImageView) findViewById(R.id.exit_test);
         animOfPurple();
-        textViews.add(enterTest);
-        textViews.add(exitTest);
+        imageViews.add(enterTest);
+        imageViews.add(exitTest);
         menu.setOnClickListener(this);
         purple_1.setVisibility(View.VISIBLE);
         purple_2.setVisibility(View.VISIBLE);
@@ -64,7 +64,7 @@ public class FloatWindow extends Activity implements View.OnClickListener {
     }
     @Override
     protected void onDestroy() {
-        textViews.clear();
+        imageViews.clear();
         super.onDestroy();
     }
     private void animOfPurple()
@@ -95,7 +95,7 @@ public class FloatWindow extends Activity implements View.OnClickListener {
         set_puple1.setStartDelay(500);
         set_puple2.playTogether(objectAnimator5,objectAnimator6,objectAnimator7,objectAnimator8);
         set.play(set_puple1).with(set_puple2);
-        set.setDuration(4000);
+        set.setDuration(3000);
         set.start();
 
         Log.i(TAG,"puple==========");
@@ -108,17 +108,17 @@ public class FloatWindow extends Activity implements View.OnClickListener {
         exitTest.setVisibility(View.VISIBLE);
         //for循环来开始小图标的出现动画
         //float density = getResources().getDisplayMetrics().density;
-        for (int i = 0; i < textViews.size(); i++) {
+        for (int i = 0; i < imageViews.size(); i++) {
             AnimatorSet set = new AnimatorSet();
-            int dp_tv1_X = 43;
+            int dp_tv1_X = 40;
             int px_tv1_X = dip2px(dp_tv1_X);
-            int dp_tv2_X = 76;
+            int dp_tv2_X = 70;
             int px_tv2_X = dip2px(dp_tv2_X);
             int pxTemp[] = {px_tv1_X,px_tv2_X};
             set.playTogether(
-                    ObjectAnimator.ofFloat(textViews.get(i),"translationX",(float)0,pxTemp[i])
-                   // , ObjectAnimator.ofFloat(textViews.get(i),"translationY",(float)0,-140+i*1*100)
-                    , ObjectAnimator.ofFloat(textViews.get(i), "alpha", 0, 1).setDuration(2000)
+                    ObjectAnimator.ofFloat(imageViews.get(i),"translationY",(float)0,pxTemp[i])
+                   //, ObjectAnimator.ofFloat(imageViews.get(i),"translationY",(float)0,28)
+                    , ObjectAnimator.ofFloat(imageViews.get(i), "alpha", 0, 1).setDuration(2000)
             );
             set.setInterpolator(new BounceInterpolator());
             set.setDuration(500).setStartDelay(100);
@@ -149,12 +149,17 @@ public class FloatWindow extends Activity implements View.OnClickListener {
 
     private void showCloseAnim(int dp) {
         //for循环来开始小图标的出现动画
-        for (int i = 0; i < textViews.size(); i++) {
+        for (int i = 0; i < imageViews.size(); i++) {
             AnimatorSet set = new AnimatorSet();
+            int dp_tv1_X = 40;
+            int px_tv1_X = dip2px(dp_tv1_X);
+            int dp_tv2_X = 70;
+            int px_tv2_X = dip2px(dp_tv2_X);
+            int pxTemp[] = {px_tv1_X,px_tv2_X};
             set.playTogether(
-                    ObjectAnimator.ofFloat(textViews.get(i), "translationX", (float) -40-i*1*100, (float)0),
-                    ObjectAnimator.ofFloat(textViews.get(i), "translationY", (float) -140+i*1*100, (float) 0),
-                    ObjectAnimator.ofFloat(textViews.get(i), "alpha", 1, 0).setDuration(2000)
+                    //ObjectAnimator.ofFloat(imageViews.get(i),"translationY",pxTemp[i],(float)0),
+                    //, ObjectAnimator.ofFloat(imageViews.get(i),"translationY",(float)0,28)
+                     ObjectAnimator.ofFloat(imageViews.get(i), "alpha", 1, 0)
             );
 
 //      set.setInterpolator(new AccelerateInterpolator());
