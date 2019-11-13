@@ -9,7 +9,9 @@ import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
 import android.view.animation.BounceInterpolator;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.example.testsys.R;
@@ -22,7 +24,8 @@ import jp.wasabeef.glide.transformations.internal.Utils;
 public class FloatWindow extends Activity implements View.OnClickListener {
 
     private static String TAG = "FloatWindow";
-    private LinearLayout menu;
+    private RelativeLayout menu;
+    private ImageView purple_1,purple_2;
     private TextView enterTest;
     private TextView exitTest;
     private boolean isMenuOpen = false;
@@ -32,12 +35,17 @@ public class FloatWindow extends Activity implements View.OnClickListener {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.float_window);
-        menu = (LinearLayout) findViewById(R.id.menu_floatWindow);
+        menu = (RelativeLayout) findViewById(R.id.menu_floatWindow);
+        purple_1 = (ImageView) findViewById(R.id.purple1);
+        purple_2 = (ImageView) findViewById(R.id.purple2);
         enterTest = (TextView) findViewById(R.id.enter_test);
         exitTest = (TextView) findViewById(R.id.exit_test);
+        animOfPurple();
         textViews.add(enterTest);
         textViews.add(exitTest);
         menu.setOnClickListener(this);
+        purple_1.setVisibility(View.VISIBLE);
+        purple_2.setVisibility(View.VISIBLE);
     }
 
     @Override
@@ -59,7 +67,39 @@ public class FloatWindow extends Activity implements View.OnClickListener {
         textViews.clear();
         super.onDestroy();
     }
+    private void animOfPurple()
+    {
+        Log.i(TAG,"puple");
 
+        AnimatorSet set = new AnimatorSet();
+        AnimatorSet set_puple1 = new AnimatorSet();
+        AnimatorSet set_puple2 = new AnimatorSet();
+        ObjectAnimator objectAnimator1 = ObjectAnimator.ofFloat(purple_1, "alpha",0f,1.0f,0.8f,0f);
+        ObjectAnimator objectAnimator2 = ObjectAnimator.ofFloat(purple_1, "scaleX", 0f, 1.0f);
+        ObjectAnimator objectAnimator3 = ObjectAnimator.ofFloat(purple_1, "scaleY", 0f, 1.0f);
+        ObjectAnimator objectAnimator4 = ObjectAnimator.ofFloat(purple_1, "translationY", 0, -dip2px(70));
+        ObjectAnimator objectAnimator5 = ObjectAnimator.ofFloat(purple_2, "scaleX", 0f, 1.0f);
+        ObjectAnimator objectAnimator6 = ObjectAnimator.ofFloat(purple_2, "scaleY", 0f, 1.0f);
+        ObjectAnimator objectAnimator7 = ObjectAnimator.ofFloat(purple_2, "translationY", 0, -dip2px(70));
+        ObjectAnimator objectAnimator8 = ObjectAnimator.ofFloat(purple_2, "alpha",0f,1.0f,0.8f,0f);
+        objectAnimator1.setRepeatCount(-1);
+        objectAnimator2.setRepeatCount(-1);
+        objectAnimator3.setRepeatCount(-1);
+        objectAnimator4.setRepeatCount(-1);
+
+        objectAnimator5.setRepeatCount(-1);
+        objectAnimator6.setRepeatCount(-1);
+        objectAnimator7.setRepeatCount(-1);
+        objectAnimator8.setRepeatCount(-1);
+        set_puple1.playTogether(objectAnimator1,objectAnimator2,objectAnimator3,objectAnimator4);
+        set_puple1.setStartDelay(500);
+        set_puple2.playTogether(objectAnimator5,objectAnimator6,objectAnimator7,objectAnimator8);
+        set.play(set_puple1).with(set_puple2);
+        set.setDuration(4000);
+        set.start();
+
+        Log.i(TAG,"puple==========");
+    }
 
     //打开扇形菜单的属性动画， dp为半径长度
 
