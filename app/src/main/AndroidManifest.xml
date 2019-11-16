@@ -3,6 +3,7 @@
     package="com.example.testsys"
     android:versionCode="1"
     android:versionName="1.0" >
+    <uses-permission android:name="android.permission.SYSTEM_ALERT_WINDOW" />
     <uses-permission android:name="android.permission.INTERNET"/>
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
     <uses-sdk
@@ -27,7 +28,10 @@
         </activity>
 
         <activity android:name="com.example.Activity.MainActivity" >
-
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
         </activity>
         <activity android:name="com.example.Activity.AllMyLesson" >
 
@@ -44,11 +48,9 @@
 
         </activity>
         <activity android:name="com.example.Activity.FloatWindow">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
+
         </activity>
+        <service android:name="com.example.Service.FloatWindowService"></service>
     </application>
 
 </manifest>

@@ -9,6 +9,8 @@ import java.util.Random;
 
 import com.example.Constant;
 import com.example.DBControl.DBAdapter;
+import com.example.Service.FloatWindowService;
+import com.example.Service.MyWindowManager;
 import com.example.TestControl.TestCtrl;
 import com.example.UI.TitleBarView;
 import com.example.testsys.R;
@@ -27,10 +29,11 @@ import android.widget.ImageView;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.TextView;
+import android.widget.Toast;
 
 public class ExamActivity extends Activity {
 	private static String TAG = "ExamActivity";
-
+    private MyWindowManager myWindowManager;
 	private int flag;
 	private int index;
 	public boolean isHandIn;
@@ -66,6 +69,7 @@ public class ExamActivity extends Activity {
 	protected void onCreate(Bundle savedInstanceState) {
 		// TODO Auto-generated method stub
 		super.onCreate(savedInstanceState);
+
 		setContentView(R.layout.test_fragment);
 		titleBarView = (TitleBarView) findViewById(R.id.test_titlebar);
 		proTextView = (TextView) findViewById(R.id.pro_text);
@@ -237,5 +241,96 @@ public class ExamActivity extends Activity {
 		chronometer.stop();
 		super.onDestroy();
 	}
+	@Override
+	public void onBackPressed() {
+		super.onBackPressed();
+		Toast.makeText(this, "按下了back键   onBackPressed()", Toast.LENGTH_SHORT).show();
+	}
+	@Override
+	protected void onUserLeaveHint() {
+		super.onUserLeaveHint();
+		MyWindowManager.initWindowManager (this,ExamActivity.this);
+		Intent intentToHome = new Intent(ExamActivity.this, FloatWindowService.class);
+		temp=testctrl.timeTrans();
+		intentToHome.putExtra("TIME",temp);
+		startService(intentToHome);
+		//FloatWindowService floatWindowService = new FloatWindowService();
+		//floatWindowService.initService(getApplicationContext(),ExamActivity.this);
+		Toast.makeText(this, "onUserLeaveHint", Toast.LENGTH_SHORT).show();
+	}
+	public ExamActivity test()
+	{
+		return this;
+	}
+	/*
+	@Override
+	public boolean onKeyDown(int keyCode, KeyEvent event)
+	{
+		if(keyCode == KeyEvent.KEYCODE_BACK)
+		{ //监控/拦截/屏蔽返回键
+			dialog();
 
+			return false;
+
+		} else if(keyCode == KeyEvent.KEYCODE_MENU)
+		{
+			if(isShowButton)
+			{
+				rly.setVisibility(View.VISIBLE);
+				isShowButton = false;
+
+			}else
+			{
+				rly.setVisibility(View.GONE);
+				isShowButton = true;
+			}
+
+			return false;
+
+		} else if(keyCode == KeyEvent.KEYCODE_HOME)
+		{
+			//由于Home键为系统键，此处不能捕获，需要重写onAttachedToWindow()
+
+			return false;
+		}
+		return super.onKeyDown(keyCode, event);
+	}
+*/
+/*
+	protected void dialog()
+	{
+		AlertDialog.Builder builder = new Builder(WebActivity.this);
+		builder.setMessage("确定要退出吗?");
+		builder.setTitle("提示");
+		builder.setPositiveButton("确认",
+				new android.content.DialogInterface.OnClickListener()
+				{
+					public void onClick(DialogInterface dialog, int which)
+					{
+						dialog.dismiss();
+						WebActivity.this.finish();
+					}
+				});
+
+		builder.setNegativeButton("取消",
+				new android.content.DialogInterface.OnClickListener()
+				{
+					public void onClick(DialogInterface dialog, int which)
+					{
+						dialog.dismiss();
+					}
+				});
+
+		builder.create().show();
+	}
+
+    */
+    /*
+    // 拦截/屏蔽系统Home键
+    public void onAttachedToWindow()
+    {
+        this.getWindow().setType(WindowManager.LayoutParams.TYPE_KEYGUARD);
+        super.onAttachedToWindow();
+    }
+    */
 }
