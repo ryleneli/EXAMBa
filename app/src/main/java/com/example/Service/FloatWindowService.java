@@ -93,7 +93,6 @@ public class FloatWindowService extends Service {
         public void handleMessage(Message msg) {
             if (msg.what == 1) {
                 MyWindowManager.update((time++));
-
             }
         }
     };

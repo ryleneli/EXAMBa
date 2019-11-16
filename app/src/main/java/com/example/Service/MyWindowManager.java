@@ -15,27 +15,25 @@ import android.widget.TextView;
 
 import com.example.Activity.ExamActivity;
 import com.example.Activity.LoginActivity;
+import com.example.UI.FloatWindowBigView;
 import com.example.UI.FloatWindowView;
 
 public class MyWindowManager {
 
     private static String TAG = "MyWindowManager";
-    private static Context context;
-    private static ExamActivity examActivity;
+
     private static FloatWindowView floatWindow;                 //floatWindowView的实例
+    private static FloatWindowBigView floatWindowBig;                 //floatWindowView的实例
     private static WindowManager.LayoutParams floatWindowParams;//floatWindowView的参数
     private static WindowManager mWindowManager;                //floatWindow管理
+    private static WindowManager.LayoutParams floatWindowParamsBig;//floatWindowView的参数
     private static Chronometer chronometer;
 
     /**
      * 创建悬浮窗，初始位置为屏幕的下方居中。
      * 必须为应用程序的Context.
      */
-    public static void initWindowManager(Context context1,ExamActivity examActivity1)
-    {
-       context = context1;
-       examActivity = examActivity1;
-    }
+
     public static void createfloatWindow(Context context) {
         //calculation = calculation01;
         WindowManager windowManager = getWindowManager(context);
@@ -62,7 +60,7 @@ public class MyWindowManager {
                 floatWindowParams.height = FloatWindowView.viewHeight;
                 floatWindowParams.x = screenWidth/ 2 - floatWindowParams.width/2;//窗口位置
                 Log.d(TAG, " lrll floatWindowParams.x====="+floatWindowParams.x+"view width"+floatWindowParams.width);
-                floatWindowParams.y =screenHeight * 4 / 5;
+                floatWindowParams.y =screenHeight * 3 / 5;
                 Log.d(TAG, " lrll floatWindowParams.y====="+floatWindowParams.y+"view height"+floatWindowParams.height);
             }
             /**将悬浮窗参数floatWindowParams传到FloatWindowView以使用（计算移动位置）*/
@@ -94,23 +92,52 @@ public class MyWindowManager {
      * 更新悬浮窗内TextView信息
      *
      */
-/*
-    public static void setTimer() {
-        floatWindow.timerStart(examActivity.chronometer);
-        Log.d(TAG, " enter set timer ===========");
-    }*/
 
-    /**
-     * 是否有悬浮窗显示在屏幕上。
-     *
-     * @return 有悬浮窗显示在桌面上返回true，没有的话返回false。
-     */
     public static void update(int time) {
         floatWindow.setText(time);
         //valueofFPS.setText("FPS : "+fps);
     }
     public static boolean isWindowShowing() {
         return floatWindow != null;
+    }
+    /**
+     * 创建一个大悬浮窗。位置为屏幕正中间。
+     *
+     * @param context
+     *            必须为应用程序的Context.
+     */
+    public static void createBigWindow(Context context) {
+        WindowManager windowManager = getWindowManager(context);
+        int screenWidth = windowManager.getDefaultDisplay().getWidth();
+        int screenHeight = windowManager.getDefaultDisplay().getHeight();
+        if (floatWindowBig == null) {
+            floatWindowBig = new FloatWindowBigView(context);
+            if (floatWindowParamsBig == null) {
+                floatWindowParamsBig = new WindowManager.LayoutParams();
+                floatWindowParamsBig.x = screenWidth / 2 - FloatWindowBigView.viewWidth / 2;
+                floatWindowParamsBig.y = screenHeight* 3 / 5;
+                floatWindowParamsBig.type = WindowManager.LayoutParams.TYPE_APPLICATION_OVERLAY;
+
+                floatWindowParamsBig.format = PixelFormat.RGBA_8888;
+                floatWindowParamsBig.gravity = Gravity.LEFT | Gravity.TOP;
+                floatWindowParamsBig.width = FloatWindowBigView.viewWidth;
+                floatWindowParamsBig.height = FloatWindowBigView.viewHeight;
+            }
+            windowManager.addView(floatWindowBig, floatWindowParamsBig);
+        }
+    }
+    /**
+     * 将大悬浮窗从屏幕上移除。
+     *
+     * @param context
+     *            必须为应用程序的Context.
+     */
+    public static void removeBigWindow(Context context) {
+        if (floatWindowBig != null) {
+            WindowManager windowManager = getWindowManager(context);
+            windowManager.removeView(floatWindowBig);
+            floatWindowBig = null;
+        }
     }
 
     /**
@@ -127,4 +154,5 @@ public class MyWindowManager {
         }
         return mWindowManager;
     }
+
 }

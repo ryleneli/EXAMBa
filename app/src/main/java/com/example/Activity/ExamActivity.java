@@ -249,7 +249,7 @@ public class ExamActivity extends Activity {
 	@Override
 	protected void onUserLeaveHint() {
 		super.onUserLeaveHint();
-		MyWindowManager.initWindowManager (this,ExamActivity.this);
+		//MyWindowManager.initWindowManager (this,ExamActivity.this);
 		Intent intentToHome = new Intent(ExamActivity.this, FloatWindowService.class);
 		temp=testctrl.timeTrans();
 		intentToHome.putExtra("TIME",temp);

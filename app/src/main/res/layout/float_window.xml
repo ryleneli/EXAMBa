@@ -1,34 +1,39 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="150dp"
-    android:layout_height="150dp"
-    android:orientation="vertical"
+<com.example.Object.MyRelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="48dp"
+    android:layout_height="80dp"
     android:id="@+id/view_floatwindow"
 
     >
+    <RelativeLayout
+        android:layout_width="48dp"
+        android:layout_height="38dp"
+        android:layout_alignParentBottom="true"
+        >
     <ImageView
-        android:id="@+id/pangxie"
+        android:id="@+id/pangxie_floatwindow"
         android:layout_width="48dp"
         android:layout_height="38dp"
         android:scaleType="fitCenter"
         android:src="@drawable/ic_pangxie"
-        android:layout_centerInParent="true"
         />
     <TextView
+        android:id="@+id/time_floatwindow"
+        android:layout_marginTop="19dp"
+        android:layout_centerHorizontal="true"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="7dp"
+        android:textColor="#000000"
+        />
+    </RelativeLayout>
 
-    android:id="@+id/time_floatwindow"
-    android:layout_centerHorizontal="true"
-    android:layout_marginTop="20dp"
-    android:layout_width="wrap_content"
-    android:layout_height="wrap_content"
-    android:textSize="7dp"
-    android:textColor="#000000"
-    ></TextView>
     <ImageView
         android:id="@+id/purple1"
         android:layout_width="8dp"
         android:layout_height="8dp"
-        android:layout_centerInParent="true"
+        android:layout_centerHorizontal="true"
         android:src="@drawable/rounded_puple"
         android:visibility="gone"
         android:alpha="0"/>
@@ -36,28 +41,11 @@
         android:id="@+id/purple2"
         android:layout_width="8dp"
         android:layout_height="8dp"
-        android:layout_centerInParent="true"
+        android:layout_alignParentBottom="true"
+        android:layout_marginBottom="20dp"
         android:src="@drawable/rounded_puple2"
+        android:layout_centerHorizontal="true"
         android:visibility="gone"
         android:alpha="0"/>
-    <Button
-        android:id="@+id/enter_test"
-        android:layout_width="24dp"
-        android:layout_height="24dp"
-        android:layout_centerInParent="true"
-        android:visibility="visible"
-        android:background="@drawable/rounded_puple"
-        android:src="@drawable/ic_close_black_24dp"
-        android:alpha="0"
-        />
-    <Button
-        android:id="@+id/exit_test"
-        android:layout_width="24dp"
-        android:layout_height="24dp"
-        android:layout_centerInParent="true"
-        android:visibility="visible"
-        android:background="@drawable/rounded_puple"
-        android:src="@drawable/ic_arrow_forward_black_24dp"
-        android:alpha="0"
-        />
-</RelativeLayout>
+
+</com.example.Object.MyRelativeLayout>
