@@ -29,16 +29,13 @@ import com.example.Activity.ExamActivity;
  #2. 收到 update message时，更新floating window的FPS数值
  #3. 退出时 remove floating window
  -----------------------------
- #@TimerTask
- #1. 定时计算FPS
- #2. post update message
-
  ****/
 
 public class FloatWindowService extends Service {
 
     private static String TAG = "FloatWindowService";
     //private Handler handler = new Handler();
+    private TimerThread mThread;
     private int time;
     private static final int COMPLETED = 0;
 
@@ -54,8 +51,9 @@ public class FloatWindowService extends Service {
         Log.d(TAG, "lrl ready to create float window");
         MyWindowManager.createfloatWindow(getApplicationContext());
         time = intent.getIntExtra("TIME",0);
-
-        new Thread(new Runnable() {
+        //mThread = new TimerThread();
+        start();
+/*        new Thread(new Runnable() {
             // TODO Auto-generated method stub
 
             @Override
@@ -74,7 +72,7 @@ public class FloatWindowService extends Service {
                 }
                 }
             }
-        }).start();
+        }).start();匿名内部类实现方法*/
         return super.onStartCommand(intent, flags, startId);
     }
 
@@ -82,7 +80,10 @@ public class FloatWindowService extends Service {
     public void onDestroy() {
         Log.d(TAG, "lrl ondestroy");
         super.onDestroy();
+        //mhandler.sendEmptyMessage(0);
+        stop();
         MyWindowManager.removefloatWindow(getApplicationContext());
+        MyWindowManager.removeBigWindow(getApplicationContext());
         Log.d(TAG, "lrl done remove float window");
     }
 
@@ -96,6 +97,41 @@ public class FloatWindowService extends Service {
             }
         }
     };
-
+    private class TimerThread extends Thread{
+        boolean isRunning = false;
+        @Override
+        public void run() {
+            super.run();
+            while (isRunning) {
+                try {
+                    Thread.sleep(1000);
+                    Message msg = new Message();
+                    msg.what = 1;
+                    mhandler.sendMessage(msg);
+                    System.out.println("send...");
+                } catch (Exception e) {
+                    // TODO Auto-generated catch block
+                    e.printStackTrace();
+                    System.out.println("thread error...");
+                }
+            }
+        }
+    }
+    // 开启定时线程
+    private void start(){
+        if(mThread == null){
+            mThread = new TimerThread();
+            mThread.isRunning = true;
+            mThread.start();
+        }
+    }
+    // 停止定时线程
+    private void stop() {
+        if (mThread != null) {
+            mThread.isRunning = false;
+            mThread.interrupt();
+            mThread = null;
+        }
+    }
 }
 

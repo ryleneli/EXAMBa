@@ -269,6 +269,7 @@ public class HomeFragment extends Fragment {
     @Override
     public void onDestroy() {
         super.onDestroy();
+        handler.removeCallbacks(mUpdate);
         Log.i(TAG, "onDestroy:====Fragment1 ");
     }
 

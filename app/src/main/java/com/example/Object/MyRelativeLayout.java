@@ -49,16 +49,13 @@ public class MyRelativeLayout extends RelativeLayout {
                 mScrolling = false;
                 break;
             case MotionEvent.ACTION_MOVE:
-                Log.d(TAG, " lrl enter ACTION_MOVE");
                 if (Math.abs(touchDownX - event.getX()) >= ViewConfiguration.get(getContext()).getScaledTouchSlop()||Math.abs(touchDownY - event.getY()) >= ViewConfiguration.get(getContext()).getScaledTouchSlop()) {
                     mScrolling = true;
-                    Log.d(TAG, " lrl ready to ACTION_MOVE");
                 } else {
                     mScrolling = false;
                 }
                 break;
             case MotionEvent.ACTION_UP:
-                Log.d(TAG, " lrl enter ACTION_UP");
                 mScrolling = false;
                 break;
         }

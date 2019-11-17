@@ -35,7 +35,7 @@ import java.util.List;
  * Created by rylene_li on 2019/1/21.
  */
 
-public class FloatWindowView extends MyRelativeLayout implements View.OnClickListener{
+public class FloatWindowView extends RelativeLayout implements View.OnTouchListener{
 
     private static String TAG = "FloatWindowView";
 
@@ -43,29 +43,62 @@ public class FloatWindowView extends MyRelativeLayout implements View.OnClickLis
     public static int viewWidth;                        //小悬浮窗的宽度
     public static int viewHeight;                       //记录小悬浮窗的高度
 
-    private static int statusBarHeight;                 //记录系统状态栏的高度
+
     private WindowManager windowManager;                //用于更新小悬浮窗的位置
     private WindowManager.LayoutParams mParams;         //小悬浮窗的参数
-
+/*
     private float xInScreen;                            //记录当前手指在屏幕上的横坐标值
     private float yInScreen;                            //记录当前手指在屏幕上的纵坐标值
     private float xInFloatWindow;                       //记录手指按下时在悬浮窗上的横坐标的值
     private float yInFloatWindow;                       //记录手指按下时在悬浮窗上的纵坐标的值
+*/
+    /**
+     * 记录当前手指位置在屏幕上的横坐标值
+     */
+    private float xInScreen;
+
+    /**
+     * 记录当前手指位置在屏幕上的纵坐标值
+     */
+    private float yInScreen;
+
+    /**
+     * 记录手指按下时在屏幕上的横坐标的值
+     */
+    private float xDownInScreen;
+
+    /**
+     * 记录手指按下时在屏幕上的纵坐标的值
+     */
+    private float yDownInScreen;
+
+    /**
+     * 记录手指按下时在小悬浮窗的View上的横坐标的值
+     */
+    private float xInView;
+
+    /**
+     * 记录手指按下时在小悬浮窗的View上的纵坐标的值
+     */
+    private float yInView;
+
     private TextView testTimer;
     private boolean isMenuOpen = false;
+    boolean inRight = true;
    //private RelativeLayout menu;
     private ImageView pangxie,purple_1,purple_2;
-
+    private  FloatWindowBigView floatWindowBig;
 
 
     public FloatWindowView(Context context) {
         super(context);
+        //floatWindowBig = new FloatWindowBigView(getContext());
         windowManager = (WindowManager) context.getSystemService(Context.WINDOW_SERVICE);
         LayoutInflater.from(context).inflate(R.layout.float_window, this);
         View view = findViewById(R.id.view_floatwindow);
         viewWidth = view.getLayoutParams().width;
         viewHeight = view.getLayoutParams().height;
-        Log.d(TAG, " lrlll xInFloatWindow="+viewWidth+"============"+viewHeight);
+
 
         testTimer = (TextView) findViewById(R.id.time_floatwindow);
         //menu = (RelativeLayout) findViewById(R.id.view_floatwindow);
@@ -75,53 +108,115 @@ public class FloatWindowView extends MyRelativeLayout implements View.OnClickLis
         purple_1 = (ImageView) findViewById(R.id.purple1);
         purple_2 = (ImageView) findViewById(R.id.purple2);
         animOfPurple();
-        pangxie.setOnClickListener(this);
-        purple_1.setVisibility(View.VISIBLE);
-        purple_2.setVisibility(View.VISIBLE);
+        pangxie.setOnTouchListener(this);
+
     }
-    @Override
-    public void onClick(View v) {
-        switch (v.getId()) {
-            case R.id.pangxie_floatwindow:
-                if (!isMenuOpen) {
-                    MyWindowManager.createBigWindow(getContext());
-                    Log.i(TAG, "lrl createBigWindow=====");
-                    isMenuOpen = true;
-                }else {
-                    MyWindowManager.removeBigWindow(getContext());
-                    isMenuOpen = false;
-                    Log.i(TAG, "lrl removeBigWindow=====");
-                }
-                break;
-        }
-    }
+
     /**如果发现用户触发了ACTION_DOWN事件，会记录按下时的坐标等数据。
      * 如果发现用户触发了ACTION_MOVE事件，则根据当前移动的坐标更新悬浮窗在屏幕中的位置。
      **/
-
     @Override
-    public boolean onTouchEvent(MotionEvent event) {
-        Log.d(TAG, " lrl really ready to ACTION_MOVE");
+    public boolean onTouch(View v, MotionEvent event) {
+        //Log.i(TAG, "lrl enter onTouchEvent=====");
         switch (event.getAction()) {
             case MotionEvent.ACTION_DOWN:
                 // 手指按下时记录必要数据,纵坐标的值都需要减去状态栏高度
-                xInFloatWindow = event.getX();
-                Log.d(TAG, " lrlll xInFloatWindow="+xInFloatWindow);
-                yInFloatWindow = event.getY();
-                Log.d(TAG, " lrlll yInFloatWindow="+yInFloatWindow);
+                xInView = event.getX();
+                yInView = event.getY();
+                xDownInScreen = event.getRawX();
+
+                yDownInScreen = event.getRawY() - MyWindowManager.getStatusBarHeight(getContext());
+
                 xInScreen = event.getRawX();
-                yInScreen = event.getRawY();
+                Log.i(TAG, "lrl xDownInScreen is     ====="+xInScreen);
+                if (isMenuOpen){
+                    if (windowManager.getDefaultDisplay().getWidth()-xInScreen>floatWindowBig.getWidth())
+                        inRight = true;
+                    else inRight = false;
+                }
+                yInScreen = event.getRawY() - MyWindowManager.getStatusBarHeight(getContext());
+                Log.i(TAG, "lrl yDownInScreen is     *****"+yInScreen);
                 break;
             case MotionEvent.ACTION_MOVE:
                 xInScreen = event.getRawX();
-                yInScreen = event.getRawY();
+                yInScreen = event.getRawY() -MyWindowManager.getStatusBarHeight(getContext());
+
                 // 手指移动的时候更新小悬浮窗的位置
                 updateViewPosition();
+                if (isMenuOpen){
+                    if (windowManager.getDefaultDisplay().getWidth()-xInScreen>floatWindowBig.getWidth())
+                        inRight = true;
+                    else inRight = false;
+                }
+                if (isMenuOpen ) {
+                    if (inRight)
+                        floatWindowBig.updateBigViewPosition(mParams.x+MyWindowManager.smallWindow_w,mParams.y+MyWindowManager.smallWindow_h-MyWindowManager.floatWindowParamsBig.height);
+                    else
+                        floatWindowBig.updateBigViewPosition(mParams.x-floatWindowBig.getWidth(),mParams.y+MyWindowManager.smallWindow_h-MyWindowManager.floatWindowParamsBig.height);
+                }
+                break;
+            case MotionEvent.ACTION_UP:
+                // 如果手指离开屏幕时，xDownInScreen和xInScreen相等，且yDownInScreen和yInScreen相等，则视为触发了单击事件。
+                if (xDownInScreen == xInScreen && yDownInScreen == yInScreen) {
+                    if (!isMenuOpen) {
+                        //Log.i(TAG, "lrl mParams.x is     *********====="+mParams.x);
+                        floatWindowBig = MyWindowManager.createBigWindow(getContext(),mParams.x,mParams.y,inRight);
+                        isMenuOpen = true;
+                    }else {
+                        MyWindowManager.removeBigWindow(getContext());
+                        isMenuOpen = false;
+                    }
+                }
                 break;
             default:
                 break;
         }
         return true;
+    }
+/*
+    @Override
+    public boolean onTouchEvent(MotionEvent event) {
+        Log.i(TAG, "lrl enter onTouchEvent=====");
+        switch (event.getAction()) {
+            case MotionEvent.ACTION_DOWN:
+                // 手指按下时记录必要数据,纵坐标的值都需要减去状态栏高度
+                xInView = event.getX();
+                yInView = event.getY();
+                xDownInScreen = event.getRawX();
+                yDownInScreen = event.getRawY() - getStatusBarHeight();
+                xInScreen = event.getRawX();
+                yInScreen = event.getRawY() - getStatusBarHeight();
+                break;
+            case MotionEvent.ACTION_MOVE:
+                xInScreen = event.getRawX();
+                yInScreen = event.getRawY() - getStatusBarHeight();
+                // 手指移动的时候更新小悬浮窗的位置
+                updateViewPosition();
+                break;
+            case MotionEvent.ACTION_UP:
+                // 如果手指离开屏幕时，xDownInScreen和xInScreen相等，且yDownInScreen和yInScreen相等，则视为触发了单击事件。
+                if (xDownInScreen == xInScreen && yDownInScreen == yInScreen) {
+                    Log.i(TAG, "lrl ready to click=====");
+                    if (!isMenuOpen) {
+                        MyWindowManager.createBigWindow(getContext());
+                        Log.i(TAG, "lrl createBigWindow=====");
+                        isMenuOpen = true;
+                    }else {
+                        MyWindowManager.removeBigWindow(getContext());
+                        isMenuOpen = false;
+                        Log.i(TAG, "lrl removeBigWindow=====");
+                    }
+                }
+
+
+                break;
+            default:
+                break;
+        }
+        return true;
+    }*/
+    public ImageView getPangxie() {
+        return pangxie;
     }
 
     /**
@@ -140,19 +235,26 @@ public class FloatWindowView extends MyRelativeLayout implements View.OnClickLis
     }
 
     /**
-     * 更新悬浮窗在屏幕中的位置。
+     * 更新悬浮窗在屏幕中的位置需要限制边界。
      */
     private void updateViewPosition() {
-        mParams.x = (int) (xInScreen - xInFloatWindow);
-        //Log.d(TAG, " lrll mParams.x="+mParams.x);
-        mParams.y = (int) ((yInScreen - yInFloatWindow));
-        //Log.d(TAG, " lrll mParams.y="+mParams.y);
+        mParams.x = (int) (xInScreen - xInView);
+        mParams.y = (int) (yInScreen - yInView-dip2px(42));
+        if (mParams.x <= 0)
+            mParams.x =0;
+        if (mParams.x >= windowManager.getDefaultDisplay().getWidth()-viewWidth)
+            mParams.x = windowManager.getDefaultDisplay().getWidth()-viewWidth;
+        if (mParams.y <= 0)
+            mParams.y =0;
+        if (mParams.y >= windowManager.getDefaultDisplay().getHeight()-viewHeight)
+            mParams.y = windowManager.getDefaultDisplay().getHeight()-viewHeight;//限制边界
         windowManager.updateViewLayout(this, mParams);
     }
+
     private void animOfPurple()
     {
-        Log.i(TAG,"puple");
-
+        purple_1.setVisibility(View.VISIBLE);
+        purple_2.setVisibility(View.VISIBLE);
         AnimatorSet set = new AnimatorSet();
         AnimatorSet set_puple1 = new AnimatorSet();
         AnimatorSet set_puple2 = new AnimatorSet();
@@ -179,8 +281,6 @@ public class FloatWindowView extends MyRelativeLayout implements View.OnClickLis
         set.play(set_puple1).with(set_puple2);
         set.setDuration(4000);
         set.start();
-
-        Log.i(TAG,"puple==========");
     }
     private int dip2px(int value) {
         float density = getResources().getDisplayMetrics().density;

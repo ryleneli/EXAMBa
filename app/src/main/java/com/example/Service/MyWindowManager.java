@@ -10,6 +10,7 @@ import android.os.Build;
 
 import android.view.View;
 import android.widget.Chronometer;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
@@ -17,6 +18,9 @@ import com.example.Activity.ExamActivity;
 import com.example.Activity.LoginActivity;
 import com.example.UI.FloatWindowBigView;
 import com.example.UI.FloatWindowView;
+import com.example.dpTopx;
+
+import java.lang.reflect.Field;
 
 public class MyWindowManager {
 
@@ -24,11 +28,13 @@ public class MyWindowManager {
 
     private static FloatWindowView floatWindow;                 //floatWindowView的实例
     private static FloatWindowBigView floatWindowBig;                 //floatWindowView的实例
-    private static WindowManager.LayoutParams floatWindowParams;//floatWindowView的参数
+    public static WindowManager.LayoutParams floatWindowParams;//floatWindowView的参数
     private static WindowManager mWindowManager;                //floatWindow管理
-    private static WindowManager.LayoutParams floatWindowParamsBig;//floatWindowView的参数
-    private static Chronometer chronometer;
-
+    public static WindowManager.LayoutParams floatWindowParamsBig;//floatWindowView的参数
+    private static ImageView pangxie_iv;
+    public static int smallWindow_w;    //小窗口宽高
+    public static int smallWindow_h;
+    public static int statusBarHeight;                 //记录系统状态栏的高度
     /**
      * 创建悬浮窗，初始位置为屏幕的下方居中。
      * 必须为应用程序的Context.
@@ -42,6 +48,7 @@ public class MyWindowManager {
         int screenHeight = windowManager.getDefaultDisplay().getHeight();
         if (floatWindow == null) {
             floatWindow = new FloatWindowView(context);
+            pangxie_iv = floatWindow.getPangxie();
             Log.d(TAG, "lrl new floatWindow");
             // 设置windowManager.LayoutParam
             if (floatWindowParams == null) {
@@ -56,11 +63,17 @@ public class MyWindowManager {
                 floatWindowParams.format = PixelFormat.RGBA_8888;
                 floatWindowParams.flags = WindowManager.LayoutParams.FLAG_NOT_TOUCH_MODAL | WindowManager.LayoutParams.FLAG_NOT_FOCUSABLE;
                 floatWindowParams.gravity = Gravity.LEFT | Gravity.TOP;
+                //Log.d(TAG, " lrll Gravity.LEFT ====="+dpTopx.dip2px(context,Gravity.LEFT ));
+                //Log.d(TAG, " lrll Gravity.LEFT ====="+dpTopx.dip2px(context,Gravity.TOP ));
                 floatWindowParams.width = FloatWindowView.viewWidth;//窗口大小
+                smallWindow_w = floatWindowParams.width;
                 floatWindowParams.height = FloatWindowView.viewHeight;
-                floatWindowParams.x = screenWidth/ 2 - floatWindowParams.width/2;//窗口位置
+                smallWindow_h = floatWindowParams.height;
+                floatWindowParams.x =screenWidth/ 2 - floatWindowParams.width/2;//窗口位置
+                //bigWindow_w = floatWindowParams.x;
                 Log.d(TAG, " lrll floatWindowParams.x====="+floatWindowParams.x+"view width"+floatWindowParams.width);
-                floatWindowParams.y =screenHeight * 3 / 5;
+                floatWindowParams.y =screenHeight * 3 / 5 - floatWindowParams.height/2;
+                //bigWindow_h = floatWindowParams.y;
                 Log.d(TAG, " lrll floatWindowParams.y====="+floatWindowParams.y+"view height"+floatWindowParams.height);
             }
             /**将悬浮窗参数floatWindowParams传到FloatWindowView以使用（计算移动位置）*/
@@ -86,6 +99,7 @@ public class MyWindowManager {
             WindowManager windowManager = getWindowManager(context);
             windowManager.removeView(floatWindow);
             floatWindow = null;
+            floatWindowParams = null;
         }
     }
     /**
@@ -100,13 +114,14 @@ public class MyWindowManager {
     public static boolean isWindowShowing() {
         return floatWindow != null;
     }
+
     /**
      * 创建一个大悬浮窗。位置为屏幕正中间。
      *
      * @param context
      *            必须为应用程序的Context.
      */
-    public static void createBigWindow(Context context) {
+    public static FloatWindowBigView createBigWindow(Context context,float bigWindow_x,float bigWindow_y,boolean inRight) {
         WindowManager windowManager = getWindowManager(context);
         int screenWidth = windowManager.getDefaultDisplay().getWidth();
         int screenHeight = windowManager.getDefaultDisplay().getHeight();
@@ -114,17 +129,23 @@ public class MyWindowManager {
             floatWindowBig = new FloatWindowBigView(context);
             if (floatWindowParamsBig == null) {
                 floatWindowParamsBig = new WindowManager.LayoutParams();
-                floatWindowParamsBig.x = screenWidth / 2 - FloatWindowBigView.viewWidth / 2;
-                floatWindowParamsBig.y = screenHeight* 3 / 5;
-                floatWindowParamsBig.type = WindowManager.LayoutParams.TYPE_APPLICATION_OVERLAY;
-
-                floatWindowParamsBig.format = PixelFormat.RGBA_8888;
-                floatWindowParamsBig.gravity = Gravity.LEFT | Gravity.TOP;
                 floatWindowParamsBig.width = FloatWindowBigView.viewWidth;
                 floatWindowParamsBig.height = FloatWindowBigView.viewHeight;
+                if (inRight)
+                    floatWindowParamsBig.x = (int)bigWindow_x + smallWindow_w;
+                else
+                    floatWindowParamsBig.x = (int)bigWindow_x - floatWindowParamsBig.width;
+                floatWindowParamsBig.y = (int)bigWindow_y +smallWindow_h-floatWindowParamsBig.height;
+                floatWindowParamsBig.type = WindowManager.LayoutParams.TYPE_APPLICATION_OVERLAY;
+                floatWindowParamsBig.flags = WindowManager.LayoutParams.FLAG_NOT_TOUCH_MODAL | WindowManager.LayoutParams.FLAG_NOT_FOCUSABLE;
+                floatWindowParamsBig.format = PixelFormat.RGBA_8888;
+                floatWindowParamsBig.gravity = Gravity.LEFT | Gravity.TOP;
+
             }
+            floatWindowBig.setBigParams(floatWindowParamsBig);
             windowManager.addView(floatWindowBig, floatWindowParamsBig);
         }
+        return floatWindowBig;
     }
     /**
      * 将大悬浮窗从屏幕上移除。
@@ -137,6 +158,7 @@ public class MyWindowManager {
             WindowManager windowManager = getWindowManager(context);
             windowManager.removeView(floatWindowBig);
             floatWindowBig = null;
+            floatWindowParamsBig = null;
         }
     }
 
@@ -155,4 +177,25 @@ public class MyWindowManager {
         return mWindowManager;
     }
 
+
+
+    /**
+     * 用于获取状态栏的高度。
+     *
+     * @return 返回状态栏高度的像素值。
+     */
+    public static int getStatusBarHeight(Context context) {
+        if (statusBarHeight == 0) {
+            try {
+                Class<?> c = Class.forName("com.android.internal.R$dimen");
+                Object o = c.newInstance();
+                Field field = c.getField("status_bar_height");
+                int x = (Integer) field.get(o);
+                statusBarHeight = context.getResources().getDimensionPixelSize(x);
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
+        return statusBarHeight;
+    }
 }
