@@ -1,24 +1,16 @@
 package com.example.Activity;
 
 
-import android.content.ContentValues;
-import android.database.Cursor;
-import android.database.sqlite.SQLiteDatabase;
 import android.graphics.drawable.Drawable;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentActivity;
 import android.support.v4.view.ViewPager;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.Toolbar;
 import android.util.Log;
-import android.widget.Toast;
+import android.view.WindowManager;
 
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
-import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
 import java.util.List;;
 import com.example.Adapter.FragmentAdapter;
@@ -27,21 +19,47 @@ import com.example.DBControl.DBAdapter;
 import com.example.DBControl.DataTrans;
 import com.example.Fragment.HomeFragment;
 import com.example.Fragment.MineFragment;
-import com.example.LogUtil;
+import com.example.Utils.LogUtil;
+import com.example.Utils.StatusBarUtil;
 import com.example.testsys.R;
 
 import static com.example.DBControl.DBAdapter.DATABSE_TABLE;
 
 
 public class MainActivity extends AppCompatActivity {
-	private static String TAG = "LRL MainActivity abcde";
-
+	private static String TAG = "LRLMainActivity ";
+    private Toolbar toolbar;
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-	    setContentView(R.layout.activity_main);
-	    ViewPager viewPager = (ViewPager) findViewById(R.id.view_pager);
-	    TabLayout tabLayout = (TabLayout) findViewById(R.id.tab_layout);
+/**
+ * 更改状态栏颜色
+
+		getWindow().addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
+//注意要清除 FLAG_TRANSLUCENT_STATUS flag
+		getWindow().clearFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
+		getWindow().setStatusBarColor(getResources().getColor(R.color.colorTitleBar));
+*/      setContentView(R.layout.activity_main);
+		//toolbar = (Toolbar) findViewById(R.id.toolbar1);
+		ViewPager viewPager = (ViewPager) findViewById(R.id.view_pager);
+		TabLayout tabLayout = (TabLayout) findViewById(R.id.tab_layout);
+
+		StatusBarUtil.setRootViewFitsSystemWindows(this,false);
+		//设置状态栏透明
+		StatusBarUtil.setTranslucentStatus(this);
+		//StatusBarUtil.setStatusBarDarkTheme(this,false);
+		//一般的手机的状态栏文字和图标都是白色的, 可如果你的应用也是纯白色的, 或导致状态栏文字看不清
+		//所以如果你是这种情况,请使用以下代码, 设置状态使用深色文字图标风格, 否则你可以选择性注释掉这个if内容
+		//if (!StatusBarUtil.setStatusBarDarkTheme(this, true)) {
+			//如果不支持设置深色风格 为了兼容总不能让状态栏白白的看不清, 于是设置一个状态栏颜色为半透明,
+			//这样半透明+白=灰, 状态栏的文字能看得清
+
+		//}
+		//StatusBarUtil.setStatusBarColor(this,R.color.colorRed);
+
+
+
+
 	    DBAdapter dbAdapter = new DBAdapter(this);
 	    if (  !(DBAdapter.HaveData(dbAdapter.open(),DATABSE_TABLE)) ) {
 			new DataTrans(this).Trans(this);
@@ -61,7 +79,20 @@ public class MainActivity extends AppCompatActivity {
 	//绑定
 		tabLayout.setupWithViewPager(viewPager);
 
-        for(int i = 0; i < tabLayout.getTabCount(); i++) {
+		viewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
+			@Override
+			public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {}
+			@Override
+			public void onPageSelected(int position) {
+				if (position == 0)
+					StatusBarUtil.setStatusBarDarkTheme(MainActivity.this,false);
+				else
+					StatusBarUtil.setStatusBarDarkTheme(MainActivity.this,true);
+			}
+			@Override
+			public void onPageScrollStateChanged(int position) {}
+		});
+		for(int i = 0; i < tabLayout.getTabCount(); i++) {
 			TabLayout.Tab tab = tabLayout.getTabAt(i);
 			Drawable d = null;
 			switch (i) {

@@ -4,63 +4,29 @@
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical"><!--mine fragment-->
-    <LinearLayout
+    <!--<LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="@color/colorTitleBar">
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="45dp"
-            android:text="个人中心"
-            android:textSize="18dp"
-            android:textColor="@color/colorRoundedButton"
-            android:layout_gravity="center"
-            android:gravity="center"/>
-    </LinearLayout>
-    <RelativeLayout
+
+    </LinearLayout>-->
+    <android.support.v7.widget.Toolbar
+        android:id="@+id/toolbar_mine"
+        android:layout_alignParentTop="true"
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_weight="1"
         android:background="@drawable/mine_bg2"
-        android:alpha="1">
-
-        <ImageView
-            android:id="@+id/my_face"
+        android:tooltipText="test">
+        <TextView
+            android:id="@+id/stu_name"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:src="@drawable/ic_sentiment_satisfied_black_72dp"
-            android:layout_centerInParent="true" />
-
-        <RelativeLayout
-            android:layout_width="match_parent"
-            android:layout_height="20dp"
-            android:layout_below="@+id/my_face">
-            <View
-                android:id="@+id/view2"
-                android:layout_width="0.5dp"
-                android:layout_height="fill_parent"
-                android:layout_centerInParent="true"
-                android:background="#A9A9A9" />
-            <TextView
-                android:id="@+id/stu_name"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:text="studentname"
-                android:layout_marginRight="20dp"
-                android:layout_toLeftOf="@+id/view2"/>
-
-            <TextView
-                android:id="@+id/stu_number"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:text="studentnumber"
-                android:layout_marginLeft="20dp"
-                android:layout_toRightOf="@+id/view2"/>
-        </RelativeLayout>
-    </RelativeLayout>
-
+            android:layout_gravity="center"
+            android:text="studentname"
+            android:textSize="36dp"
+            />
+    </android.support.v7.widget.Toolbar>
 
     <LinearLayout
         android:layout_width="match_parent"

@@ -18,6 +18,9 @@
         <!-- All customizations that are NOT specific to a particular API-level can go here. -->
 		<!--<item name="android:fontFamily">@font/custom_fonts_resources</item>//字体应用，有效-->
 		<!--<item name="android:windowFullscreen">true</item>//隐藏状态栏-->
+		<item name="colorPrimary">@color/colorPrimary</item>
+		<item name="colorPrimaryDark">@color/colorPrimaryDark</item>
+		<item name="colorAccent">@color/colorAccent</item>
 	</style>
 	<style name="SplashTheme" parent="Theme.AppCompat.Light.NoActionBar">
 		<item name="android:windowBackground">@drawable/splash</item>

@@ -249,6 +249,7 @@ public class ExamActivity extends Activity {
 	@Override
 	protected void onUserLeaveHint() {
 		super.onUserLeaveHint();
+		Log.i(TAG, "lrl    =====");
 		//MyWindowManager.initWindowManager (this,ExamActivity.this);
 		Intent intentToHome = new Intent(ExamActivity.this, FloatWindowService.class);
 		temp=testctrl.timeTrans();
@@ -258,10 +259,7 @@ public class ExamActivity extends Activity {
 		//floatWindowService.initService(getApplicationContext(),ExamActivity.this);
 		Toast.makeText(this, "onUserLeaveHint", Toast.LENGTH_SHORT).show();
 	}
-	public ExamActivity test()
-	{
-		return this;
-	}
+
 	/*
 	@Override
 	public boolean onKeyDown(int keyCode, KeyEvent event)

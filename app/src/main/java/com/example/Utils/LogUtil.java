@@ -1,4 +1,4 @@
-package com.example;
+package com.example.Utils;
 
 /**
  * Created by yong on 2019/9/4.

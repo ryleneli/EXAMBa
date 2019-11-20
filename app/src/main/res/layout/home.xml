@@ -4,19 +4,22 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     android:background="@color/colorbg"><!--homefragment-->
-    <LinearLayout
+    <android.support.v7.widget.Toolbar
+        android:id="@+id/toolbar_home"
+        android:layout_alignParentTop="true"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="@color/colorTitleBar">
+        android:layout_height="45dp"
+        android:background="@color/colorTitleBar"
+        android:tooltipText="test">
         <TextView
-            android:layout_width="match_parent"
-            android:layout_height="45dp"
-            android:text="学习"
-            android:textSize="18dp"
-            android:textColor="@color/colorRoundedButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
             android:layout_gravity="center"
-            android:gravity="center"/>
-    </LinearLayout>
+            android:textColor="@color/colorRoundedButton"
+            android:text="test"
+            android:textSize="18sp" />
+    </android.support.v7.widget.Toolbar>
+
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
