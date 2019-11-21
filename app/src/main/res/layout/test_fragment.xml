@@ -4,21 +4,35 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical">
-    <com.example.UI.TitleBarView
-        android:id="@+id/test_titlebar"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_alignParentTop="true"
-        app:title_back_icon_visible="true"
-        app:title_answer_visible="true"
-        app:title_exam_chronometer_visible="true">
 
-    </com.example.UI.TitleBarView>
+        <LinearLayout
+            android:id="@+id/above_titlebar"
+            android:layout_width="match_parent"
+            android:layout_height="60dp"
+            android:background="@color/colorTitleBar">
+            <com.example.UI.StatusBarHeightView
+            android:id="@+id/statusbar_view"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:use_type="use_padding_top"
+            android:orientation="vertical" >
+        <com.example.UI.TitleBarView
+            android:id="@+id/test_titlebar"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentTop="true"
+            app:title_back_icon_visible="true"
+            app:title_answer_visible="true"
+            app:title_exam_chronometer_visible="true">
+        </com.example.UI.TitleBarView>
+    </com.example.UI.StatusBarHeightView>
+        </LinearLayout>
+
     <RelativeLayout
         android:id="@+id/question_type"
         android:layout_width="match_parent"
         android:layout_height="45dp"
-        android:layout_below="@+id/test_titlebar"
+        android:layout_below="@+id/above_titlebar"
         android:layout_marginBottom="10dp"
         android:background="@color/gray">
 

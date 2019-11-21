@@ -38,4 +38,10 @@
         <attr name="student_number" format="string" />
         <attr name="lesson_check_visible" format="boolean" />
     </declare-styleable>
+    <declare-styleable name="StatusBarHeightView">
+        <attr name="use_type" format="integer">
+            <enum name="use_height" value="0" />
+            <enum name="use_padding_top" value="1" />
+        </attr>
+    </declare-styleable>
 </resources>

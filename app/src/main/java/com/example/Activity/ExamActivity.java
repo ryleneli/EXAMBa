@@ -13,6 +13,7 @@ import com.example.Service.FloatWindowService;
 import com.example.Service.MyWindowManager;
 import com.example.TestControl.TestCtrl;
 import com.example.UI.TitleBarView;
+import com.example.Utils.StatusBarUtil;
 import com.example.testsys.R;
 import android.app.Activity;
 import android.content.Intent;
@@ -22,6 +23,7 @@ import android.os.SystemClock;
 import android.util.Log;
 import android.view.View;
 import android.view.View.OnClickListener;
+import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.Chronometer;
 import android.widget.ImageButton;
@@ -69,8 +71,11 @@ public class ExamActivity extends Activity {
 	protected void onCreate(Bundle savedInstanceState) {
 		// TODO Auto-generated method stub
 		super.onCreate(savedInstanceState);
-
 		setContentView(R.layout.test_fragment);
+		StatusBarUtil.setRootViewFitsSystemWindows(this,false);
+		//设置状态栏透明
+		StatusBarUtil.setTranslucentStatus(this);
+		StatusBarUtil.setStatusBarDarkTheme(ExamActivity.this,false);
 		titleBarView = (TitleBarView) findViewById(R.id.test_titlebar);
 		proTextView = (TextView) findViewById(R.id.pro_text);
 		numText = (TextView) findViewById(R.id.test_number);

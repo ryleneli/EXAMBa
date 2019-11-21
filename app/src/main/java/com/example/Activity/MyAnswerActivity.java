@@ -17,6 +17,7 @@ import android.widget.TextView;
 import com.example.Adapter.MyAnswerRecyclerView;
 import com.example.Adapter.MyRecyclerViewAdapter;
 import com.example.UI.TitleBarView;
+import com.example.Utils.StatusBarUtil;
 import com.example.testsys.R;
 
 import static android.view.View.GONE;
@@ -44,6 +45,10 @@ public class MyAnswerActivity extends Activity {
     protected void onCreate(final Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.answer_record);
+        StatusBarUtil.setRootViewFitsSystemWindows(this,false);
+        //设置状态栏透明
+        StatusBarUtil.setTranslucentStatus(this);
+        StatusBarUtil.setStatusBarDarkTheme(MyAnswerActivity.this,false);
         Log.i(TAG,"LRL mySelect now is **********onCreate");
         Intent intent = getIntent() ;
         myAnswer = intent.getIntArrayExtra("answer");

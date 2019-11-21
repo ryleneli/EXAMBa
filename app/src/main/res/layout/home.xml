@@ -4,21 +4,27 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     android:background="@color/colorbg"><!--homefragment-->
-    <android.support.v7.widget.Toolbar
-        android:id="@+id/toolbar_home"
-        android:layout_alignParentTop="true"
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="45dp"
+        android:layout_height="60dp"
         android:background="@color/colorTitleBar"
-        android:tooltipText="test">
-        <TextView
-            android:layout_width="wrap_content"
+        >
+        <com.example.UI.StatusBarHeightView
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_gravity="center"
+            app:use_type="use_padding_top"
+            android:orientation="vertical" >
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:gravity="center"
             android:textColor="@color/colorRoundedButton"
-            android:text="test"
+            android:text="学习"
+            android:layout_marginBottom="5dp"
             android:textSize="18sp" />
-    </android.support.v7.widget.Toolbar>
+        </com.example.UI.StatusBarHeightView>
+    </LinearLayout>
+
 
     <ScrollView
         android:layout_width="match_parent"
