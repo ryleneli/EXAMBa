@@ -20,6 +20,7 @@ android {
 
 dependencies {
     //compile 'com.android.support:support-v7:28.home1.home1'
+    //implementation 'androidx.annotation:annotation:1.1.0'
     /*rotrofit*/
     implementation 'com.squareup.retrofit2:retrofit:2.1.0'
     implementation 'com.squareup.retrofit2:converter-scalars:2.0.0'

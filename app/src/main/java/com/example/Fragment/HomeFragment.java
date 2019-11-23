@@ -14,7 +14,9 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.Button;
+import android.widget.CompoundButton;
 import android.widget.ExpandableListView;
 import android.widget.ListView;
 import android.widget.TextView;
@@ -31,6 +33,7 @@ import com.example.Object.MyListView;
 import com.example.Object.MyRecyclerView;
 import com.example.UI.TestView;
 import com.example.itemClickListener;
+import com.example.itemLongClickListener;
 import com.example.testsys.R;
 
 import java.util.ArrayList;
@@ -38,12 +41,14 @@ import java.util.List;
 import java.util.Timer;
 import java.util.TimerTask;
 
+import static android.view.View.VISIBLE;
+
 /**
  * Created by rylene_li on 2019/9/30.
  */
 
 public class HomeFragment extends Fragment {
-    private static String TAG = "LRL HomeFragment";
+    private static String TAG = "LRLHomeFragment";
 
     private List<Lesson> lessonList = new ArrayList<Lesson>();
     private Lesson lesson;
@@ -83,12 +88,23 @@ public class HomeFragment extends Fragment {
         LinearLayoutManager layoutManager = new LinearLayoutManager(getContext());
         layoutManager.setOrientation(LinearLayoutManager.HORIZONTAL);
         recyclerView.setLayoutManager(layoutManager);
-        recyclerViewAdapter = new MyRecyclerViewAdapter(getContext(),lessonList);
+        recyclerViewAdapter = new MyRecyclerViewAdapter(getContext(),lessonList,getActivity());
         recyclerView.setAdapter(recyclerViewAdapter);
         handler.post(mUpdate);
+       /* //长按事件，
+        recyclerViewAdapter.setItemLongClickListener (new itemLongClickListener() {
+            @Override
+            public boolean itemLongClick() {
+                Log.i(TAG,"LRL temp  is =============================setItemLongClickListener"+recyclerViewAdapter.mposition);
+                showLongClick(VISIBLE);
+                return true;
+            }
+        });*/
+
         recyclerViewAdapter.setItemClickListener(new itemClickListener() {
             @Override
             public void itemClick() {
+                Log.i(TAG,"LRL temp  is =============================setItemClickListener");
                 lesson = lessonList.get(recyclerViewAdapter.mposition);
                 String text = lesson.getName();
                 learning_text.setText(text);
@@ -216,6 +232,7 @@ public class HomeFragment extends Fragment {
 
         }
     };
+
     private void initFruits() {
         Lesson apple = new Lesson("通信原理");
         lessonList.add(apple);
@@ -229,6 +246,65 @@ public class HomeFragment extends Fragment {
         lessonList.add(pear);
         Lesson grape = new Lesson("计算机基础");
         lessonList.add(grape);
+    }
+    /*
+    private void showLongClick(int isvisibility) {
+        Log.i(TAG,"LRL temp  is  checkbox position is "+recyclerViewAdapter.mposition);
+        //recyclerViewAdapter.checkBox.setVisibility(isvisibility);
+        recyclerViewAdapter.i.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView,
+                                         boolean isChecked) {
+                // TODO Auto-generated method stub
+                if (isChecked) {
+                    showDelete(recyclerViewAdapter.mposition);
+                } else {
+                    //editText1.setText(buttonView.getText()+"取消选中");
+                }
+            }
+        });
+    }*/
+        /***
+         * 删除
+         */
+        public void showDelete(int position)
+        {
+     /*       //删除缓存
+            String home = "";
+            for (int i = 0; i < listPosition.size() - 1; i++) {
+                UserBean userBean = list.get(listPosition.get(i));
+                if (!userBean.isCheck()) {
+                    home += listPosition.get(i) + ",";
+                }
+            }
+            aCache.remove("home");
+            listPosition.clear();
+            try {
+                UtilFileDB.ADDFile(aCache, "home", home.substring(0, (home.length() - 1)));
+                if (listPosition == null || listPosition.size() <= 1) {
+                    listPosition = HomeData.POSITION(aCache);
+                }
+            } catch (Exception e) {
+                listPosition.add((list.size()-1));//只留加号
+            }
+            showLongClick(false);
+        }
+        list.clear();
+        for (int i = 0; i < 34; i++) {
+            UserBean user = new UserBean(HomeData.IMG[i], HomeData.TITLE[i], false, isvisibility);
+            list.add(user);
+        }*/
+        //HomeFragment.list.get(33).setIsvisibility(false);
+        notifyData(recyclerViewAdapter.mposition);
+    }
+    /*****
+     * 刷新数据
+     */
+    public void notifyData(int position) {
+        recyclerViewAdapter.notifyItemRemoved(position);
+        lessonList.remove(position);
+        recyclerViewAdapter.notifyItemRangeChanged(position, recyclerViewAdapter.getItemCount());
+        recyclerViewAdapter.notifyDataSetChanged();
     }
     @Override
     public void onActivityCreated(Bundle savedInstanceState) {
@@ -269,6 +345,7 @@ public class HomeFragment extends Fragment {
     @Override
     public void onDestroy() {
         super.onDestroy();
+        lessonList.clear();
         handler.removeCallbacks(mUpdate);
         Log.i(TAG, "onDestroy:====Fragment1 ");
     }
