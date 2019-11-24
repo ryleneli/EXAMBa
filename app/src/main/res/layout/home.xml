@@ -87,6 +87,7 @@
                     android:background="#A9A9A9" />
 
                 <com.example.Object.MyRecyclerView
+                    android:background="@color/cardview_shadow_start_color"
                     android:id="@+id/rv"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content">
@@ -101,15 +102,7 @@
                 android:layout_height="wrap_content"
                 android:orientation="vertical"
                 android:layout_alignParentBottom="true">
-                <Button
-                    android:id="@+id/addlesson_button"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="10dp"
-                    android:layout_marginRight="40dp"
-                    android:layout_marginLeft="40dp"
-                    android:background="@drawable/rounded_button"
-                    android:text="添加课程" />
+
                 <LinearLayout
                     android:layout_marginTop="10dp"
                     android:layout_width="match_parent"

@@ -5,6 +5,7 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.app.FragmentStatePagerAdapter;
 import android.util.Log;
+import android.view.ViewGroup;
 
 import java.util.List;
 
@@ -77,4 +78,15 @@ public class FragmentAdapter extends FragmentPagerAdapter {
             Log.i(TAG,"LRL mFragmentList.size()"+mFragmentList.size());
             return mFragmentList.size();
         }
+
+    /**
+     * 可以避免在viewpager切换，fragment不可见时执行到onDestroyView
+     * @param container
+     * @param position
+     * @param object
+     */
+   @Override
+    public void destroyItem(ViewGroup container, int position, Object object) {
+         //super.destroyItem(container, position, object);
+    }
 }

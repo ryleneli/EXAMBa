@@ -21,19 +21,14 @@ import com.example.testsys.R;
 public class MineFragment extends Fragment {
     private static String TAG = "MineFragment";
     private ItemView message;
+    private View view;
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        final View view = inflater.inflate(R.layout.mine, container, false);
-        message = (ItemView) view.findViewById(R.id.mine_message);
-        super.onCreate(savedInstanceState);
-        Log.i(TAG,"LRL CREAT MINE FRAGMENT");
-        message.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                //message.setBackgroundColor(view.findViewById(R.id.mine_message),006600);
-                Toast.makeText(getContext(), "我是onclick事件显示的", Toast.LENGTH_SHORT).show();
-            }
-        });
-/*
+        if (view == null) {
+            view = inflater.inflate(R.layout.mine, container, false);
+            message = (ItemView) view.findViewById(R.id.mine_message);
+            super.onCreate(savedInstanceState);
+
+
         message.setItemClickListener(new itemClickListener() {
             @Override
             public void itemClick() {
@@ -41,11 +36,20 @@ public class MineFragment extends Fragment {
                 Toast.makeText(getContext(),TAG,Toast.LENGTH_SHORT).show();
             }
 
-        });*/
+        });
         /*测试用勿删，实验成功。通过gettext对象来修改内容，不必一定在xml中设置
         TextView lefttext = message.getleftText();
         lefttext.setText("sssssss");*/
+        }
         return view;
+    }
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+       /* if (view != null) {
+            ((ViewGroup) view.getParent()).removeView(view);
+        }*/
+        Log.i(TAG, "onDestroyView: ====Fragment1");
     }
 }
 

@@ -2,6 +2,7 @@ package com.example.Adapter;
 
 import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.Color;
 import android.support.annotation.NonNull;
 import android.support.v4.content.ContextCompat;
@@ -17,6 +18,8 @@ import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import com.example.Activity.AllMyLesson;
+import com.example.Activity.MainActivity;
 import com.example.Object.Lesson;
 import com.example.Object.MyRecyclerView;
 import com.example.itemClickListener;
@@ -67,31 +70,6 @@ public class MyRecyclerViewAdapter extends RecyclerView.Adapter<MyRecyclerViewAd
         }
     }
 
-    /*
-        static class ViewHolder extends MyRecyclerView.ViewHolder {
-            TextView textView;
-            TextView lessonName;
-            ImageButton imageButton;
-            RelativeLayout relativeLayout;
-
-            public ViewHolder(View view) {
-                super(view);
-                lessonName = (TextView) view.findViewById(R.id.my_lesson_name_recyview);
-                textView = (TextView) view.findViewById(R.id.my_lesson_image);
-                imageButton = (ImageButton) view.findViewById(R.id.lesson_delect);
-                relativeLayout = (RelativeLayout) view.findViewById(R.id.my_lesson_rela_layout);
-            }
-        }
-        static class BottomViewHolder extends ViewHolder {
-            ImageView add;
-            RelativeLayout relativeLayout;
-            public BottomViewHolder(View view) {
-                super(view);
-                add = (ImageView) view.findViewById(R.id.add_recyview_img);
-                //relativeLayout = (RelativeLayout) view.findViewById(R.id.my_lesson_rela_layout);
-            }
-        }
-    */
     public MyRecyclerViewAdapter(Context mContext, List<Lesson> fruitList, Activity activity) {
         this.mContext = mContext;
         this.myLessonList = fruitList;
@@ -133,30 +111,6 @@ public class MyRecyclerViewAdapter extends RecyclerView.Adapter<MyRecyclerViewAd
             notifyItemRangeChanged(getItemCount() - 1, getItemCount());
         }
     }
-
-/*
-    @NonNull
-    @Override
-    public MyRecyclerViewAdapter.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        //ViewHolder holder ;
-        //View view;
-        if (viewType == ITEM_TYPE_CONTENT){
-            /*view = LayoutInflater.from(parent.getContext()).inflate(R.layout.mylessons_recy, parent, false);
-            holder = new ViewHolder(view);
-            this.imageButton = holder.imageButton;
-            this.relativeLayout = holder.relativeLayout;
-            return holder;//new ViewHolder(mLayoutInflater.inflate(R.layout.main_activity_list_item_content, parent, false));
-
-            return new ViewHolder(LayoutInflater.from(parent.getContext()).inflate(R.layout.mylessons_recy, parent, false));
-        }else if (viewType == ITEM_TYPE_BOTTOM){
-         /*   view = LayoutInflater.from(parent.getContext()).inflate(R.layout.bottom_recy, parent, false);
-            holder = new BottomViewHolder(view);
-            return holder; //new bottomViewHolder(mLayoutInflater.inflate(R.layout.main_activity_list_item_bottom, parent, false));
-
-            return new BottomViewHolder(LayoutInflater.from(parent.getContext()).inflate(R.layout.bottom_recy, parent, false));
-        }
-        return null;
-    }*/
 
     @Override
     public void onBindViewHolder(@NonNull final ViewHolder holder, final int position) {
@@ -203,12 +157,17 @@ public class MyRecyclerViewAdapter extends RecyclerView.Adapter<MyRecyclerViewAd
                     imageButton.setOnClickListener(new View.OnClickListener() {
                         @Override
                         public void onClick(View v) {
-                            Log.i(TAG, "LRLHomeFragment:is  checkbox position is ----" + mposition);
+                            Log.i(TAG, "LRLHomeFragment:is  ppppppposition is ----" + position);
+                            Log.i(TAG, "LRLHomeFragment:is  mmmmmmposition is ----" + mposition);
                             // TODO Auto-generated method stub
                             //if (isChecked) {
                             notifyItemRemoved(position);
+                            Log.i(TAG, "LRLHomeFragment:is before getItemCount()is ----" + getItemCount());
                             myLessonList.remove(position);
-                            notifyItemRangeChanged(position, getItemCount());
+
+                            notifyItemRangeChanged(position, getItemCount()-mBottomCount-position);
+                            Log.i(TAG, "LRLHomeFragment:is after getItemCount()is ----" + getItemCount());
+                            //notifyDataSetChanged();全部更新的话就没有动画显示
                             imageButton.setVisibility(View.GONE);
                         }
                     });
@@ -222,6 +181,8 @@ public class MyRecyclerViewAdapter extends RecyclerView.Adapter<MyRecyclerViewAd
             relativeLayout.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
+                    Intent intent = new Intent(activity, AllMyLesson.class);
+                    mContext.startActivity(intent);
                     Log.i(TAG, "LRLHomeFragment:is  checkbox position is "+holder.getAdapterPosition());
                 }
             });

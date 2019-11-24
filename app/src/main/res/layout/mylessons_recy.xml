@@ -3,10 +3,11 @@
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
     android:orientation="vertical"
-    android:layout_margin="10dp"
+
     ><!--mylessonssson recyclerview的自定义布局-->
 
     <RelativeLayout
+        android:layout_margin="10dp"
         android:id="@+id/my_lesson_rela_layout"
         android:layout_width="70dp"
         android:layout_height="70dp"
@@ -40,6 +41,7 @@
 
     <TextView
         android:id="@+id/my_lesson_name_recyview"
+        android:layout_marginBottom="10dp"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="test"

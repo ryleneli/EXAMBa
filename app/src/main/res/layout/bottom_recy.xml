@@ -7,6 +7,7 @@
     ><!--mylessonssson recyclerview的自定义布局-->
 
         <RelativeLayout
+            android:layout_margin="10dp"
             android:id="@+id/bottom_rela_layout"
             android:layout_width="70dp"
             android:layout_height="70dp"
