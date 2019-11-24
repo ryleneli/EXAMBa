@@ -89,6 +89,8 @@ public class HomeFragment extends Fragment {
         layoutManager.setOrientation(LinearLayoutManager.HORIZONTAL);
         recyclerView.setLayoutManager(layoutManager);
         recyclerViewAdapter = new MyRecyclerViewAdapter(getContext(),lessonList,getActivity());
+        recyclerViewAdapter.setmBottomCount(1);
+        recyclerViewAdapter.addFooterView(LayoutInflater.from(getContext()).inflate(R.layout.bottom_recy,null));
         recyclerView.setAdapter(recyclerViewAdapter);
         handler.post(mUpdate);
        /* //长按事件，
