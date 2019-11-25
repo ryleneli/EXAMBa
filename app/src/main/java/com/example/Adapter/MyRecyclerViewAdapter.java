@@ -85,6 +85,7 @@ public class MyRecyclerViewAdapter extends RecyclerView.Adapter<MyRecyclerViewAd
 
     @Override
     public MyRecyclerViewAdapter.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+        Log.i(TAG, "LRLHome===========================");
         View view;
         if (viewType == ITEM_TYPE_BOTTOM) {
             //view = LayoutInflater.from(parent.getContext()).inflate(R.layout.bottom_recy, parent, false);
@@ -114,6 +115,7 @@ public class MyRecyclerViewAdapter extends RecyclerView.Adapter<MyRecyclerViewAd
 
     @Override
     public void onBindViewHolder(@NonNull final ViewHolder holder, final int position) {
+        Log.i(TAG, "LRLHome===========================onbind");
         if (!isBottomView(position)) {
             Log.i(TAG, "LRLHomeFragment:enter content view");
             TextView lessonName = (TextView) holder.itemView.findViewById(R.id.my_lesson_name_recyview);
@@ -134,6 +136,7 @@ public class MyRecyclerViewAdapter extends RecyclerView.Adapter<MyRecyclerViewAd
             }
             //holder.imageView.setColorFilter(mposition==position? checkColor:unCheckColor);注意view setcolor的方法
             textView.setTextColor(mposition == position ? checkColor : unCheckColor);
+            imageButton.setVisibility(View.GONE);
             holder.itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
@@ -168,7 +171,7 @@ public class MyRecyclerViewAdapter extends RecyclerView.Adapter<MyRecyclerViewAd
                             notifyItemRangeChanged(position, getItemCount()-mBottomCount-position);
                             Log.i(TAG, "LRLHomeFragment:is after getItemCount()is ----" + getItemCount());
                             //notifyDataSetChanged();全部更新的话就没有动画显示
-                            imageButton.setVisibility(View.GONE);
+
                         }
                     });
 

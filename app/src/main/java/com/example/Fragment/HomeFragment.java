@@ -29,6 +29,7 @@ import com.example.Adapter.MyExpandableAdapter;
 import com.example.Adapter.MyRecyclerViewAdapter;
 import com.example.Object.Lesson;
 import com.example.Adapter.MylessonAdapter;
+import com.example.Object.MyCustomItemAnimator;
 import com.example.Object.MyListView;
 import com.example.Object.MyRecyclerView;
 import com.example.UI.TestView;
@@ -92,6 +93,7 @@ public class HomeFragment extends Fragment {
             recyclerViewAdapter.setmBottomCount(1);
             recyclerViewAdapter.addFooterView(LayoutInflater.from(getContext()).inflate(R.layout.bottom_recy, null));
             recyclerView.setAdapter(recyclerViewAdapter);
+            recyclerView.setItemAnimator(new MyCustomItemAnimator());
             handler.post(mUpdate);
 
 
