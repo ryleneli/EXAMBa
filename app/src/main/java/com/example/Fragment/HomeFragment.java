@@ -93,7 +93,7 @@ public class HomeFragment extends Fragment {
             recyclerViewAdapter.setmBottomCount(1);
             recyclerViewAdapter.addFooterView(LayoutInflater.from(getContext()).inflate(R.layout.bottom_recy, null));
             recyclerView.setAdapter(recyclerViewAdapter);
-            recyclerView.setItemAnimator(new MyCustomItemAnimator());
+            //recyclerView.setItemAnimator(new MyCustomItemAnimator());
             handler.post(mUpdate);
 
 
