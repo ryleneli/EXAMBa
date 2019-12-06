@@ -65,7 +65,7 @@ public class MainActivity extends AppCompatActivity {
 		viewPager.setAdapter(adapter);
 		//viewPager.setOffscreenPageLimit(2);
 		//绑定
-		tabLayout.setupWithViewPager(viewPager);
+		tabLayout.setupWithViewPager(viewPager);//tablayout和viewpager联动
 
 		viewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
 			@Override

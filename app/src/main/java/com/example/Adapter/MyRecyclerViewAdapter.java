@@ -142,7 +142,7 @@ public class MyRecyclerViewAdapter extends RecyclerView.Adapter<MyRecyclerViewAd
                 public void onClick(View v) {
                     //将点击的位置传出去
                     mposition = holder.getAdapterPosition();
-                    Log.i(TAG, "mposition ----" + mposition);
+                    Log.i(TAG, "abcdfllllllllllllllllllllllllllll ----" + mposition);
                     listener.itemClick();
                     /*在点击监听里最好写入setVisibility(View.VISIBLE);这样可以避免效果会闪
                     //holder.mListSelect.setVisibility(View.VISIBLE);
@@ -151,6 +151,7 @@ public class MyRecyclerViewAdapter extends RecyclerView.Adapter<MyRecyclerViewAd
                     notifyDataSetChanged();
                 }
             });
+
             holder.itemView.setOnLongClickListener(new View.OnLongClickListener() {
                 @Override
                 public boolean onLongClick(View view) {
@@ -160,12 +161,12 @@ public class MyRecyclerViewAdapter extends RecyclerView.Adapter<MyRecyclerViewAd
                     imageButton.setOnClickListener(new View.OnClickListener() {
                         @Override
                         public void onClick(View v) {
-                            Log.i(TAG, "LRLHomeFragment:is  ppppppposition is ----" + position);
+                            Log.i(TAG, "abcdf3333333333333333333333333333333333" + position);
                             Log.i(TAG, "LRLHomeFragment:is  mmmmmmposition is ----" + mposition);
                             // TODO Auto-generated method stub
                             //if (isChecked) {
                             notifyItemRemoved(position);
-                            Log.i(TAG, "LRLHomeFragment:is before getItemCount()is ----" + getItemCount());
+                            Log.i(TAG, "abcdf2222222222222222222222222222222222-" + getItemCount());
                             myLessonList.remove(position);
 
                             notifyItemRangeChanged(position, getItemCount()-mBottomCount-position);
