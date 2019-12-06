@@ -121,7 +121,7 @@ public class MyWindowManager {
      * @param context
      *            必须为应用程序的Context.
      */
-    public static FloatWindowBigView createBigWindow(Context context,float bigWindow_x,float bigWindow_y,boolean inRight) {
+    public static FloatWindowBigView createWindow(Context context, float bigWindow_x, float bigWindow_y, float xInScreen_1) {
         WindowManager windowManager = getWindowManager(context);
         int screenWidth = windowManager.getDefaultDisplay().getWidth();
         int screenHeight = windowManager.getDefaultDisplay().getHeight();
@@ -129,12 +129,17 @@ public class MyWindowManager {
             floatWindowBig = new FloatWindowBigView(context);
             if (floatWindowParamsBig == null) {
                 floatWindowParamsBig = new WindowManager.LayoutParams();
-                floatWindowParamsBig.width = FloatWindowBigView.viewWidth;
-                floatWindowParamsBig.height = FloatWindowBigView.viewHeight;
-                if (inRight)
+                floatWindowParamsBig.width = floatWindowBig.viewWidth;
+                floatWindowParamsBig.height = floatWindowBig.viewHeight;
+                //创建悬浮窗1时设置初始位置计算参考FloatWindowView中注释，左侧计算，右侧计算
+                boolean inRight = false;
+                if (windowManager.getDefaultDisplay().getWidth()-floatWindowParams.width-floatWindowParams.x>floatWindowParamsBig.width) {
                     floatWindowParamsBig.x = (int)bigWindow_x + smallWindow_w;
+                }
                 else
+                {
                     floatWindowParamsBig.x = (int)bigWindow_x - floatWindowParamsBig.width;
+                }
                 floatWindowParamsBig.y = (int)bigWindow_y +smallWindow_h-floatWindowParamsBig.height;
                 floatWindowParamsBig.type = WindowManager.LayoutParams.TYPE_APPLICATION_OVERLAY;
                 floatWindowParamsBig.flags = WindowManager.LayoutParams.FLAG_NOT_TOUCH_MODAL | WindowManager.LayoutParams.FLAG_NOT_FOCUSABLE;

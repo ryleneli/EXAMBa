@@ -52,7 +52,7 @@ public class MyRecyclerView extends RecyclerView {
                 if (dealtX >= dealtY) {
                     parent.requestDisallowInterceptTouchEvent(true);
                 } else {
-                    parent.requestDisallowInterceptTouchEvent(false);
+                    getParent().getParent().getParent().requestDisallowInterceptTouchEvent(false);
                 }
                 lastX = x;
                 lastY = y;

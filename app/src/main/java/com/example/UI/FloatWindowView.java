@@ -43,7 +43,7 @@ public class FloatWindowView extends RelativeLayout implements View.OnTouchListe
     public static int viewWidth;                        //小悬浮窗的宽度
     public static int viewHeight;                       //记录小悬浮窗的高度
 
-
+    public View view;
     private WindowManager windowManager;                //用于更新小悬浮窗的位置
     private WindowManager.LayoutParams mParams;         //小悬浮窗的参数
 /*
@@ -95,7 +95,7 @@ public class FloatWindowView extends RelativeLayout implements View.OnTouchListe
         //floatWindowBig = new FloatWindowBigView(getContext());
         windowManager = (WindowManager) context.getSystemService(Context.WINDOW_SERVICE);
         LayoutInflater.from(context).inflate(R.layout.float_window, this);
-        View view = findViewById(R.id.view_floatwindow);
+        view = findViewById(R.id.view_floatwindow);
         viewWidth = view.getLayoutParams().width;
         viewHeight = view.getLayoutParams().height;
 
@@ -129,11 +129,6 @@ public class FloatWindowView extends RelativeLayout implements View.OnTouchListe
 
                 xInScreen = event.getRawX();
                 Log.i(TAG, "lrl xDownInScreen is     ====="+xInScreen);
-                if (isMenuOpen){
-                    if (windowManager.getDefaultDisplay().getWidth()-xInScreen>floatWindowBig.getWidth())
-                        inRight = true;
-                    else inRight = false;
-                }
                 yInScreen = event.getRawY() - MyWindowManager.getStatusBarHeight(getContext());
                 Log.i(TAG, "lrl yDownInScreen is     *****"+yInScreen);
                 break;
@@ -144,7 +139,7 @@ public class FloatWindowView extends RelativeLayout implements View.OnTouchListe
                 // 手指移动的时候更新小悬浮窗的位置
                 updateViewPosition();
                 if (isMenuOpen){
-                    if (windowManager.getDefaultDisplay().getWidth()-xInScreen>floatWindowBig.getWidth())
+                    if (windowManager.getDefaultDisplay().getWidth()-view.getLayoutParams().width-mParams.x>floatWindowBig.getWidth())
                         inRight = true;
                     else inRight = false;
                 }
@@ -160,7 +155,7 @@ public class FloatWindowView extends RelativeLayout implements View.OnTouchListe
                 if (xDownInScreen == xInScreen && yDownInScreen == yInScreen) {
                     if (!isMenuOpen) {
                         //Log.i(TAG, "lrl mParams.x is     *********====="+mParams.x);
-                        floatWindowBig = MyWindowManager.createBigWindow(getContext(),mParams.x,mParams.y,inRight);
+                        floatWindowBig = MyWindowManager.createWindow(getContext(),mParams.x,mParams.y,xInScreen);
                         isMenuOpen = true;
                     }else {
                         MyWindowManager.removeBigWindow(getContext());
