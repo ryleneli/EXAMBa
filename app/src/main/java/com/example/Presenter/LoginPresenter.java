@@ -71,20 +71,6 @@ public class LoginPresenter{
         RegisterDialogFragment fragment = new RegisterDialogFragment();
         fragment.show(loginActivity.fm, "fragment_edit_name");
     }
-/*
-    public void toWebInfo() {
-        loginActivity.showToast("跳转到用户个人信息界面");
-        Intent intent = new Intent(context,WebInfoActivity.class);
-        context.startActivity(intent);
-        this.loginActivity.finish();
-    }
-
-    public void initLoginInfo() {
-        //获取User信息，然后填充到登录信息中
-        //User local_user = localUser.readInfoLocal(StaticVariable.USER_FILE);
-        loginActivity.account.setText(local_user.getUsername());
-        loginActivity.password.setText(local_user.getPassword());
-    }*/
 
     public void login(User user) {
         //登录用户信息

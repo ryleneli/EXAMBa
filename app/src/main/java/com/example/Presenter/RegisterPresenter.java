@@ -14,16 +14,6 @@ import com.example.webConnect.NetWorks;
 import com.google.gson.Gson;
 
 import rx.Observer;
-/*
-import com.example.Activity.MainActivity;
-import com.example.Activity.RegisterActivity;
-import com.google.gson.Gson;
-
-import rx.Observer;
-import com.example.webConnect.NetWorks;
-import com.example.LocalRecord.LocalRecord;
-import com.example.Object.Bean.User;
-import com.example.UserStatics.StaticVariable;
 
 /**
  * Created by hasee on 2016/10/27.

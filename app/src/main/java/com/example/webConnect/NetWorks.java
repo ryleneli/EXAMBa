@@ -34,11 +34,11 @@ public class NetWorks extends RetrofitUtils {
         @POST("WebService")//通过@GET, @POST, @PUT, @DELETE和@HEAD指定对应的请求方式，参数是请求路径
         @Headers("Content-Type:application/x-www-form-urlencoded; charset=utf-8")
         Observable<String> connectedTest(@Field("action") String action);
-/*
+
         @FormUrlEncoded
         @POST("WebService")//通过@GET, @POST, @PUT, @DELETE和@HEAD指定对应的请求方式，参数是请求路径
         @Headers("Content-Type:application/x-www-form-urlencoded; charset=utf-8")
-        Observable<String> getTitle(@Field("action") String action);*/
+        Observable<String> getTitle(@Field("action") String action);
 
         @FormUrlEncoded
         @POST("WebService")
@@ -80,7 +80,10 @@ public class NetWorks extends RetrofitUtils {
     public static void connectTest(String action,Observer<String> observer){
         setSubscribe(service.connectedTest(action),observer);
     }
-
+    //返回随机数
+    public static void getTitle(String action,Observer<String> observer){
+        setSubscribe(service.getTitle(action),observer);
+    }
     //获取单个用户信息
     public static void getUserInfo(String action,int userId,Observer<String> observer){
         setSubscribe(service.getUserInfo(action,userId),observer);

@@ -29,7 +29,7 @@ import static android.content.ContentValues.TAG;
 
 public class SplashActivity extends Activity {
 
-    private static String TAG = "SplashActivitylrl";
+    private static String TAG = "SplashActivity";
     private RelativeLayout relativeLayout;
     private SplashPresenter splashPresenter;
     @Override
@@ -55,29 +55,6 @@ public class SplashActivity extends Activity {
         new Thread(new Runnable() {
             @Override
             public void run() {
-/*                try {
-
-                    OkHttpClient client = new OkHttpClient();
-                    Request request = new Request.Builder()
-                            .url("http://122.51.93.183:8080/webService/WebService?action=connectedTest")
-                            .build();
-                    Response response = client.newCall(request).execute();
-                    String responseData = response.body().string();
-                    if (responseData.equals("connected"))
-                    {
-                        request = new Request.Builder()
-                                .url("http://122.51.93.183:8080/webService/WebService?action=getTitle")
-                                .build();
-                        response = client.newCall(request).execute();
-                        responseData = response.body().string();
-                        setSplashImage(responseData);
-                    }
-                    else
-                        Toast.makeText(SplashActivity.this, "server is unconnected", Toast.LENGTH_SHORT).show();
-
-                } catch (Exception e) {
-                    e.printStackTrace();
-                }*/
                 splashPresenter.webTest();
             }
         }).start();
