@@ -6,12 +6,10 @@ import android.content.Intent;
 import android.net.ConnectivityManager;
 import android.util.Log;
 
-import com.example.Activity.LoginActivity;
 import com.example.Activity.MainActivity;
 import com.example.Fragment.RegisterDialogFragment;
 import com.example.LocalRecord.LocalRecord;
-import com.example.Object.User;
-import com.example.UserStatics.StaticVariable;
+import com.example.Object.Bean.User;
 import com.example.webConnect.NetWorks;
 import com.google.gson.Gson;
 
@@ -24,7 +22,7 @@ import com.google.gson.Gson;
 import rx.Observer;
 import com.example.webConnect.NetWorks;
 import com.example.LocalRecord.LocalRecord;
-import com.example.Object.User;
+import com.example.Object.Bean.User;
 import com.example.UserStatics.StaticVariable;
 
 /**

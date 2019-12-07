@@ -1,17 +1,14 @@
 package com.example.Adapter;
 
 import android.content.Context;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
-import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.example.Object.Lesson;
-import com.example.UI.ItemView;
+import com.example.Object.Bean.Lesson;
 import com.example.UI.LessonItemView;
 import com.example.testsys.R;
 
@@ -32,7 +29,7 @@ public class MylessonAdapter extends ArrayAdapter {
         }
         @Override
         public View getView(int position, View convertView, ViewGroup parent) {
-            Lesson lesson = (Lesson) getItem(position); // 获取当前项的Fruit实例
+            Lesson lesson = (Lesson) getItem(position);
             View view = LayoutInflater.from(getContext()).inflate(resourceId, null);//实例化一个对象
             LessonItemView lessonItemView = view.findViewById(R.id.mylesson_listview);
             imageView = lessonItemView.getLessonIcon();

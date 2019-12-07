@@ -1,6 +1,6 @@
-package com.example.Object;
+package com.example.Object.Bean;
 
-import com.example.Object.Student;
+import com.example.Object.Bean.Student;
 
 import java.util.ArrayList;
 import java.util.HashMap;

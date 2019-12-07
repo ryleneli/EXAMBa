@@ -1,4 +1,4 @@
-package com.example.Object;
+package com.example.Object.CustomizeObject;
 
 import android.content.Context;
 import android.support.annotation.Nullable;
@@ -6,7 +6,6 @@ import android.support.v4.view.ViewPager;
 import android.support.v7.widget.RecyclerView;
 import android.util.AttributeSet;
 import android.view.MotionEvent;
-import android.view.ViewConfiguration;
 import android.view.ViewParent;
 
 /**

@@ -1,4 +1,4 @@
-package com.example.Object;
+package com.example.Object.Bean;
 
 /**
  * Created by rylene_li on 2019/9/30.

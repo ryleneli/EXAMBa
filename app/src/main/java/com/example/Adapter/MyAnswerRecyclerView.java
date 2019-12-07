@@ -3,25 +3,18 @@ package com.example.Adapter;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
-import android.graphics.Color;
 import android.support.annotation.NonNull;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.example.Activity.ExamActivity;
-import com.example.Activity.MyAnswerActivity;
-import com.example.Object.Lesson;
-import com.example.itemClickListener;
+import com.example.Callback.itemClickListener;
 import com.example.testsys.R;
-
-import java.util.List;
 
 import static android.app.Activity.RESULT_OK;
 

@@ -1,16 +1,8 @@
 package com.example.Activity;
 
-import java.io.FileInputStream;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.Serializable;
-import java.util.Random;
-
-import com.example.Constant;
 import com.example.DBControl.DBAdapter;
 import com.example.Service.FloatWindowService;
-import com.example.Service.MyWindowManager;
+import com.example.Manager.MyWindowManager;
 import com.example.TestControl.TestCtrl;
 import com.example.UI.TitleBarView;
 import com.example.Utils.StatusBarUtil;
@@ -23,7 +15,6 @@ import android.os.SystemClock;
 import android.util.Log;
 import android.view.View;
 import android.view.View.OnClickListener;
-import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.Chronometer;
 import android.widget.ImageButton;

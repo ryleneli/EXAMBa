@@ -1,6 +1,5 @@
-package com.example.Object;
+package com.example.Object.CustomizeObject;
 
-import android.widget.TextView;
 import android.content.Context;
 import android.graphics.Canvas;
 import android.graphics.Color;
@@ -9,10 +8,6 @@ import android.graphics.Matrix;
 import android.graphics.Paint;
 import android.graphics.Shader;
 import android.util.AttributeSet;
-import android.util.Log;
-import android.view.View.MeasureSpec;
-import android.view.WindowManager;
-import android.widget.TextView;
 
 public class MyTextView extends android.support.v7.widget.AppCompatTextView {
 

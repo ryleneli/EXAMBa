@@ -34,6 +34,11 @@ public class NetWorks extends RetrofitUtils {
         @POST("WebService")//通过@GET, @POST, @PUT, @DELETE和@HEAD指定对应的请求方式，参数是请求路径
         @Headers("Content-Type:application/x-www-form-urlencoded; charset=utf-8")
         Observable<String> connectedTest(@Field("action") String action);
+/*
+        @FormUrlEncoded
+        @POST("WebService")//通过@GET, @POST, @PUT, @DELETE和@HEAD指定对应的请求方式，参数是请求路径
+        @Headers("Content-Type:application/x-www-form-urlencoded; charset=utf-8")
+        Observable<String> getTitle(@Field("action") String action);*/
 
         @FormUrlEncoded
         @POST("WebService")

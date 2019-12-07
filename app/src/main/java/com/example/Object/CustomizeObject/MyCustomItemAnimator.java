@@ -1,4 +1,4 @@
-package com.example.Object;
+package com.example.Object.CustomizeObject;
 
 import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;
@@ -12,7 +12,6 @@ import android.view.ViewPropertyAnimator;
 import android.view.animation.AnticipateOvershootInterpolator;
 
 import java.util.ArrayList;
-import java.util.Iterator;
 
 public class MyCustomItemAnimator extends DefaultItemAnimator {
 

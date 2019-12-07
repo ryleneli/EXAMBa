@@ -1,24 +1,14 @@
 package com.example.Service;
 
 
-import android.app.ActivityManager;
 import android.app.Service;
-import android.content.Context;
 import android.content.Intent;
-import android.content.pm.PackageManager;
-import android.content.pm.ResolveInfo;
 import android.os.IBinder;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Timer;
-import java.util.TimerTask;
 import android.os.Handler;
 import android.util.Log;
 import android.os.Message;
 
-import android.os.Bundle;
-
-import com.example.Activity.ExamActivity;
+import com.example.Manager.MyWindowManager;
 /**
  * Created by rylene_li on 2019/1/21.
  */

@@ -8,14 +8,12 @@ import android.view.View;
 import android.widget.Button;
 
 import com.example.Adapter.MylessonAdapter;
-import com.example.Object.Lesson;
-import com.example.Object.MyListView;
+import com.example.Object.Bean.Lesson;
+import com.example.Object.CustomizeObject.MyListView;
 import com.example.testsys.R;
 
 import java.util.ArrayList;
 import java.util.List;
-
-import static android.content.ContentValues.TAG;
 
 /**
  * Created by 15151 on 2019/10/18.

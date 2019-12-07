@@ -1,4 +1,4 @@
-package com.example.Object;
+package com.example.Object.CustomizeObject;
 
 import android.widget.ExpandableListView;
 
@@ -10,7 +10,6 @@ import android.widget.ExpandableListView;
 
 import android.content.Context;
 import android.util.AttributeSet;
-import android.widget.ExpandableListView;
 
 /**
  * 重写ExpandableListView以解决ScrollView嵌套ExpandableListView

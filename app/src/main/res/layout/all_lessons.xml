@@ -10,11 +10,11 @@
         app:title_back_icon_visible="true"
         app:title_text_text="全部课程"
         ></com.example.UI.TitleBarView>
-        <com.example.Object.MyListView
+        <com.example.Object.CustomizeObject.MyListView
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_marginTop="15dp"
             android:id="@+id/list_view_mylessons"
             >
-        </com.example.Object.MyListView>
+        </com.example.Object.CustomizeObject.MyListView>
 </LinearLayout>

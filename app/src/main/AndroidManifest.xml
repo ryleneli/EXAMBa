@@ -18,20 +18,17 @@
         <activity
             android:name="com.example.Activity.SplashActivity"
             android:theme="@style/SplashTheme">
-
-        </activity>
-
-        <activity android:name="com.example.Activity.LoginModeActivity" >
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
         </activity>
 
         <activity android:name="com.example.Activity.LoginActivity" >
         </activity>
 
         <activity android:name="com.example.Activity.MainActivity" >
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
+
         </activity>
         <activity android:name="com.example.Activity.AllMyLesson" >
 

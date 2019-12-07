@@ -3,25 +3,22 @@ package com.example.Presenter;
 import android.content.Context;
 import android.content.Intent;
 import android.net.ConnectivityManager;
-import android.support.v4.app.FragmentManager;
 import android.util.Log;
 
 import com.example.Activity.MainActivity;
 //import com.example.Activity.RegisterActivity;
 import com.example.Fragment.RegisterDialogFragment;
 import com.google.gson.Gson;
-import android.support.v4.app.FragmentManager;
+
 import rx.Observer;
 import com.example.webConnect.NetWorks;
 import com.example.LocalRecord.LocalRecord;
 import com.example.Activity.LoginActivity;
 //import yong.tank.Title_Activity.View.RegisterActivity;
 //import yong.tank.Title_Activity.View.WebInfoActivity;
-import com.example.Object.User;
-import com.example.UserStatics.StaticVariable;
+import com.example.Object.Bean.User;
 
 /**
- * Created by hasee on 2016/10/27.
  * 处理登陆相关的方法
  */
 

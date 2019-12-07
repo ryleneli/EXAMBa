@@ -1,4 +1,4 @@
-package com.example.Object;
+package com.example.Object.CustomizeObject;
 
 import android.content.Context;
 import android.util.AttributeSet;
@@ -6,8 +6,6 @@ import android.util.Log;
 import android.view.MotionEvent;
 import android.view.ViewConfiguration;
 import android.widget.RelativeLayout;
-
-import com.example.DisPlayUtils;
 
 /**
  * 作者：willkong on 2017/5/8.

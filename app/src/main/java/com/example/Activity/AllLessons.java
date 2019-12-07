@@ -2,12 +2,10 @@ package com.example.Activity;
 
 import android.app.Activity;
 import android.os.Bundle;
-import android.view.View;
-import android.widget.Button;
 
 import com.example.Adapter.MylessonAdapter;
-import com.example.Object.Lesson;
-import com.example.Object.MyListView;
+import com.example.Object.Bean.Lesson;
+import com.example.Object.CustomizeObject.MyListView;
 import com.example.testsys.R;
 
 import java.util.ArrayList;

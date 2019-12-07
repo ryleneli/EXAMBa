@@ -1,10 +1,9 @@
-package com.example.Object;
+package com.example.Object.CustomizeObject;
 
 import android.content.Context;
 import android.support.v4.view.ViewPager;
 import android.util.AttributeSet;
 import android.view.MotionEvent;
-import android.view.View;
 
 /**
  * Created by DELL on 2019/10/5.

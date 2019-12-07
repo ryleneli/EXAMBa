@@ -1,12 +1,11 @@
 package com.example.UserStatics;
 
-import android.graphics.Bitmap;
 import android.os.Environment;
 
 import java.io.File;
 
 
-import com.example.Object.User;
+import com.example.Object.Bean.User;
 
 
 

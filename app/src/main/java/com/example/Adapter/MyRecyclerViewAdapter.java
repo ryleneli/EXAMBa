@@ -11,19 +11,14 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.CheckBox;
-import android.widget.CompoundButton;
 import android.widget.ImageButton;
-import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.example.Activity.AllMyLesson;
-import com.example.Activity.MainActivity;
-import com.example.Object.Lesson;
-import com.example.Object.MyRecyclerView;
-import com.example.itemClickListener;
-import com.example.itemLongClickListener;
+import com.example.Object.Bean.Lesson;
+import com.example.Callback.itemClickListener;
+import com.example.Callback.itemLongClickListener;
 import com.example.testsys.R;
 
 import java.util.List;

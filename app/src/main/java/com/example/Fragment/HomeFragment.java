@@ -1,48 +1,32 @@
 package com.example.Fragment;
 
 import android.content.Intent;
-import android.graphics.Color;
-import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.os.Handler;
-import android.os.Message;
 import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentManager;
 import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.AdapterView;
-import android.widget.Button;
-import android.widget.CompoundButton;
 import android.widget.ExpandableListView;
-import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.example.Activity.AllMyLesson;
 import com.example.Activity.ExamActivity;
 import com.example.Activity.MainActivity;
 import com.example.Adapter.MyExpandableAdapter;
 import com.example.Adapter.MyRecyclerViewAdapter;
-import com.example.Object.Lesson;
-import com.example.Adapter.MylessonAdapter;
-import com.example.Object.MyCustomItemAnimator;
-import com.example.Object.MyListView;
-import com.example.Object.MyRecyclerView;
+import com.example.Object.Bean.Lesson;
+import com.example.Object.CustomizeObject.MyRecyclerView;
 import com.example.UI.TestView;
-import com.example.itemClickListener;
-import com.example.itemLongClickListener;
+import com.example.Callback.itemClickListener;
 import com.example.testsys.R;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Timer;
 import java.util.TimerTask;
-
-import static android.view.View.VISIBLE;
 
 /**
  * Created by rylene_li on 2019/9/30.

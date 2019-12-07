@@ -1,12 +1,7 @@
 package com.example.UI;
 
-import android.animation.Animator;
 import android.animation.AnimatorSet;
 import android.animation.ObjectAnimator;
-import android.content.Intent;
-import android.view.animation.BounceInterpolator;
-import android.widget.Button;
-import android.widget.Chronometer;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 
@@ -15,21 +10,13 @@ import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.WindowManager;
-import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.util.Log;
 
-import com.example.Activity.ExamActivity;
-import com.example.Activity.MyAnswerActivity;
-import com.example.Object.MyRelativeLayout;
-import com.example.Service.FloatWindowService;
-import com.example.Service.MyWindowManager;
+import com.example.Manager.MyWindowManager;
 import com.example.testsys.R;
 
-import java.lang.reflect.Field;
 import java.text.DecimalFormat;
-import java.util.ArrayList;
-import java.util.List;
 
 /**
  * Created by rylene_li on 2019/1/21.

@@ -11,6 +11,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.Constant;
+import com.example.Presenter.SplashPresenter;
 import com.example.testsys.R;
 
 import java.util.Timer;
@@ -30,12 +31,14 @@ public class SplashActivity extends Activity {
 
     private static String TAG = "SplashActivitylrl";
     private RelativeLayout relativeLayout;
+    private SplashPresenter splashPresenter;
     @Override
     protected void onCreate(Bundle savedInstanceState){
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_splash);
         relativeLayout = (RelativeLayout)findViewById(R.id.logolayout);
         setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);//判断横竖屏状态
+        splashPresenter = new SplashPresenter(this,this);
         sendRequestWithOkHttp();
         Timer timer = new Timer();
         TimerTask timerTask = new TimerTask(){
@@ -52,7 +55,8 @@ public class SplashActivity extends Activity {
         new Thread(new Runnable() {
             @Override
             public void run() {
-                try {
+/*                try {
+
                     OkHttpClient client = new OkHttpClient();
                     Request request = new Request.Builder()
                             .url("http://122.51.93.183:8080/webService/WebService?action=connectedTest")
@@ -70,13 +74,15 @@ public class SplashActivity extends Activity {
                     }
                     else
                         Toast.makeText(SplashActivity.this, "server is unconnected", Toast.LENGTH_SHORT).show();
+
                 } catch (Exception e) {
                     e.printStackTrace();
-                }
+                }*/
+                splashPresenter.webTest();
             }
         }).start();
     }
-    private void setSplashImage(final String responseData) {
+    public void setSplashImage(final String responseData) {
         runOnUiThread(new Runnable() {
             @Override
             public void run() {

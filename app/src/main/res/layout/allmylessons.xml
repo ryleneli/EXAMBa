@@ -38,12 +38,12 @@
             android:layout_below="@+id/allmylessons_title"
             android:layout_above="@+id/view_aboveadd"
             android:orientation="vertical">
-            <com.example.Object.MyListView
+            <com.example.Object.CustomizeObject.MyListView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:id="@+id/list_view_mylessons"
                 >
-            </com.example.Object.MyListView>
+            </com.example.Object.CustomizeObject.MyListView>
         </LinearLayout>
 
 </RelativeLayout>

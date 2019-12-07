@@ -1,4 +1,4 @@
-package com.example.Object;
+package com.example.Object.Bean;
 
 import java.io.Serializable;
 import java.util.Date;

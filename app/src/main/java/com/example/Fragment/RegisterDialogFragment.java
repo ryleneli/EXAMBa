@@ -28,7 +28,7 @@ public class RegisterDialogFragment extends DialogFragment implements View.OnCli
        private static String TAG = "RegisterDialogFragment";
        public EditText mUsername;
        public EditText mPassword;
-       public Button btn;
+       public Button register_btn;
        public ImageView iv;
        private RegisterPresenter registerPresenter = new RegisterPresenter(this);
        @Nullable
@@ -46,9 +46,9 @@ public class RegisterDialogFragment extends DialogFragment implements View.OnCli
            AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
            View view= LayoutInflater.from(getActivity()).inflate(R.layout.register_layout, null);
            mUsername= view.findViewById(R.id.register_et1);
-           btn= view.findViewById(R.id.register_btn);
+           register_btn= view.findViewById(R.id.register_btn);
            mPassword= view.findViewById(R.id.register_et2);
-           btn.setOnClickListener(this);
+           register_btn.setOnClickListener(this);
            builder.setView(view);
            return builder.create();
        }
@@ -58,7 +58,7 @@ public class RegisterDialogFragment extends DialogFragment implements View.OnCli
            switch (v.getId())
            {
                case R.id.register_btn:
-                   Log.i(TAG,"battle_computer");
+                   Log.i(TAG,"---------->to regist");
                    registerPresenter.register();
                    break;
            }

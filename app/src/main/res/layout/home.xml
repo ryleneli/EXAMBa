@@ -146,12 +146,12 @@
                     android:layout_height="0.5dp"
                     android:background="#A9A9A9" />
 
-                <com.example.Object.MyRecyclerView
+                <com.example.Object.CustomizeObject.MyRecyclerView
                     android:background="@color/cardview_shadow_start_color"
                     android:id="@+id/rv"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content">
-                </com.example.Object.MyRecyclerView>
+                </com.example.Object.CustomizeObject.MyRecyclerView>
             </LinearLayout>
 
 
@@ -181,7 +181,7 @@
                         android:layout_height="wrap_content"
                         android:layout_gravity="center"
                         android:text="当前学习课程："/>
-                    <com.example.Object.MyTextView
+                    <com.example.Object.CustomizeObject.MyTextView
                         android:id="@+id/learning_lesson"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
@@ -289,7 +289,7 @@
                         android:layout_width="fill_parent"
                         android:layout_height="0.5dp"
                         android:background="#A9A9A9" />
-                    <com.example.Object.MyExpandableListView
+                    <com.example.Object.CustomizeObject.MyExpandableListView
                         android:id="@+id/elv"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
