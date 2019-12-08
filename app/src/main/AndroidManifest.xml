@@ -44,9 +44,7 @@
             android:launchMode="singleTask">
 
         </activity>
-        <activity android:name="com.example.Activity.FloatWindow">
 
-        </activity>
         <service android:name="com.example.Service.FloatWindowService"></service>
     </application>
 

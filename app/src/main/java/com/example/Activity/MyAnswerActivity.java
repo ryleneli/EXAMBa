@@ -16,6 +16,7 @@ import android.widget.TextView;
 
 import com.example.Adapter.MyAnswerRecyclerView;
 import com.example.Adapter.MyRecyclerViewAdapter;
+import com.example.Presenter.MyAnswerPresenter;
 import com.example.UI.TitleBarView;
 import com.example.Utils.StatusBarUtil;
 import com.example.testsys.R;
@@ -27,38 +28,34 @@ import static android.view.View.GONE;
  */
 
 public class MyAnswerActivity extends Activity {
-    private static String TAG = "LRL ExamActivity";
+    private static String TAG = "MyAnswerActivity";
     private TitleBarView titleBarView;
-    private TextView numText,resultText,timeText;
-    private RecyclerView recyclerView ;
-    private MyAnswerRecyclerView recyclerViewAdapter;
+    private TextView resultText,timeText;
+    public RecyclerView recyclerView ;
+    public MyAnswerRecyclerView recyclerViewAdapter;
     private Button button ;
     private RelativeLayout relativeLayout;
     private View view;
-    private Chronometer chronometer;
-    private int myAnswer[] = new int [15];
-    private int testAnswer[] = new int [15];
+    public Chronometer chronometer;
     boolean isHandIn = false;
-    private int sum;
 
+    public MyAnswerPresenter myAnswerPresenter;
     @Override
     protected void onCreate(final Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.answer_record);
+        myAnswerPresenter = new MyAnswerPresenter(getBaseContext(),this);
         StatusBarUtil.setRootViewFitsSystemWindows(this,false);
         //设置状态栏透明
         StatusBarUtil.setTranslucentStatus(this);
         StatusBarUtil.setStatusBarDarkTheme(MyAnswerActivity.this,false);
         Log.i(TAG,"LRL mySelect now is **********onCreate");
         Intent intent = getIntent() ;
-        myAnswer = intent.getIntArrayExtra("answer");
-        testAnswer = intent.getIntArrayExtra("test_answer");
+        myAnswerPresenter.getData(intent);
         titleBarView = (TitleBarView) findViewById(R.id.myAnswer_titlebar);
         chronometer = titleBarView.getChronometer();
-        final int temp = intent.getIntExtra("timer",0);
-        Log.i(TAG, "my temp======================"+temp);
-        chronometer.setBase(SystemClock.elapsedRealtime()-temp*1000);
-        chronometer.start();
+        myAnswerPresenter.setTime();
+        //chronometer.start();
         button = (Button) findViewById(R.id.upload_button);
         relativeLayout = (RelativeLayout) findViewById(R.id.question_type_1);
         resultText = (TextView) findViewById(R.id.result);
@@ -68,13 +65,9 @@ public class MyAnswerActivity extends Activity {
         recyclerView = (RecyclerView)findViewById(R.id.my_answer);
         GridLayoutManager layoutManager = new GridLayoutManager(this,5);
         recyclerView.setLayoutManager(layoutManager);
-        recyclerViewAdapter = new MyAnswerRecyclerView(this,MyAnswerActivity.this,myAnswer,testAnswer,isHandIn);
-        recyclerView.setAdapter(recyclerViewAdapter);
-        for (int i=0;i<15;i++)
-        {
-            //Log.i(TAG, "my answer====="+i+" is  ==========="+myAnswer[i]);
-            //Log.i(TAG, "test answer*******"+i+" is  ************"+testAnswer[i]);
-        }
+        //recyclerViewAdapter = new MyAnswerRecyclerView(this,MyAnswerActivity.this,myAnswer,testAnswer,isHandIn);
+        //recyclerView.setAdapter(recyclerViewAdapter);
+        myAnswerPresenter.handIn(isHandIn);
         button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -91,41 +84,21 @@ public class MyAnswerActivity extends Activity {
                     titleBarView.setTimer(false);
                     chronometer.stop();
                     chronometer.setVisibility(View.INVISIBLE);
-                    recyclerViewAdapter = new MyAnswerRecyclerView(getBaseContext(),MyAnswerActivity.this,myAnswer,testAnswer,isHandIn);
-                    recyclerView.setAdapter(recyclerViewAdapter);
-                    sum = answerCount();
-                    String temp_text = "正确："+sum + "/15";
-                    resultText.setText(temp_text);
-                    int minute = temp/60;
-                    int second = temp%60;
-                    Log.i(TAG, "my answer====="+minute+" is  ==========="+second);
-                    String time_text = "考试用时："+minute + ":"+second;
-                    timeText.setText(time_text);
+
+                    myAnswerPresenter.handIn(isHandIn);
+                    resultText.setText(myAnswerPresenter.getResult());
+                    timeText.setText(myAnswerPresenter.showTime());
                 }
                 else
                 {
                     Log.i(TAG, "my answer====================ready to enter exam");
-                    Intent intent = new Intent(MyAnswerActivity.this, ExamActivity.class);
-                    intent.putExtra("isHandIn",isHandIn);
-                    intent.putExtra("answer",myAnswer);
-                    //intent.putExtra("test_answer",testAnswer);
-                    setResult(RESULT_OK, intent);
-                    MyAnswerActivity.this.finish();
+                    myAnswerPresenter.putData(isHandIn);
                 }
 
             }
         });
     }
-    private int answerCount()
-    {
-        int sum = 0;
-        for (int i=0;i<15;i++)
-        {
-            if (myAnswer[i] == testAnswer[i])
-                sum ++;
-        }
-        return sum;
-    }
+
     @Override
     protected void onStart() {//ExamActivity走singletask模式，在活动站中只保存一个实例
         super.onStart();
