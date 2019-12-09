@@ -1,6 +1,8 @@
 package com.example.Activity;
 
+import com.example.Constant;
 import com.example.DBControl.DBAdapter;
+import com.example.Presenter.ExamPresenter;
 import com.example.Service.FloatWindowService;
 import com.example.Manager.MyWindowManager;
 import com.example.TestControl.TestCtrl;
@@ -52,17 +54,16 @@ public class ExamActivity extends Activity {
 	private int temp;
 	Cursor cursor;
 	DBAdapter dbAdapter;
-	/*int[] problemRand = new int[160];//所有题目顺序
-	int[] testTurn = new int[15];//试题
-	int[] testAnswer = new int[15];//试题答案
-	int[] mySelect = new int[15];// 我的答案*/
+
 	String TextMode_text;
-	TestCtrl testctrl;
+	//TestCtrl testctrl;
+	public ExamPresenter examPresenter;
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		// TODO Auto-generated method stub
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.test_fragment);
+		examPresenter = new ExamPresenter(getBaseContext(),ExamActivity.this);
 		StatusBarUtil.setRootViewFitsSystemWindows(this,false);
 		//设置状态栏透明
 		StatusBarUtil.setTranslucentStatus(this);
@@ -86,7 +87,7 @@ public class ExamActivity extends Activity {
 		imageView.setVisibility(View.VISIBLE);
 		chronometer.setBase(SystemClock.elapsedRealtime());
 		chronometer.start();
-		dbAdapter = new DBAdapter(this);
+/*		dbAdapter = new DBAdapter(this);
 		dbAdapter.open();
 		cursor = dbAdapter.getAllData();
 		int numberOfAlltest = cursor.getCount();
@@ -97,7 +98,7 @@ public class ExamActivity extends Activity {
 
 		testctrl = new TestCtrl(this,this,dbAdapter,cursor,chronometer,numberOfAlltest,numberOfChosen,problemRand,testTurn,testAnswer,mySelect);
 		testctrl.testOfChosen(0);
-		testctrl.handlerOftestAnswer();
+		testctrl.handlerOftestAnswer();*/
         //testctrl.OnPaint(proTextView,radioGroup,radioA,radioB,radioC,radioD);
 		//numText.setText("1/15");
 		//forword_btn.setText("无");
@@ -105,14 +106,14 @@ public class ExamActivity extends Activity {
 			@Override
 			public void onClick(View v) {
 				// TODO Auto-generated method stub
-				testctrl.forwordBtn(forword_btn,next_btn,numText,proTextView,radioGroup,radioA,radioB,radioC,radioD);
+				examPresenter.forwordBtn(forword_btn,next_btn,numText,proTextView,radioGroup,radioA,radioB,radioC,radioD);
 			}
 		});
 		next_btn.setOnClickListener(new OnClickListener() {
 			@Override
 			public void onClick(View v) {
 				// TODO Auto-generated method stub
-				testctrl.nextBtn(ExamActivity.this,isHandIn,forword_btn,next_btn,numText,proTextView,radioGroup,radioA,radioB,radioC,radioD);
+				examPresenter.nextBtn(ExamActivity.this,isHandIn,forword_btn,next_btn,numText,proTextView,radioGroup,radioA,radioB,radioC,radioD);
 			}
 		});
 
@@ -120,7 +121,7 @@ public class ExamActivity extends Activity {
 			@Override
 			public void onCheckedChanged(RadioGroup group, int checkedId) {
 				// TODO Auto-generated method stub
-				testctrl.myAnswerRecord(radioA,radioB,radioC,radioD);
+				examPresenter.record(radioA,radioB,radioC,radioD);
 			}
 		});
 		answerButton.setOnClickListener(new OnClickListener() {
@@ -130,38 +131,12 @@ public class ExamActivity extends Activity {
 				    Intent intent = new Intent(ExamActivity.this, MyAnswerActivity.class);
 					intent.putExtra("answer",mySelect);
 					intent.putExtra("test_answer",testAnswer);
-				    temp=testctrl.timeTrans();
+				    temp=timeTrans();
 					intent.putExtra("timer",temp);
 				    startActivityForResult(intent,1);
 			}
 		});
 
-
-		/*
-		chronometer.setOnChronometerTickListener(new Chronometer.OnChronometerTickListener() {
-			@Override
-			public void onChronometerTick(Chronometer chronometer) {
-				// TODO Auto-generated method stub
-				seconds--;
-				if (seconds == -1) {
-					minutes--;
-					seconds = 59;
-				}
-				if (minutes < 0) {
-					chronometer.stop();
-					// 直接交卷！
-					handlerAfterHandIn();
-				} else {
-					if (minutes < 5) {
-						chronometer.setTextColor(Color.RED);
-						chronometer.setText(nowtime());
-					} else {
-						chronometer.setTextColor(Color.GREEN);
-						chronometer.setText(nowtime());
-					}
-				}
-			}
-		});*/
 	}
 	@Override
 	protected void onStart() {//ExamActivity走singletask模式，在活动站中只保存一个实例
@@ -248,83 +223,41 @@ public class ExamActivity extends Activity {
 		Log.i(TAG, "lrl    =====");
 		//MyWindowManager.initWindowManager (this,ExamActivity.this);
 		Intent intentToHome = new Intent(ExamActivity.this, FloatWindowService.class);
-		temp=testctrl.timeTrans();
+		temp=timeTrans();
 		intentToHome.putExtra("TIME",temp);
 		startService(intentToHome);
 		//FloatWindowService floatWindowService = new FloatWindowService();
 		//floatWindowService.initService(getApplicationContext(),ExamActivity.this);
 		Toast.makeText(this, "onUserLeaveHint", Toast.LENGTH_SHORT).show();
 	}
-
-	/*
-	@Override
-	public boolean onKeyDown(int keyCode, KeyEvent event)
+	public int timeTrans ( )
 	{
-		if(keyCode == KeyEvent.KEYCODE_BACK)
-		{ //监控/拦截/屏蔽返回键
-			dialog();
-
-			return false;
-
-		} else if(keyCode == KeyEvent.KEYCODE_MENU)
-		{
-			if(isShowButton)
-			{
-				rly.setVisibility(View.VISIBLE);
-				isShowButton = false;
-
-			}else
-			{
-				rly.setVisibility(View.GONE);
-				isShowButton = true;
-			}
-
-			return false;
-
-		} else if(keyCode == KeyEvent.KEYCODE_HOME)
-		{
-			//由于Home键为系统键，此处不能捕获，需要重写onAttachedToWindow()
-
-			return false;
+		int temp0 = Integer.parseInt(chronometer.getText().toString().split(":")[0]);
+		int temp1 =Integer.parseInt(chronometer.getText().toString().split(":")[1]);
+		return temp0*60+temp1;
+	}
+	public void setIndex(int index)
+	{
+		curIndex = index;
+	}
+	public String testMode(int flag) {
+		String mode = null;
+		switch (flag) {
+			case 1:
+			{mode = Constant.CHAPTER;}
+			break;
+			case 2:
+			{mode = Constant.RANDOM;}
+			break;
+			case 3:
+			{mode = Constant.ERROR;}
+			break;
+			case 4:
+			{mode = Constant.TEST;}
+			break;
+			default:
+				break;
 		}
-		return super.onKeyDown(keyCode, event);
+		return mode;
 	}
-*/
-/*
-	protected void dialog()
-	{
-		AlertDialog.Builder builder = new Builder(WebActivity.this);
-		builder.setMessage("确定要退出吗?");
-		builder.setTitle("提示");
-		builder.setPositiveButton("确认",
-				new android.content.DialogInterface.OnClickListener()
-				{
-					public void onClick(DialogInterface dialog, int which)
-					{
-						dialog.dismiss();
-						WebActivity.this.finish();
-					}
-				});
-
-		builder.setNegativeButton("取消",
-				new android.content.DialogInterface.OnClickListener()
-				{
-					public void onClick(DialogInterface dialog, int which)
-					{
-						dialog.dismiss();
-					}
-				});
-
-		builder.create().show();
-	}
-
-    */
-    /*
-    // 拦截/屏蔽系统Home键
-    public void onAttachedToWindow()
-    {
-        this.getWindow().setType(WindowManager.LayoutParams.TYPE_KEYGUARD);
-        super.onAttachedToWindow();
-    }
-    */
 }

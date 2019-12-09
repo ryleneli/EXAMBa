@@ -5,7 +5,6 @@ import android.content.Intent;
 import android.os.SystemClock;
 
 import com.example.Activity.ExamActivity;
-import com.example.Activity.LoginActivity;
 import com.example.Activity.MyAnswerActivity;
 import com.example.Adapter.MyAnswerRecyclerView;
 import com.example.Model.MyAnswerModel;
@@ -21,13 +20,11 @@ public class MyAnswerPresenter {
     private Context context;
     private MyAnswerActivity myAnswerActivity;
     private MyAnswerModel myAnswerModel;
-    public int result;
-    //public boolean isHandIn;
+
     public MyAnswerPresenter(Context context, MyAnswerActivity myAnswerActivity){
         this.myAnswerActivity=myAnswerActivity;
         this.context=context;
         this.myAnswerModel = new MyAnswerModel();
-
     }
     public void getData (Intent intent)
     {
@@ -54,7 +51,6 @@ public class MyAnswerPresenter {
     public String getResult ()
     {
         String temp_text = "正确："+myAnswerModel.answerCount() + "/15";
-        //resultText.setText(temp_text);
         return temp_text;
     }
     public String showTime ()
