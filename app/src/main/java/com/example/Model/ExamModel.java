@@ -29,13 +29,13 @@ public class ExamModel {
     public int[] testAnswer;//试题答案
     public int[] mySelect;// 我的答案
 
-    String TESTSUBJECT;
-    String TESTANSWER;
-    String ANSWERA;
-    String ANSWERB;
-    String ANSWERC;
-    String ANSWERD;
-    int TESTTPYE;
+    public String TESTSUBJECT;
+    public String TESTANSWER;
+    public String ANSWERA;
+    public String ANSWERB;
+    public String ANSWERC;
+    public String ANSWERD;
+    public int TESTTPYE;
 
     public Boolean isHandIn;
     public ExamModel(Context context,int mode) {
@@ -96,40 +96,7 @@ public class ExamModel {
             }
         }
     }
-    public void handleOfAnswer(int curIndex,TextView myAnswer)
-    {
-        String temp = null;
-        if (curIndex<=4)
-        {
-            if (mySelect[curIndex] == 1) {
-                temp = "对";
-                myAnswer.setText("您的答案"+temp);
-            } else if (mySelect[curIndex] == 3) {
-                temp = "错";
-                myAnswer.setText("您的答案"+temp);
-            }
-            else if (mySelect[curIndex] == 0) {
-                temp = "未选";
-                myAnswer.setText("您的答案："+temp);
-            }
-        }
-        else if (curIndex > 4 && curIndex <=14)
-        {
-            if (mySelect[curIndex] == 1) {
-                temp = "A";
-                myAnswer.setText("您的答案"+temp);
-            } else if (mySelect[curIndex] == 2) {
-                temp = "B";
-                myAnswer.setText("您的答案"+temp);
-            } else if (mySelect[curIndex] == 3) {
-                temp = "C";
-                myAnswer.setText("您的答案"+temp);
-            } else if (mySelect[curIndex] == 4) {
-                temp = "D";
-                myAnswer.setText("您的答案"+temp);
-            }
-        }
-    }
+
     public void testOfChosen(int chapterNum)//取题
     {   //顺序all,乱序all，chapter all,error all
         curIndex = 0;
@@ -173,7 +140,7 @@ public class ExamModel {
             //ShowToast(e.toString());
         }
     }
-    public void OnPaint(TextView proTextView, TextView rightAnswer,TextView myAnswer,RadioGroup radioGroup, RadioButton radio_a, RadioButton radio_b, RadioButton radio_c, RadioButton radio_d)//显示题目
+    public void getProTxt(RadioGroup radioGroup)//显示题目
     {
         if (cursor.getCount() == 0) {
             //Toast.makeText(gthis, "hello,there is no test found", Toast.LENGTH_LONG).show();
@@ -186,51 +153,11 @@ public class ExamModel {
 
             TESTANSWER = cursor.getString(cursor.getColumnIndex(DBAdapter.TESTANSWER));
             TESTTPYE = cursor.getInt(cursor.getColumnIndex(DBAdapter.TESTTPYE));
-            proTextView.setText((curIndex + 1) + "." + TESTSUBJECT);
+
             ANSWERA = cursor.getString(cursor.getColumnIndex(DBAdapter.ANSWERA));
             ANSWERB = cursor.getString(cursor.getColumnIndex(DBAdapter.ANSWERB));
             ANSWERC = cursor.getString(cursor.getColumnIndex(DBAdapter.ANSWERC));
             ANSWERD = cursor.getString(cursor.getColumnIndex(DBAdapter.ANSWERD));
-            if (ANSWERA.compareTo("") == 0) {
-                // 判断题
-                radio_a.setText("对");
-                radio_c.setText("错");
-                radio_b.setVisibility(View.GONE);
-                radio_d.setVisibility(View.GONE);
-            } else {
-                // 选择题
-                radio_a.setText("A." + ANSWERA);
-                radio_b.setText("B." + ANSWERB);
-                radio_c.setText("C." + ANSWERC);
-                radio_d.setText("D." + ANSWERD);
-                radio_a.setVisibility(View.VISIBLE);
-                radio_b.setVisibility(View.VISIBLE);
-                radio_c.setVisibility(View.VISIBLE);
-                radio_d.setVisibility(View.VISIBLE);
-            }
-            switch (mySelect[curIndex]) {
-                case 1:
-                    radio_a.setChecked(true);
-                    break;
-                case 2:
-                    radio_b.setChecked(true);
-                    break;
-                case 3:
-                    radio_c.setChecked(true);
-                    break;
-                case 4:
-                    radio_d.setChecked(true);
-                    break;
-                default:
-                    break;
-            }
         }
-        if (isHandIn)
-        {
-            handleOfAnswer(curIndex,myAnswer);
-            rightAnswer.setText("正确答案："+TESTANSWER);
-        }
-
     }
-
 }

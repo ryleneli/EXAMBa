@@ -84,7 +84,6 @@ public class MyAnswerActivity extends Activity {
                     titleBarView.setTimer(false);
                     chronometer.stop();
                     chronometer.setVisibility(View.INVISIBLE);
-
                     myAnswerPresenter.handIn(isHandIn);
                     resultText.setText(myAnswerPresenter.getResult());
                     timeText.setText(myAnswerPresenter.showTime());

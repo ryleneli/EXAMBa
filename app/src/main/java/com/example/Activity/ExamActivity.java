@@ -28,26 +28,25 @@ import android.widget.Toast;
 
 public class ExamActivity extends Activity {
 	private static String TAG = "ExamActivity";
-    private MyWindowManager myWindowManager;
+
 	private int flag;
 	private int index;
 	public boolean isHandIn;
-	private String title;
-	private TitleBarView titleBarView;
-	private TextView proTextView;//问题
-	private TextView numText;
-	private TextView TextMode;
+	public String title;
+	public TitleBarView titleBarView;
+	public TextView proTextView;//问题
+	public TextView numText;
+	public TextView TextMode;
 	public TextView rightAnswer;
 	public TextView myAnswer;
-	private RadioButton radioA;
-	private RadioButton radioB;
-	private RadioButton radioC;
-	private RadioButton radioD;//答案按钮组
-	private RadioGroup radioGroup;
-	private Button forword_btn;//上一题按钮
-	private Button next_btn;//下一题按钮
-	private int[] testAnswer = new int[15];//试题答案
-	private int[] mySelect = new int[15];// 我的答案
+	public RadioButton radioA;
+	public RadioButton radioB;
+	public RadioButton radioC;
+	public RadioButton radioD;//答案按钮组
+	public RadioGroup radioGroup;
+	public Button forword_btn;//上一题按钮
+	public Button next_btn;//下一题按钮
+
 	public Chronometer chronometer;
 	private ImageButton answerButton;
 	private ImageView imageView;
@@ -87,33 +86,19 @@ public class ExamActivity extends Activity {
 		imageView.setVisibility(View.VISIBLE);
 		chronometer.setBase(SystemClock.elapsedRealtime());
 		chronometer.start();
-/*		dbAdapter = new DBAdapter(this);
-		dbAdapter.open();
-		cursor = dbAdapter.getAllData();
-		int numberOfAlltest = cursor.getCount();
-		int numberOfChosen = 15;
-		int[] problemRand = new int[numberOfAlltest];//所有题目顺序
-		int[] testTurn = new int[numberOfChosen];//试题
 
-
-		testctrl = new TestCtrl(this,this,dbAdapter,cursor,chronometer,numberOfAlltest,numberOfChosen,problemRand,testTurn,testAnswer,mySelect);
-		testctrl.testOfChosen(0);
-		testctrl.handlerOftestAnswer();*/
-        //testctrl.OnPaint(proTextView,radioGroup,radioA,radioB,radioC,radioD);
-		//numText.setText("1/15");
-		//forword_btn.setText("无");
 		forword_btn.setOnClickListener(new OnClickListener() {
 			@Override
 			public void onClick(View v) {
 				// TODO Auto-generated method stub
-				examPresenter.forwordBtn(forword_btn,next_btn,numText,proTextView,radioGroup,radioA,radioB,radioC,radioD);
+				examPresenter.forwordBtn();
 			}
 		});
 		next_btn.setOnClickListener(new OnClickListener() {
 			@Override
 			public void onClick(View v) {
 				// TODO Auto-generated method stub
-				examPresenter.nextBtn(ExamActivity.this,isHandIn,forword_btn,next_btn,numText,proTextView,radioGroup,radioA,radioB,radioC,radioD);
+				examPresenter.nextBtn();
 			}
 		});
 
@@ -121,19 +106,13 @@ public class ExamActivity extends Activity {
 			@Override
 			public void onCheckedChanged(RadioGroup group, int checkedId) {
 				// TODO Auto-generated method stub
-				examPresenter.record(radioA,radioB,radioC,radioD);
+				examPresenter.record();
 			}
 		});
 		answerButton.setOnClickListener(new OnClickListener() {
 			@Override
 			public void onClick(View v) {
-				// TODO Auto-generated method stub
-				    Intent intent = new Intent(ExamActivity.this, MyAnswerActivity.class);
-					intent.putExtra("answer",mySelect);
-					intent.putExtra("test_answer",testAnswer);
-				    temp=timeTrans();
-					intent.putExtra("timer",temp);
-				    startActivityForResult(intent,1);
+                examPresenter.answerBtn();
 			}
 		});
 
@@ -153,18 +132,12 @@ public class ExamActivity extends Activity {
 			index = 0;
 			rightAnswer.setVisibility(View.VISIBLE);
 			myAnswer.setVisibility(View.VISIBLE);
-
-			for (int i=0;i<15;i++)
-			{
-				Log.i(TAG, "my answer====="+i+" is  ==========="+mySelect[i]);
-				Log.i(TAG, "test answer*******"+i+" is  ************"+testAnswer[i]);
-			}
 		}
 
-		TextMode_text = testctrl.testMode(flag);
+		TextMode_text = examPresenter.testMode(flag);
 		titleBarView.getTitleText().setText(title);
 		TextMode.setText(TextMode_text);
-		testctrl.setIndex(index);
+		examPresenter.setIndex(index);
 		String temp = (index + 1) + "/" + 15;
 		numText.setText(temp);
 		if (index == 0)
@@ -181,7 +154,7 @@ public class ExamActivity extends Activity {
 			next_btn.setText("下一题");
 		}
 
-		testctrl.OnPaint(proTextView,radioGroup,radioA,radioB,radioC,radioD);
+		examPresenter.examTestShow();
 	}
 	@Override
 	protected void onRestart() {
@@ -195,9 +168,9 @@ public class ExamActivity extends Activity {
 			case 1 :
 				if(resultCode == RESULT_OK)
 				{
-					index = data.getIntExtra("select_index",0);
+					//index = data.getIntExtra("select_index",0);
 					isHandIn = data.getBooleanExtra("isHandIn",false);
-					mySelect = data.getIntArrayExtra("answer");
+					//mySelect = data.getIntArrayExtra("answer");
 				}
 				break;
 			default : break;
@@ -221,13 +194,10 @@ public class ExamActivity extends Activity {
 	protected void onUserLeaveHint() {
 		super.onUserLeaveHint();
 		Log.i(TAG, "lrl    =====");
-		//MyWindowManager.initWindowManager (this,ExamActivity.this);
 		Intent intentToHome = new Intent(ExamActivity.this, FloatWindowService.class);
 		temp=timeTrans();
 		intentToHome.putExtra("TIME",temp);
 		startService(intentToHome);
-		//FloatWindowService floatWindowService = new FloatWindowService();
-		//floatWindowService.initService(getApplicationContext(),ExamActivity.this);
 		Toast.makeText(this, "onUserLeaveHint", Toast.LENGTH_SHORT).show();
 	}
 	public int timeTrans ( )
@@ -236,28 +206,6 @@ public class ExamActivity extends Activity {
 		int temp1 =Integer.parseInt(chronometer.getText().toString().split(":")[1]);
 		return temp0*60+temp1;
 	}
-	public void setIndex(int index)
-	{
-		curIndex = index;
-	}
-	public String testMode(int flag) {
-		String mode = null;
-		switch (flag) {
-			case 1:
-			{mode = Constant.CHAPTER;}
-			break;
-			case 2:
-			{mode = Constant.RANDOM;}
-			break;
-			case 3:
-			{mode = Constant.ERROR;}
-			break;
-			case 4:
-			{mode = Constant.TEST;}
-			break;
-			default:
-				break;
-		}
-		return mode;
-	}
+
+
 }
