@@ -67,26 +67,7 @@ public class ExamActivity extends Activity {
 		//设置状态栏透明
 		StatusBarUtil.setTranslucentStatus(this);
 		StatusBarUtil.setStatusBarDarkTheme(ExamActivity.this,false);
-		titleBarView = (TitleBarView) findViewById(R.id.test_titlebar);
-		proTextView = (TextView) findViewById(R.id.pro_text);
-		numText = (TextView) findViewById(R.id.test_number);
-		TextMode = (TextView) findViewById(R.id.test_mode);
-		radioA = (RadioButton) findViewById(R.id.radioA);
-		radioB = (RadioButton) findViewById(R.id.radioB);
-		radioC = (RadioButton) findViewById(R.id.radioC);
-		radioD = (RadioButton) findViewById(R.id.radioD);
-		forword_btn = (Button) findViewById(R.id.last);
-		next_btn = (Button) findViewById(R.id.next);
-		radioGroup = (RadioGroup) findViewById(R.id.radioGroup);
-		rightAnswer = (TextView) findViewById(R.id.right_answer);
-		myAnswer = (TextView) findViewById(R.id.my_answer);
-		chronometer = titleBarView.getChronometer();
-		answerButton = titleBarView.getTitleAnswer();
-		imageView = titleBarView.getTimerBack();
-		imageView.setVisibility(View.VISIBLE);
-		chronometer.setBase(SystemClock.elapsedRealtime());
-		chronometer.start();
-
+        initView();
 		forword_btn.setOnClickListener(new OnClickListener() {
 			@Override
 			public void onClick(View v) {
@@ -106,7 +87,7 @@ public class ExamActivity extends Activity {
 			@Override
 			public void onCheckedChanged(RadioGroup group, int checkedId) {
 				// TODO Auto-generated method stub
-				examPresenter.record();
+				examPresenter.answerRecord();
 			}
 		});
 		answerButton.setOnClickListener(new OnClickListener() {
@@ -116,6 +97,29 @@ public class ExamActivity extends Activity {
 			}
 		});
 
+	}
+	private void initView()
+	{
+		titleBarView = (TitleBarView) findViewById(R.id.test_titlebar);
+		proTextView = (TextView) findViewById(R.id.pro_text);
+		numText = (TextView) findViewById(R.id.test_number);
+		TextMode = (TextView) findViewById(R.id.test_mode);
+		radioA = (RadioButton) findViewById(R.id.radioA);
+		radioB = (RadioButton) findViewById(R.id.radioB);
+		radioC = (RadioButton) findViewById(R.id.radioC);
+		radioD = (RadioButton) findViewById(R.id.radioD);
+		forword_btn = (Button) findViewById(R.id.last);
+		next_btn = (Button) findViewById(R.id.next);
+		radioGroup = (RadioGroup) findViewById(R.id.radioGroup);
+		rightAnswer = (TextView) findViewById(R.id.right_answer);
+		myAnswer = (TextView) findViewById(R.id.my_answer);
+		chronometer = titleBarView.getChronometer();
+		answerButton = titleBarView.getTitleAnswer();
+		answerButton.setVisibility(View.VISIBLE);
+		imageView = titleBarView.getTimerBack();
+		imageView.setVisibility(View.VISIBLE);
+		chronometer.setBase(SystemClock.elapsedRealtime());
+		chronometer.start();
 	}
 	@Override
 	protected void onStart() {//ExamActivity走singletask模式，在活动站中只保存一个实例
@@ -168,7 +172,7 @@ public class ExamActivity extends Activity {
 			case 1 :
 				if(resultCode == RESULT_OK)
 				{
-					//index = data.getIntExtra("select_index",0);
+					index = data.getIntExtra("select_index",0);
 					isHandIn = data.getBooleanExtra("isHandIn",false);
 					//mySelect = data.getIntArrayExtra("answer");
 				}
@@ -180,9 +184,7 @@ public class ExamActivity extends Activity {
 
 	@Override
 	protected void onDestroy() {
-		dbAdapter.close();
-		cursor.close();
-		chronometer.stop();
+        examPresenter.close();
 		super.onDestroy();
 	}
 	@Override
@@ -193,7 +195,7 @@ public class ExamActivity extends Activity {
 	@Override
 	protected void onUserLeaveHint() {
 		super.onUserLeaveHint();
-		Log.i(TAG, "lrl    =====");
+		Log.i(TAG, "startservice    =====");
 		Intent intentToHome = new Intent(ExamActivity.this, FloatWindowService.class);
 		temp=timeTrans();
 		intentToHome.putExtra("TIME",temp);

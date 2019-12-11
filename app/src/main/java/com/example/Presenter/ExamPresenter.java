@@ -33,8 +33,23 @@ public class ExamPresenter {
         this.examModel = new ExamModel(context, 0);
     }
 
-    public void record() {
-        examModel.myAnswerRecord(examActivity.radioA, examActivity.radioB, examActivity.radioC, examActivity.radioD);
+    public void answerRecord() {
+
+            if (!examActivity.isHandIn) {
+                if (examActivity.radioA.isChecked() && examModel.mySelect[examModel.curIndex] != 1) {//return to change answer
+                    examModel.mySelect[examModel.curIndex] = 1;
+
+                } else if (examActivity.radioB.isChecked() && examModel.mySelect[examModel.curIndex] != 2) {
+                    examModel.mySelect[examModel.curIndex] = 2;
+
+                } else if (examActivity.radioC.isChecked() && examModel.mySelect[examModel.curIndex] != 3) {
+                    examModel.mySelect[examModel.curIndex] = 3;
+
+                } else if (examActivity.radioD.isChecked() && examModel.mySelect[examModel.curIndex] != 4) {
+                    examModel.mySelect[examModel.curIndex] = 4;
+
+                }
+            }
     }
 
     public void forwordBtn() {
@@ -90,13 +105,14 @@ public class ExamPresenter {
                 examActivity.next_btn.setText("提交");
             }
             if (examModel.curIndex == 15) {
-                Intent intent = new Intent(examActivity, MyAnswerActivity.class);
+/*                Intent intent = new Intent(examActivity, MyAnswerActivity.class);
                 intent.putExtra("answer", examModel.mySelect);
                 intent.putExtra("test_answer", examModel.testAnswer);
                 int temp = examActivity.timeTrans();
                 intent.putExtra("timer", temp);
                 Log.i(TAG, "LRL temp  is =============================" + temp);
-                examActivity.startActivityForResult(intent, 1);
+                examActivity.startActivityForResult(intent, 1);*/
+                answerBtn();
                 examModel.curIndex = 14;
             }
             if (examActivity.isHandIn && examModel.curIndex == 14) {
@@ -125,10 +141,10 @@ public class ExamPresenter {
         if (curIndex <= 4) {
             if (examModel.mySelect[curIndex] == 1) {
                 temp = "对";
-                examActivity.myAnswer.setText("您的答案" + temp);
+                examActivity.myAnswer.setText("您的答案：" + temp);
             } else if (examModel.mySelect[curIndex] == 3) {
                 temp = "错";
-                examActivity.myAnswer.setText("您的答案" + temp);
+                examActivity.myAnswer.setText("您的答案：" + temp);
             } else if (examModel.mySelect[curIndex] == 0) {
                 temp = "未选";
                 examActivity.myAnswer.setText("您的答案：" + temp);
@@ -136,16 +152,16 @@ public class ExamPresenter {
         } else if (curIndex > 4 && curIndex <= 14) {
             if (examModel.mySelect[curIndex] == 1) {
                 temp = "A";
-                examActivity.myAnswer.setText("您的答案" + temp);
+                examActivity.myAnswer.setText("您的答案：" + temp);
             } else if (examModel.mySelect[curIndex] == 2) {
                 temp = "B";
-                examActivity.myAnswer.setText("您的答案" + temp);
+                examActivity.myAnswer.setText("您的答案：" + temp);
             } else if (examModel.mySelect[curIndex] == 3) {
                 temp = "C";
-                examActivity.myAnswer.setText("您的答案" + temp);
+                examActivity.myAnswer.setText("您的答案：" + temp);
             } else if (examModel.mySelect[curIndex] == 4) {
                 temp = "D";
-                examActivity.myAnswer.setText("您的答案" + temp);
+                examActivity.myAnswer.setText("您的答案：" + temp);
             }
         }
     }
@@ -164,7 +180,7 @@ public class ExamPresenter {
     public void handInAnswerShow()
     {
         handleOfAnswer(examModel.curIndex);
-        examActivity.rightAnswer.setText("正确答案："+examModel.testAnswer[examModel.curIndex]);
+        examActivity.rightAnswer.setText("正确答案："+examModel.TESTANSWER);
     }
     public void proTextShow()
     {
@@ -204,10 +220,10 @@ public class ExamPresenter {
                 break;
         }
     }
-    public void paint(TextView proTextView, TextView rightAnswer,TextView myAnswer,RadioGroup radioGroup, RadioButton radio_a, RadioButton radio_b, RadioButton radio_c, RadioButton radio_d)
+/*    public void paint(TextView proTextView, TextView rightAnswer,TextView myAnswer,RadioGroup radioGroup, RadioButton radio_a, RadioButton radio_b, RadioButton radio_c, RadioButton radio_d)
     {
         //examModel.OnPaint(proTextView,examActivity.rightAnswer,examActivity.myAnswer,radioGroup,radio_a,radio_b,radio_c,radio_d);//直接下一题
-    }
+    }*/
 
     public void setIndex(int index)
     {
@@ -232,5 +248,11 @@ public class ExamPresenter {
                 break;
         }
         return mode;
+    }
+    public void close()
+    {
+        examModel.dbAdapter.close();
+        examModel.cursor.close();
+        examActivity.chronometer.stop();
     }
 }

@@ -44,36 +44,19 @@ public class ExamModel {
         cursor = dbAdapter.getAllData();
         numberOfAll = cursor.getCount();
         numberOfChosen = 15;
+        //problemRand = new int[numberOfAll];
         initData(mode);
     }
     public void initData(int chapterNum)
     {
         problemRand = new int[numberOfAll];
         testTurn = new int[numberOfChosen];
+        testAnswer = new int[numberOfChosen];
+        mySelect = new int[numberOfChosen];
         testOfChosen(chapterNum);
         handlerOftestAnswer();
     }
 
-    //记录答案
-    public void myAnswerRecord(RadioButton radio_a,
-                               RadioButton radio_b, RadioButton radio_c, RadioButton radio_d)
-    {
-        if (!isHandIn) {
-            if (radio_a.isChecked() && mySelect[curIndex] != 1) {//return to change answer
-                mySelect[curIndex] = 1;
-
-            } else if (radio_b.isChecked() && mySelect[curIndex] != 2) {
-                mySelect[curIndex] = 2;
-
-            } else if (radio_c.isChecked() && mySelect[curIndex] != 3) {
-                mySelect[curIndex] = 3;
-
-            } else if (radio_d.isChecked() && mySelect[curIndex] != 4) {
-                mySelect[curIndex] = 4;
-
-            }
-        }
-    }
     public void handlerOftestAnswer() {//将答案转换成数据格式
         // TODO Auto-generated method stub
         //isHandIn = true;

@@ -31,7 +31,7 @@ import static android.content.ContentValues.TAG;
  * Created by 15151 on 2019/10/21.
  */
 
-public class TestCtrl {
+public class TestCtrl {/*
     //具体的题目显示逻辑
     private static String TAG = "LRL ExamActivity";
     private Context mcontext;
@@ -110,12 +110,12 @@ public class TestCtrl {
         curIndex = index;
     }
 
-/*    public int timeTrans ( )
+*//*    public int timeTrans ( )
     {
         int temp0 = Integer.parseInt(chronometer.getText().toString().split(":")[0]);
         int temp1 =Integer.parseInt(chronometer.getText().toString().split(":")[1]);
         return temp0*60+temp1;
-    }*/
+    }*//*
     public void forwordBtn (Button button_for,Button button_nex,TextView textView_num, TextView textView_pro, RadioGroup radioGroup, RadioButton radio_a, RadioButton radio_b, RadioButton radio_c, RadioButton radio_d) {
 
             if (isHandIn) {// 交卷后
@@ -396,5 +396,5 @@ public class TestCtrl {
             examActivity.rightAnswer.setText("正确答案："+TESTANSWER);
         }
 
-    }
+    }*/
 }
