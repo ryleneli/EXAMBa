@@ -151,4 +151,7 @@ public class ItemView extends RelativeLayout {
     public TextView getLeftText() {
         return leftText;
     }
+    public TextView getRightText() {
+        return rightText;
+    }
 }

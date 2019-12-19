@@ -11,6 +11,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.Chronometer;
+import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
@@ -30,6 +31,7 @@ import static android.view.View.GONE;
 public class MyAnswerActivity extends Activity {
     private static String TAG = "MyAnswerActivity";
     private TitleBarView titleBarView;
+    private ImageView back_img;
     private TextView resultText,timeText;
     public RecyclerView recyclerView ;
     public MyAnswerRecyclerView recyclerViewAdapter;
@@ -38,6 +40,7 @@ public class MyAnswerActivity extends Activity {
     private View view;
     public Chronometer chronometer;
     boolean isHandIn = false;
+    public Intent intent1;
 
     public MyAnswerPresenter myAnswerPresenter;
     @Override
@@ -53,6 +56,7 @@ public class MyAnswerActivity extends Activity {
         Intent intent = getIntent() ;
         myAnswerPresenter.getData(intent);
         titleBarView = (TitleBarView) findViewById(R.id.myAnswer_titlebar);
+        back_img = (ImageView)titleBarView.getTitleBack();
         chronometer = titleBarView.getChronometer();
         myAnswerPresenter.setTime();
         //chronometer.start();
@@ -68,6 +72,19 @@ public class MyAnswerActivity extends Activity {
         //recyclerViewAdapter = new MyAnswerRecyclerView(this,MyAnswerActivity.this,myAnswer,testAnswer,isHandIn);
         //recyclerView.setAdapter(recyclerViewAdapter);
         myAnswerPresenter.handIn(isHandIn);
+        back_img.setOnClickListener(new View.OnClickListener()
+        {
+            @Override
+            public void onClick(View v) {
+                if (!isHandIn) {
+                    intent1 = new Intent(MyAnswerActivity.this, ExamActivity.class);
+                }
+                else {
+                    intent1 = new Intent(MyAnswerActivity.this, MainActivity.class);
+                }
+                    startActivity(intent1);
+            }
+        });
         button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

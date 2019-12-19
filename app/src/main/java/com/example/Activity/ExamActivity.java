@@ -1,5 +1,6 @@
 package com.example.Activity;
 
+import com.bumptech.glide.util.Util;
 import com.example.Constant;
 import com.example.DBControl.DBAdapter;
 import com.example.Presenter.ExamPresenter;
@@ -10,6 +11,8 @@ import com.example.UI.TitleBarView;
 import com.example.Utils.StatusBarUtil;
 import com.example.testsys.R;
 import android.app.Activity;
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.database.Cursor;
 import android.os.Bundle;
@@ -46,6 +49,7 @@ public class ExamActivity extends Activity {
 	public RadioGroup radioGroup;
 	public Button forword_btn;//上一题按钮
 	public Button next_btn;//下一题按钮
+	private ImageView back_img;
 
 	public Chronometer chronometer;
 	private ImageButton answerButton;
@@ -62,12 +66,39 @@ public class ExamActivity extends Activity {
 		// TODO Auto-generated method stub
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.test_fragment);
+
 		examPresenter = new ExamPresenter(getBaseContext(),ExamActivity.this);
 		StatusBarUtil.setRootViewFitsSystemWindows(this,false);
 		//设置状态栏透明
 		StatusBarUtil.setTranslucentStatus(this);
 		StatusBarUtil.setStatusBarDarkTheme(ExamActivity.this,false);
         initView();
+		back_img.setOnClickListener(new View.OnClickListener()
+		{
+			@Override
+			public void onClick(View v) {
+				AlertDialog.Builder normalDialog = new AlertDialog.Builder(ExamActivity.this);
+				normalDialog.setTitle("提示");
+				normalDialog.setMessage("您确定要退出测试吗?");
+				normalDialog.setPositiveButton("确定",
+				new DialogInterface.OnClickListener() {
+					@Override
+					public void onClick(DialogInterface dialog, int which)
+					{
+						Intent intent = new Intent(ExamActivity.this, MainActivity.class);
+						startActivity(intent);
+					}
+			    });
+				normalDialog.setNegativeButton("关闭",
+				new DialogInterface.OnClickListener() {
+					@Override
+					public void onClick(DialogInterface dialog, int which) {
+						//showToastShort("点击了关闭");
+					}
+				});        // 显示
+			   normalDialog.show();
+		}
+		});
 		forword_btn.setOnClickListener(new OnClickListener() {
 			@Override
 			public void onClick(View v) {
@@ -98,9 +129,11 @@ public class ExamActivity extends Activity {
 		});
 
 	}
+
 	private void initView()
 	{
 		titleBarView = (TitleBarView) findViewById(R.id.test_titlebar);
+		back_img = (ImageView)titleBarView.getTitleBack();
 		proTextView = (TextView) findViewById(R.id.pro_text);
 		numText = (TextView) findViewById(R.id.test_number);
 		TextMode = (TextView) findViewById(R.id.test_mode);

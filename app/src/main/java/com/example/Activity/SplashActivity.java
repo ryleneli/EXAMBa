@@ -82,7 +82,7 @@ public class SplashActivity extends Activity {
                 ObjectAnimator.ofFloat(textView, "rotationX", 0f, 360f),
         };
         set.playTogether(items);
-        set.setDuration(3000).start();
+        set.setDuration(2000).start();
     }
     private void addViewAnimator()
     {

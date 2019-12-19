@@ -18,16 +18,44 @@ import com.example.testsys.R;
 
 public class MineFragment extends Fragment {
     private static String TAG = "MineFragment";
-    private ItemView message;
+    private ItemView message,test,passport,about;
     private View view;
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         if (view == null) {
             view = inflater.inflate(R.layout.mine, container, false);
             message = (ItemView) view.findViewById(R.id.mine_message);
+            test = (ItemView) view.findViewById(R.id.mine_exam);
+            passport = (ItemView) view.findViewById(R.id.change_password);
+            about = (ItemView) view.findViewById(R.id.about);
+
             super.onCreate(savedInstanceState);
 
 
         message.setItemClickListener(new itemClickListener() {
+            @Override
+            public void itemClick() {
+                Log.i(TAG,"LRL setItemClickListener is OK");
+                Toast.makeText(getContext(),TAG,Toast.LENGTH_SHORT).show();
+            }
+
+        });
+        test.setItemClickListener(new itemClickListener() {
+            @Override
+            public void itemClick() {
+                Log.i(TAG,"LRL setItemClickListener is OK");
+                Toast.makeText(getContext(),TAG,Toast.LENGTH_SHORT).show();
+            }
+
+        });
+        passport.setItemClickListener(new itemClickListener() {
+            @Override
+            public void itemClick() {
+                Log.i(TAG,"LRL setItemClickListener is OK");
+                Toast.makeText(getContext(),TAG,Toast.LENGTH_SHORT).show();
+            }
+
+        });
+        about.setItemClickListener(new itemClickListener() {
             @Override
             public void itemClick() {
                 Log.i(TAG,"LRL setItemClickListener is OK");

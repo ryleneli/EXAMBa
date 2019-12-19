@@ -5,6 +5,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical">
     <com.example.UI.TitleBarView
+        android:id="@+id/alllessons_title"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         app:title_back_icon_visible="true"

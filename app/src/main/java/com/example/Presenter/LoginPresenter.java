@@ -82,6 +82,7 @@ public class LoginPresenter{
             @Override
             public void onError(Throwable e) {
                 loginActivity.showToast("连接服务器出错-->1");
+                Log.i(TAG, "startservice    =====");
             }
 
             @Override

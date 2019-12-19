@@ -10,15 +10,18 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ExpandableListView;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.Activity.AllMyLesson;
 import com.example.Activity.ExamActivity;
 import com.example.Activity.MainActivity;
 import com.example.Adapter.MyExpandableAdapter;
 import com.example.Adapter.MyRecyclerViewAdapter;
 import com.example.Object.Bean.Lesson;
 import com.example.Object.CustomizeObject.MyRecyclerView;
+import com.example.UI.ItemView;
 import com.example.UI.TestView;
 import com.example.Callback.itemClickListener;
 import com.example.testsys.R;
@@ -43,15 +46,17 @@ public class HomeFragment extends Fragment {
     private MyRecyclerViewAdapter recyclerViewAdapter;
     private TestView chapterView,randomView,errorView,testView;
     private ExpandableListView expandableListView;
-    private TextView hotLesson,learning_text;
+    private ItemView itemView;
+    private ImageView imageViewAll;
+    private TextView hotLesson,learning_text,viewAll;
     private Handler handler = new Handler();
     private final Timer timer = new Timer();
     private TimerTask task;
     int index;
-    String[] groupNames = { "a", "b", "c" };
-    String[][] childNames = new String[][] { { "a1", "a2", "a3" },
-            { "b1", "b2", "b3", "b4", "b5" },
-            { "c1", "c2", "c3", "c4" } };
+    String[] groupNames = { "testa", "testb", "testc" };
+    String[][] childNames = new String[][] { { "testa_1", "testa_2", "testa_3" },
+            { "testb_1", "testb_2", "testb_3", "testb_4", "testb_5" },
+            { "testc_1", "testc_2", "testc_3", "testc_4" } };
 
 
 
@@ -64,6 +69,9 @@ public class HomeFragment extends Fragment {
             recyclerView = view.findViewById(R.id.rv);
             hotLesson = (TextView) view.findViewById(R.id.hot_lesson);
             learning_text = (TextView) view.findViewById(R.id.learning_lesson);
+            itemView = view.findViewById(R.id.item_view);
+            imageViewAll = (ImageView) itemView.getRightArrow();
+            viewAll = (TextView) itemView.getRightText();
             chapterView = (TestView) view.findViewById(R.id.home_chapbutton);
             randomView = (TestView) view.findViewById(R.id.home_randbutton);
             errorView = (TestView) view.findViewById(R.id.home_errorbutton);
@@ -80,7 +88,14 @@ public class HomeFragment extends Fragment {
             //recyclerView.setItemAnimator(new MyCustomItemAnimator());
             handler.post(mUpdate);
 
-
+            itemView.setOnClickListener(new View.OnClickListener()
+            {
+                @Override
+                public void onClick(View v) {
+                    Intent intent = new Intent(getActivity(), AllMyLesson.class);
+                    getContext().startActivity(intent);
+                }
+            });
             recyclerViewAdapter.setItemClickListener(new itemClickListener() {
                 @Override
                 public void itemClick() {

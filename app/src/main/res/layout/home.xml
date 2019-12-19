@@ -70,6 +70,7 @@
                 android:orientation="vertical"
                 android:background="#ffffff">
                 <com.example.UI.ItemView
+                    android:id="@+id/item_view"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     app:left_icon_visible="true"
